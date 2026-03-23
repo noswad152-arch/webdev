@@ -1,0 +1,167 @@
+
+
+<style>
+    
+.cluster-card {
+  margin: 18px 0;
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-soft);
+  font-size: 14px;
+  position: relative;
+}
+
+.cluster-header {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cluster-glyph {
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.cluster-line {
+  margin-top: 6px;
+  font-style: italic;
+  color: var(--text-soft);
+}
+
+.cluster-hint {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.cluster-expand {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cluster-reveal {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: none;
+}
+
+.cluster-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.cluster-themes {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.cluster-summary {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  color: var(--text-soft);
+}
+
+.cluster-cta {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+</style>
+<div class="cluster-card" data-cluster="">
+  <div class="cluster-header">
+    <span class="cluster-glyph">✧</span>
+    <span class="cluster-ref">Genesis 32:27</span>
+  </div>
+
+  <div class="cluster-line">
+    “What is your name?” he asked.
+  </div>
+
+  <div class="cluster-hint">
+    This verse sits inside a larger moment.
+    <span class="cluster-expand">Reveal →</span>
+  </div>
+
+  <div class="cluster-reveal">
+    <div class="cluster-title"></div>
+    <div class="cluster-themes"></div>
+    <div class="cluster-summary"></div>
+
+    <button class="cluster-cta"></button>
+  </div>
+</div>
+<script>
+async function loadCluster(cardEl, clusterData) {
+  const isCurated = clusterData.is_curated === true;
+
+  // Glyph distinction
+  const glyph = isCurated ? "✦" : "✧";
+  cardEl.querySelector(".cluster-glyph").textContent = glyph;
+
+  // Title
+  const title = isCurated
+    ? clusterData.title
+    : "A Moment of Significance";
+  cardEl.querySelector(".cluster-title").textContent = title;
+
+  // Themes
+  const themes = isCurated
+    ? clusterData.theme.join(" • ")
+    : clusterData.theme?.join(" • ") || "";
+  cardEl.querySelector(".cluster-themes").textContent = themes;
+
+  // Summary (hybrid)
+  const summary = isCurated
+    ? clusterData.curated_summary
+    : clusterData.ai_summary;
+  cardEl.querySelector(".cluster-summary").textContent = summary;
+
+  // CTA
+  const cta = isCurated
+    ? clusterData.cta_text
+    : "Explore this moment more deeply →";
+  cardEl.querySelector(".cluster-cta").textContent = cta;
+
+  // Expand behavior
+  const hint = cardEl.querySelector(".cluster-hint");
+  const reveal = cardEl.querySelector(".cluster-reveal");
+
+  hint.addEventListener("click", () => {
+    reveal.style.display = "block";
+  });
+}
+
+// Example usage with your JSON:
+const exampleCluster = {
+  is_curated: false,
+  title: "Wrestling in the Night",
+  theme: ["identity", "surrender", "transformation"],
+  curated_summary: "",
+  ai_summary:
+    "Jacob’s nighttime encounter is a turning point — a moment where identity, surrender, and transformation converge. The question 'What is your name?' becomes the pivot that shifts Jacob from striving to becoming.",
+  cta_text: "There’s more to this moment. Step into the full encounter?"
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const card = document.querySelector(".cluster-card");
+  loadCluster(card, exampleCluster);
+});
+</script>

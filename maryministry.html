@@ -5,563 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The True Story of Mary Magdalene</title>
     <!-- Add your CSS link here -->
+         <link rel="stylesheet" href="styles/cp.css">
+  
 </head>
-<style>
-  /* Add your CSS styles here */
-    /* --- Episode 1 Styles (Squarespace Safe) --- */
-  :root {
-    --bg: #0b0b10;
-    --bg-soft: #151521;
-    --card: #1f1f30;
-    --accent: #f6b45b;
-    --accent-soft: rgba(246, 180, 91, 0.18);
-    --text-main: #f7f3ea;
-    --text-soft: #c9c3b5;
-    --border-soft: rgba(255, 255, 255, 0.06);
-    --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.7);
-    --radius-lg: 18px;
-    --radius-pill: 999px;
-  }
-
-  .episode-page {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at top, #2b2230 0, #0b0b10 55%);
-    color: var(--text-main);
-    padding: 30px 16px 64px;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .episode-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
-  .series-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 14px;
-    border-radius: var(--radius-pill);
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-soft);
-    color: var(--text-soft);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .series-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px rgba(246, 180, 91, 0.9);
-  }
-
-  .episode-title {
-    margin-top: 18px;
-    font-size: 32px;
-    letter-spacing: 0.04em;
-  }
-
-  .episode-subtitle {
-    margin-top: 10px;
-    font-size: 16px;
-    color: var(--text-soft);
-  }
-
-  .meta-row {
-    margin-top: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    font-size: 13px;
-    color: var(--text-soft);
-  }
-
-  .meta-pill {
-    padding: 4px 12px;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--border-soft);
-    background: rgba(0, 0, 0, 0.35);
-  }
-
-  .hero-panel {
-    margin-top: 28px;
-    padding: 20px 20px 22px;
-    border-radius: var(--radius-lg);
-    background: radial-gradient(circle at top left, var(--accent-soft), var(--bg-soft));
-    border: 1px solid var(--border-soft);
-    box-shadow: var(--shadow-soft);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-glow {
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(circle at top, rgba(246, 180, 91, 0.22), transparent 60%);
-    opacity: 0.7;
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-  }
-
-  .hero-tagline {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .hero-quote {
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--text-main);
-  }
-
-  .hero-quote span {
-    color: var(--accent);
-  }
-
-  .hero-note {
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--text-soft);
-  }
-
-  .content-grid {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.3fr);
-    gap: 20px;
-  }
-
-  @media (max-width: 800px) {
-    .content-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
-  .content-card {
-    padding: 20px 20px 22px;
-    border-radius: var(--radius-lg);
-    background: var(--bg-soft);
-    border: 1px solid var(--border-soft);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .content-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .content-heading {
-    font-size: 18px;
-    margin-bottom: 12px;
-    color: var(--accent);
-  }
-
-  .content-body {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-soft);
-  }
-
-  .content-body p + p {
-    margin-top: 10px;
-  }
-
-  .list {
-    margin-top: 10px;
-    padding-left: 18px;
-  }
-
-  .list li {
-    margin-bottom: 6px;
-  }
-
-  .reflection-card {
-    margin-top: 22px;
-    padding: 16px 18px;
-    border-radius: var(--radius-lg);
-    border: 1px dashed rgba(246, 180, 91, 0.5);
-    background: rgba(0, 0, 0, 0.35);
-    font-size: 14px;
-    color: var(--text-soft);
-  }
-
-  .reflection-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .mini-player-container {
-  width: 250px; /* Or whatever your sidebar width is */
-  padding: 10px;
-  background: #f4f4f4;
-}
-
-/* This ensures the Squarespace iframe scales to your sidebar width */
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  height: 0;
-  overflow: hidden;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-    .hero-image-block {
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    margin: 32px 0;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .hero-image-block img {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: brightness(0.75) contrast(1.1);
-    transition: opacity 0.5s ease-in-out;
-    opacity: 1;
-  }
-
-/* A helper class to hide the image during the swap */
-.fade-out {
-  opacity: 0;
-}
-  .hero-image-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top, rgba(246,180,91,0.25), rgba(0,0,0,0.65));
-    pointer-events: none;
-  }
-
-  .hero-image-text {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
-    color: #f7f3ea;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    text-shadow: 0 4px 14px rgba(0,0,0,0.7);
-  }
-
-  .hero-image-title {
-    font-size: 28px;
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-
-  .hero-image-subtitle {
-    font-size: 15px;
-    color: #e8dcc7;
-  }
-
-  @media (max-width: 600px) {
-    .hero-image-title {
-      font-size: 22px;
-    }
-    .hero-image-subtitle {
-      font-size: 14px;
-    }
-  }
-
-
-
-
-  /* Container spacing */
-  #custom-summary-output {
-    margin-top: 12px;
-  }
-
-  /* Mini-card container */
-  #custom-summary-output .custom-item {
-    background: radial-gradient(circle at top left,
-      rgba(246,180,91,0.12),
-      rgba(21,21,33,0.92)
-    );
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 16px 18px 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 14px 36px rgba(0,0,0,0.55);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Soft glow halo */
-  #custom-summary-output .custom-item::before {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(circle at top,
-      rgba(246,180,91,0.18),
-      transparent 60%
-    );
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  /* Hover lift */
-  #custom-summary-output .custom-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 48px rgba(0,0,0,0.65);
-  }
-
-  /* Image styling */
-  #custom-summary-output img {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
-  }
-
-  /* Typography */
-  #custom-summary-output p,
-  #custom-summary-output strong,
-  #custom-summary-output a {
-    color: var(--text-soft);
-    font-family: inherit;
-    line-height: 1.6;
-  }
-
-  #custom-summary-output strong {
-    color: var(--text-main);
-    font-size: 15px;
-    letter-spacing: 0.01em;
-  }
-
-  #custom-summary-output p {
-    margin: 6px 0;
-    font-size: 14px;
-  }
-
-  /* Accent link */
-  #custom-summary-output a {
-    display: inline-block;
-    margin-top: 8px;
-    color: var(--accent);
-    font-weight: 500;
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-  }
-
-  #custom-summary-output a:hover {
-    opacity: 0.8;
-  }
-
- .scripture-card {
-    background: radial-gradient(circle at top left,
-      rgba(246,180,91,0.12),
-      rgba(21,21,33,0.92)
-    );
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 18px;
-    padding: 20px 22px 24px;
-    margin: 28px 0;
-    box-shadow: 0 18px 48px rgba(0,0,0,0.55);
-    position: relative;
-    overflow: hidden;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-
-  .scripture-card::before {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(circle at top,
-      rgba(246,180,91,0.18),
-      transparent 60%
-    );
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  .scripture-inner {
-    position: relative;
-  }
-
-  .scripture-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .scripture-ref {
-    font-size: 15px;
-    color: var(--text-main);
-    margin-bottom: 10px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
-  .scripture-text {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--text-soft);
-    white-space: pre-wrap;
-  }
-
-  /* Optional gentle fade-in when JS injects content */
-  .scripture-fade {
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .scripture-fade.loaded {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .pinned-latest {
-  border: 2px solid #000;
-  transform: scale(1.05); /* Makes it slightly larger than the others */
-  z-index: 2;
-}
-
-
-/* Container card (inherits your reflection-card aesthetic) */
-  .reflection-grid-card {
-    margin-top: 22px;
-    padding: 18px 20px;
-    border-radius: var(--radius-lg);
-    border: 1px dashed rgba(246, 180, 91, 0.5);
-    background: rgba(0, 0, 0, 0.35);
-    font-size: 14px;
-    color: var(--text-soft);
-  }
-
-  .reflection-grid-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: 14px;
-    letter-spacing: 0.01em;
-  }
-
-  /* Grid layout */
-  .reflection-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-
-  /* Column header */
-  .grid-header {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  /* Rows inside each column */
-  .grid-content p {
-    margin: 6px 0;
-    padding: 6px 8px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: var(--text-soft);
-  }
-
-  /* Optional: subtle hover lift */
-  .grid-content p:hover {
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateY(-2px);
-    transition: 0.25s ease;
-  }
-
-  /* Responsive collapse */
-  @media (max-width: 700px) {
-    .reflection-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-
-
-.reflection-grid-card {
-    margin-top: 22px;
-    padding: 20px 22px;
-    border-radius: var(--radius-lg);
-    border: 1px dashed rgba(246,180,91,0.5);
-    background: rgba(0,0,0,0.35);
-    font-size: 14px;
-    
-    color: var(--text-soft);
-  }
-
-  .reflection-grid-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: 16px;
-  }
-
-  .reflection-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 18px;
-  }
-
-  .grid-header {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .grid-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 84px;
-    margin: 6px 0;
-    padding: 6px 8px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .glyph {
-    font-size: 16px;
-    color: var(--accent);
-    width: 20px;
-    text-align: center;
-  }
-
-  @media (max-width: 700px) {
-    .reflection-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  </style>
 <body>
 
 <div class="episode-page">
@@ -569,10 +15,10 @@
   <!-- Header -->
   <header class="episode-header">
   <div class="hero-image-block">
-  <img src="https://duge79ki51wc4.cloudfront.net/images/asset_4d0283e32a765940.jpg" alt="Mary Magdalene Hero Image">
+  <img src="https://duge79ki51wc4.cloudfront.net/images/asset_e2bc57f600013785.jpeg" alt="Mary Magdalene Hero Image">
   <div class="hero-image-overlay"></div>
   <div class="hero-image-text">
-    <div class="hero-image-title">The True Story of Mary Magdalene</div>
+    <div class="hero-image-title">The Quiet Story of Mary Magdalene</div>
     <div class="hero-image-subtitle">A journey through history, memory, and devotion</div>
   </div>
 </div>
@@ -580,12 +26,12 @@
       <span class="series-dot"></span>
       <span>The Ministry</span>
     </div>    
-    <p class="episode-subtitle">To understand the woman, we begin with the world that shaped her.</p>
+    <p class="episode-subtitle">The calling that transcends time and tradition</p>
 
     <div class="meta-row">
       <span class="meta-pill">Theme: The Ministry</span>
       <span class="meta-pill">Movement: Silent Witness</span>
-      <span class="meta-pill">Reading Time: ~10 minutes</span>
+      <span class="meta-pill">Reading Time: ~20 minutes</span>
     </div>
   </header>
 
@@ -595,10 +41,10 @@
     <div class="hero-content">
       <div class="hero-tagline">Opening Movement</div>
       <p class="hero-quote">
-         The nature of Mary's walk with Jesus must be understood in the context of the evidence we have before the Ministry of Jesus, and at the end of it. 
+         Most have felt it, few understand it.  There is Something profound about Mary than the Gospels reveal.
       </p>
       <p class="hero-note">
-        This episode is about the quiet moments that reveal the depth of her faith.
+        This episode is about the quiet moments that reveal the depth of Mary's faith.
       </p>
     </div>
   </section>
@@ -611,6 +57,7 @@
       <div class="content-heading">The Heart Within Her Story</div>
 
       <div class="content-body">
+
         <p>
           If we are to assume that Mary Magdalene's early story is one of transformation,
           as discussed in Episode 3, we must now decipher her Ministry with Jesus through 
@@ -618,15 +65,17 @@
           If we don't, we find we'd have to take a break in silence for a couple weeks because silence is all we have from here until the Passion.        
        </p>
 
-        <p>
-          <strong>What We Know</strong>
-        </p>
+
+          <div class="content-heading">What We Know</div>
+
                 
         <p>
           After the mention of Mary as being from Magdala in Luke 8:2, the Gospels are silent about her participation in the Ministry of Jesus.
           This is a significant gap in the narrative, especially considering her prominent role at the crucifixion and resurrection. 
           The absence of details about her involvement during Jesus' ministry has led to centuries of speculation and myth-making, 
-          often overshadowing the historical reality of who she was and what she did.          
+          often overshadowing the historical reality of who she was and what she did.  
+          </p>
+          <p>We all can "feel" that there is a deeper story here, but how do we access it?
         </p>
         <p>
          The question we are trying to answer is what is the emotional story behind
@@ -634,57 +83,55 @@
          background and experiences shape her role in the events leading up to and following the crucifixion.
         </p>
         <p>
-         I can strongly assert, and the evidence supports, that a deep love and understanding 
+         The evidence supports that a deep love and understanding 
          of Jesus was cultivated in Mary long before the events of the Passion, 
          and that her witness at the crucifixion and resurrection was not a sudden transformation
-         but the culmination of a long journey of faith and devotion. 
+         but the culmination of a long journey of faith and deep spiritual practice.
         </p>
-        <p>
-         ...but first, the issue of marriage must be addressed.  The idea that Mary Magdalene was married to Jesus is a modern invention with no basis in historical fact.
-         It is a narrative created in the 20th century, popularized by works of fiction such as "The Da Vinci Code" and other similar novels.
-         There is no credible historical evidence to support the claim that Mary Magdalene was married to Jesus, and it is widely rejected by historians and theologians alike.         
+
+         <div class="content-heading">...but first, the issue of marriage must be addressed.</div>
+         
+         <p>The idea that Mary Magdalene was married to Jesus is a modern invention with no basis in historical fact.  The marriage myth actually diminishes the true depth of Mary's spiritual connection to Jesus and the singular role she played in his ministry.
          </p>
          <p>
-            To follow on that point, here are a couple of glaring issues
+            Before we make that point, here are a couple of glaring issues
              with the idea of Mary Magdalene being married to Jesus:
          </p>
         <p>
         <div class="content-body">
-        <p><strong>No Temple Blessing</strong></p>
+        <div class="content-heading">1. No Temple Blessing</div>
         <p style="margin-left: 25px;">A Jewish marriage required a ketubah (contract) and a public celebration (huppah). 
             Had Jesus been married, his "wife" would have had a specific legal standing
-            and responsibilities that would have made his itinerant,
-             homeless ministry almost impossible to justify under Torah law. Not to mention the moral questions 
-             it would bring up to leave his "wife" without the standing she would need 
-             beyond his death.</p>
+            and responsibilities. Not to mention the moral questions 
+             it would bring up to leave his "wife" without the standing she would need beyond his death; a death expected by Jesus himself.</p>
         <p style="margin-left: 25px;">Given Mary's grounding in Jewish tradition 
-            as discussed in Episode 3, and Jesus' inclination to stay true to Jewish law
+            as discussed in Episode 2, and Jesus' inclination to stay true to Jewish law
             that wasn't affront to the New Covenant Jesus was establishing, it is nearly impossible the bond of marriage
             would have gone unnoticed or hidden.  
             This later point, in particular, would fly against all the teachings of Jesus throughout canon and far beyond his Ministry.</p>
-        </p>
-                <p><strong>Family Obligations</strong></p>
+
+        <div class="content-heading">2. Family Obligations</div>
         <p style="margin-left: 25px;">In the Gospels, Jesus’ mother and brothers are 
             frequently mentioned and even confront him at times. 
             The total absence of a wife in these family 
             confrontations—especially given that a wife would have had the
             highest claim on his protection—is a strong argument for his celibacy.</p>
-                        <p><strong>Jesus Support of Marriage</strong></p>
+            <p style="margin-left: 25px;">The misunderstood woman in the background would not have drawn the attention of the disciples, or the family in the context of the Gospels.</p>
+                        <div class="content-heading">3. Jesus Support of Marriage</div>
         <p style="margin-left: 25px;">Despite what later Christianty would have assumed,
              Jesus consistently affirmed the value of marriage and the 
              sanctity of the marital bond.  In Matthew 19:12, Jesus speaks
-              about the importance of celibacy for those who can accept it, 
-              but he does not denounce marriage itself.  The meaning here is simple: 
+              about the importance of celibacy for those who can accept it (as "eros" love can carry deep conflict and distraction from the spiritual path), 
+              but he does not denounce marriage itself.  
+              <p style="margin-left: 25px;">
+              The meaning here is simple: 
               Jesus valued both celibacy and marriage, recognizing the unique callings 
-              and commitments of each.  He would not have hidden a marital relationship if it existed.</p>
+              and commitments of each.  He would not have hidden a marital relationship if it existed.
+            </p>
         </div>
-        <p>
         <div class="content-heading">So What was this Deep Devotion?</div>
-          
-        </p>
              <!-- LOVE PILL (fully centered, email-safe) -->
-<div role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:22px auto;">
-  
+<div role="presentation" style="margin:22px auto; text-align:center;">
       <div style="
         padding:10px 22px;
         border-radius:999px;
@@ -700,72 +147,65 @@
       ">
         Agape Love
       </div>
-      </div>
-
-<p>
-<strong>Agape Explains So Much</strong>
+    </div>
 
         <p>
         The Greek word "agape" is used in the New Testament to describe a 
-        selfless, sacrificial love that seeks the well-being of others.
-        This type of love is often associated with God's love for 
-        humanity and is considered the highest form of love in Christian theology.
-        In the context of Mary Magdalene's relationship with Jesus, agape love 
-        can help us understand the depth of her devotion and the nature of her witness.
-        <p>
-         Mary’s love for Jesus was not based on romantic or familial ties but on 
-         a profound spiritual connection and a deep understanding of his 
-         mission and message.
-         </p>
-         <p>
-         This agape love would have been cultivated through her experiences 
-         in Magdala, her interactions with Jesus during his ministry, 
-         and her witnessing of his teachings and miracles.
-         It explains why she would have been present at the crucifixion 
-         and why she was the first to 
-         witness the resurrection. Her love was rooted in a deep faith and a 
-         commitment to Jesus' mission, which transcended any earthly relationship.        
-
+        selfless, sacrificial love that knows the true nature of God's will.
+        This type of love is often associated with God's highest intention for 
+        humanity and is love recognized as sacred, holy, and not easily attainable in Christian theology.
         </p>
-                        <p><strong>Contrast to the 12</strong></p>
+        <section class="reflection-card">
+          <div class="reflection-label">Agape: The Highest Form of Spiritual Devotion</div>
+          <p>
+            "Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind. This is the first and great commandment. And the second is like unto it, Thou shalt love thy neighbour as thyself. On these two commandments hang all the law and the prophets." -Matthew 22:37–40       
+          </p>
+        </section>
+        <p>
+          Mary's love for Jesus was not based on romantic or familial ties but on 
+          a profound spiritual connection and a deep understanding of his 
+          mission and message; Likely brought about by deep <em>personal</em> transformation and healing.  
+        </p>
+        <div class="content-heading"><em>...the kind of healing you work at, not the kind that is given to you...</em></div>
+        <p>
+          This wasn't an academic understanding, but a heart-level one. It was real, powerful, and would have likely been completely misunderstood by most followers of Jesus.
+        </p>
+        <p> 
+          It explains why she would have been present at the crucifixion 
+          and why she was the first to 
+          witness the resurrection. Her love was rooted in a deep faith and a 
+          commitment to Jesus' mission, which transcended any earthly relationship.     
+        </p>
+        <p>
+          Few can fathom the true nature of agape love.  When you have achieved agape love, you are no longer bound by the limitations of human relationships and attachments.  You ARE the frequency of Love itself.
+        </p>
+        <div class="content-heading">Contrast to the Gratitude Theory</div>
+        <p style="margin-left: 25px;">Some have suggested that Mary’s devotion to Jesus was a result of gratitude for her healing, as mentioned in Luke 8:2. 
+            However, this interpretation reduces her relationship with Jesus to a transactional one, where her love is contingent on what he did for her. This would have been rejected by Jesus through his teachings on love and discipleship, which emphasize a selfless and unconditional commitment to God and all creation.
+          </p>
+                        <div class="content-heading">Contrast to the 12</div>
         <p style="margin-left: 25px;">The 12 disciples were chosen to be Jesus' closest followers and to carry on his mission after his death. 
             However, their relationship with Jesus was often marked by misunderstanding, fear, and even betrayal. 
-            In contrast, Mary Magdalene's relationship with Jesus was characterized by unwavering devotion and a deep understanding of his teachings. 
-            While the 12 struggled to grasp the full significance of Jesus' message, Mary seems to have had a profound spiritual insight that allowed her to remain faithful even in the face of great adversity.</p>
-        <p>
-            
-            <p style="margin-left: 25px;">The narrative surrounding the 12 disciples often focuses on their failures and shortcomings, while Mary's story highlights her steadfastness and faithfulness.
-                This contrast serves to underscore the unique role that Mary played in Jesus' ministry and the early
-            </p>          
+            In contrast, Mary Magdalene's relationship with Jesus was characterized by unwavering devotion and a deep understanding of his teachings.
         </p>
-               <p><strong>The Gratitude Myth</strong></p>
-        <p style="margin-left: 25px;">Some have suggested that Mary’s devotion to Jesus was a result of gratitude for her healing, as mentioned in Luke 8:2. 
-            However, this interpretation reduces her relationship with Jesus to a transactional one, where her love is contingent on what he did for her. This would be
-            would be rejected by Jesus' teachings on love and discipleship, which emphasize a selfless and unconditional commitment to God and others.
-            It overlooks the possibility that Mary’s devotion was rooted in a deeper spiritual connection and a genuine understanding of Jesus' mission. 
-            Her love for Jesus likely went far beyond gratitude and was based on a profound recognition of his significance and a commitment to his teachings.</p>
+        <p style="margin-left: 25px;">While the 12 struggled to grasp the full significance of Jesus' message, Mary seems to have had a profound spiritual insight that allowed her to remain faithful even in the face of great adversity.</p>
+        <p style="margin-left: 25px;">The 12 were the "thorn bearers" of Jesus' ministry, while Mary was the "heart bearer."  The thorn teaches in the moment and hopes to move you past it, the heart exists beyond the moment and provides a glimpse into eternity.</p>
 
-                         <p><strong>Short Reflection on "The Gospel of Mary"</strong></p>
-        <p style="margin-left: 25px;">In the apocryphal "Gospel of Mary," Mary Magdalene is portrayed as a favored disciple who receives special teachings from Jesus.
-            While this text is not considered canonical and its historical accuracy is debated, it does reflect the early Christian community's recognition of Mary's unique role and her deep spiritual insight.
-            <p style="margin-left: 25px;">In the Gospel of Mary, Levi (matthew) defends Mary against the other disciples who question her authority, highlighting the tension between Mary's spiritual insight and the traditional patriarchal structure of the early church.
-            In this writing, Levi says to the other disciples, "If the Savior made her worthy, who are you indeed to reject her? Surely the Savior knows her very well. That is why he loved her more than us." 
-            </p>
-            <p>
-                <p style="margin-left: 25px;">We will analyze this text more deeply in in a later Episode, but for now, it serves as a reminder that Mary's relationship with Jesus was complex and multifaceted.
-            </p>
-        </p>
+
+        <div class="content-heading">Short Reflection on "The Gospel of Mary"</div>
+        <p style="margin-left: 25px;">In the apocryphal "Gospel of Mary," Mary Magdalene is portrayed as a favored disciple who receives special teachings from Jesus. While this text is not considered canonical and its historical accuracy is debated, it does reflect the early Christian community's recognition of Mary's unique role and her deep spiritual insight.</p>
+        <p style="margin-left: 25px;">In the Gospel of Mary, Levi (Matthew) defends Mary against the other disciples who question her authority, highlighting the tension between Mary's spiritual insight and the traditional patriarchal structure of the early church. In this writing, Levi says to the other disciples, "If the Savior made her worthy, who are you indeed to reject her? Surely the Savior knows her very well. That is why he loved her more than us."</p>
+        <p style="margin-left: 25px;">One must pause and reflect on this statement for a moment.  Agape doesn't set standards for love, it simply IS LOVE.  Proof, yet again, even in the context of this dialog in the Gospel of Mary, that Mary had a deeper understanding of Jesus than the 12 disciples could grasp.</p>
   <section class="reflection-card">
 
     <div class="reflection-label">If this is all true</div>
     <div>
-       If Mary was "holding the space" for the ministry, her silence in the Synoptic Gospels isn't an omission by the authors—it’s an accurate reflection of a person whose work was entirely internal and metaphysical.
-    </div>
+       If Mary was "holding the space" for the ministry, her silence in the Synoptic Gospels isn't an omission by the authors—it’s an accurate reflection of a person whose work was entirely internal- a "holding of consciousness" that was essential to the ministry's success but invisible to the outside world, and even among the disciples themselves.
+      </div>
   </section>
 
 <section class="reflection-grid-card">
-  
-  <div role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:22px auto;">
+  <div role="presentation" style="margin:22px auto; text-align:center;">
   
       <div style="
         padding:10px 22px;
@@ -780,10 +220,9 @@
         box-shadow:0 4px 12px rgba(246,180,91,0.45);
         display:inline-block;
       ">
-        The Initiated Mary, Embodiment of Sophia (Wisdom)
+        The Disciple Mary (Human) vs. The Initiated Mary (Spirit)
       </div>
-      </div>
-
+</div>
   <div class="reflection-grid">
 
     <!-- Column 1 -->
@@ -797,78 +236,73 @@
 
     <!-- Column 2 -->
     <div>
-      <div class="grid-header">Disciple View (Canonical)</div>
-      <div class="grid-row"><span class="glyph">☉</span>Seven literal spirits of illness or sin- prostitute</div>
+      <div class="grid-header">Disciple</div>
+      <div class="grid-row"><span class="glyph">☉</span>Seven literal spirits of illness or sin</div>
       <div class="grid-row"><span class="glyph">☉</span>Jesus as master and his grateful servant</div>
-      <div class="grid-row"><span class="glyph">☉</span>Providing means "out of her resources"</div>
-      <div class="grid-row"><span class="glyph">☉</span>She is a background figure until the end</div>
+      <div class="grid-row"><span class="glyph">☉</span>Providing means "of her resources"</div>
+      <div class="grid-row"><span class="glyph">☉</span>a background figure</div>
     </div>
 
     <!-- Column 3 -->
     <div>
-      <div class="grid-header">Holding Consciousness View</div>
-      <div class="grid-row"><span class="glyph">✹</span>Seven layers of deep spiritual healing</div>
-      <div class="grid-row"><span class="glyph">✹</span>Alighnment, synergy, or a spiritual mirror</div>
+      <div class="grid-header">Initiated </div>
+              <div class="grid-row"><span class="glyph">✹</span>Seven layers of deep spiritual healing</div>
+      <div class="grid-row"><span class="glyph">✹</span>Alignment, love, a spiritual mirror</div>
       <div class="grid-row"><span class="glyph">✹</span>"Vessel" for the ministry’s deeper truths</div>
-      <div class="grid-row"><span class="glyph">✹</span>She is the "silent partner" holding the internal space for the ministry</div>
+      <div class="grid-row"><span class="glyph">✹</span>holds the internal space for the ministry</div>
     </div>
 
   </div>
 </section>
 
 <p> </p>
-<div class="content-heading">Her Heart, her Soul algined, Mary is ready...</div>
+<div class="content-heading">
+  <p>
+    Up to this point, Mary Magdalene has remained at the edges of the story.
+
+<br><br>Not absent.
+Not central.
+
+<br><br>Simply there.
+</p>
+ <p>
+But there comes a moment when the kind of discipleship she embodies can no longer remain in the background.
+
+Because the story itself is about to change.
+</p>
+<p>
+The crowds will thin.
+The voices will grow quiet.
+
+And the road that once drew followers will begin to drive them away.
+
+What remains then is not enthusiasm, or curiosity, or even understanding.
+</p>
+<p>
+What remains is presence.
+<br><br>
+And this is where Mary Magdalene steps fully into view.
+  </p>
+</div>
 
     </article>
-
+<!-- TODO: lots of content to add here. Images, scripture, reflection, etc. Also need to add the "mini-card" content here. -->
     <aside class="content-card">
-      <div class="content-label">Images</div>
-      <h2 class="content-heading"></h2>
+      <div class="content-label">Resources</div>
 
-    <div class="hero-image-block">
-       <img src="https://duge79ki51wc4.cloudfront.net/images/asset_252501166e8f9a90.png">
-       <div class="hero-image-overlay"></div>
-       <div class="hero-image-text">
-         <div class="hero-image-title">Magdala</div>
-         <div class="hero-image-subtitle">Where the story begins</div>
-        </div>
-      </div>
-     <div class="hero-image-block">
-        <img src="https://duge79ki51wc4.cloudfront.net/images/asset_983c061110a7df4f.jpg">
-        <div class="hero-image-overlay"></div>
-        <div class="hero-image-text">
-           <div class="hero-image-title">The Magdala Stone</div>
-           <div class="hero-image-subtitle"></div>
-      </div>
-    </div>
-                  <div class="hero-image-block">
-  <img src="https://duge79ki51wc4.cloudfront.net/images/asset_3e04aeb002e632e3.jpeg">
-  <div class="hero-image-overlay"></div>
-  <div class="hero-image-text">
-    <div class="hero-image-title">Magdala Market</div>
-    <div class="hero-image-subtitle">Dramatic Reconstruction</div>
-  </div>
-</div>
-<div class="content-heading">Before we venture into next week.. Hold This image close</div>
-                  <div class="hero-image-block">
-  <img src="https://duge79ki51wc4.cloudfront.net/images/asset_e31818beff5f0626.jpeg"">
-  <div class="hero-image-overlay"></div>
-  <div class="hero-image-text">
-    <div class="hero-image-title"></div>
-    <div class="hero-image-subtitle">Reflection</div>
-  </div>
-</div>
-<div class="content-heading">
-Outside, Magdala moved as it always did...
-<p><p style="margin-left: 25px;">Trade</p>
-<p><p style="margin-left: 25px;">Voices</p>
-<p><p style="margin-left: 25px;">Exchange</p>
-<p><p style="margin-left: 25px;">Expectation</p>
-<p>But inside, a woman sat before still water&mdash;</p>
-<p>His words still echoing within her,</p>
-<p>"Mary, is that what you want to keep?"</p>
-<p>and she began, quietly, to return...</p>
-</div>
+      <div class="content-body">
+        <p>
+          <a href="https://www.britannica.com/biography/Mary-Magdalene">Britannica: Mary Magdalene</a>
+        </p>
+        <p>
+          <a href="https://www.britannica.com/biography/Jesus-of-Nazareth">Britannica: Jesus of Nazareth</a>
+        </p>
+        <p>
+          <a href="https://www.britannica.com/topic/agape">Britannica: Agape Love</a>
+        </p>
+        <p>
+          <a href="https://en.wikipedia.org/wiki/Gospel_of_Mary">Wikipedia: Gospel of Mary</a>
+        </p>
     </aside>
 
   </section>
@@ -878,7 +312,8 @@ Outside, Magdala moved as it always did...
     <div class="reflection-label">A quiet question to carry</div>
     <div>
        Have you ever known someone whose love and devotion were so profound that they seemed to hold a sacred space for something greater than themselves without the need for recognition or reward?
-       <p>What other canonical character from the bible reflects a similar "agape" love of Jesus, with a slighty different flavor?
+       <p>What other canonical character from the bible reflects a similar love of Jesus, with a slighty different flavor?
+       </p>
     </div>
   </section>
 
