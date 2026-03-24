@@ -164,9 +164,11 @@
   }
 
   .content-body {
-    font-size: 15px;
+    
+    font-size: 18px;
     line-height: 1.7;
     color: var(--text-soft);
+    font-family: "Cinzel", serif;
   }
 
   .content-body p + p {
@@ -651,4 +653,421 @@
   font-style: italic;
   font-size: 22px;
   margin-top: 1.5rem;
+}
+.bible-search {
+  background: #111;
+  border: 1px solid #333;
+  padding: 1.5rem;
+  border-radius: 6px;
+  color: #ddd;
+  font-family: "Georgia", "Times New Roman", serif;
+  max-width: 100%;
+}
+
+.bible-search label {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  color: #bbb;
+}
+
+.bs-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.bs-field {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bs-field.narrow {
+  flex: 0 0 140px;
+}
+
+.bible-search input,
+.bible-search select {
+  margin-top: 4px;
+  padding: 0.5rem;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #eee;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.bs-hint {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.bs-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.bible-search button {
+  background: #444;
+  color: #eee;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.bible-search button:hover {
+  background: #555;
+}
+
+.bs-status {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.bs-divider {
+  margin: 1.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.bs-results {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+.bs-result {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  color: #ddd;
+  font-family: "Georgia", "Times New Roman", serif;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Future: cluster emphasis */
+.bs-result[data-hascluster="true"] {
+  box-shadow: 0 0 12px rgba(180, 140, 60, 0.25);
+  border-color: #4a3a1a;
+}
+
+.bs-result:hover {
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
+}
+
+.bs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.bs-primary-ref {
+  font-size: 1.1rem;
+  color: #eee;
+  letter-spacing: 0.5px;
+}
+
+.bs-meta span {
+  color: #ccc;
+}
+
+.bs-notes {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+.bs-tags {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bs-tags span {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.bs-divider {
+  margin: 1.2rem 0;
+  border-bottom: 1px solid #222;
+}
+
+
+.bs-verse:hover {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+.bs-verse {
+  padding: 0.8rem 1rem;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+    cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.bs-verse:last-child {
+  margin-bottom: 0;
+}
+
+.bs-verses {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+
+.bs-ref {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.2rem;
+}
+
+.bs-text {
+  font-size: 1rem;
+  color: #ddd;
+  line-height: 1.6;
+}
+.bs-verse-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.bs-copy-btn,
+.bs-open-btn {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 2px 5px;
+  font-size: 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.bs-copy-btn:hover,
+.bs-open-btn:hover {
+  background: #222;
+  border-color: #444;
+}
+.bs-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #222;
+}
+
+.bs-hero-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #eee;
+  letter-spacing: 0.5px;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+.bs-hero-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 4px;
+  opacity: 0.9;
+}
+
+.bs-top-pick {
+  font-size: 0.85rem;
+  color: #d2b47c;
+  opacity: 0.9;
+  font-style: italic;
+}
+ /* Prevent horizontal resizing */
+#wv2-prayer-box textarea {
+  resize: vertical; /* only up/down */
+  max-height: 300px;
+  max-width: 100%;  /* never overflow the prayer box */
+  box-sizing: border-box; /* padding stays inside the width */
+}
+
+/* Optional: reduce oversized padding */
+#wv2PrayerPromptEmail,
+#wv2PrayerPrompt,
+#wv2PrayerText {
+  padding: 12px 14px !important; /* softer, more proportional */
+}
+
+  /* --- Flex Layout Wrapper --- */
+.prayer-flex-wrapper {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+/* Left + Right Columns */
+.prayer-flex-left,
+.prayer-flex-right {
+  flex: 1;
+  min-width: 0; /* prevents overflow */
+}
+
+/* Make sure cards don’t stretch too tall */
+.prayer-instruction,
+#wv2-prayer-box {
+  height: 100%;
+}
+
+/* --- Responsive (mobile/tablet) --- */
+@media (max-width: 900px) {
+  .prayer-flex-wrapper {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+/* --- Prayer Instruction Card --- */
+.prayer-instruction {
+  background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
+  border-radius: 20px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(180, 150, 255, 0.15);
+  border: 1px solid rgba(200, 170, 255, 0.25);
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+
+.prayer-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #5a3d8c;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.prayer-text {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #5b4f6d;
+  margin-bottom: 20px;
+}
+
+.prayer-image-wrapper {
+  margin-top: 16px;
+}
+
+.prayer-image {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(150, 120, 220, 0.25);
+  opacity: 0.95;
+}
+
+/* --- Prayer Box --- */
+#wv2-prayer-box {
+  background: #ffffff;
+  border: 1px solid rgba(210, 190, 255, 0.4);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(180, 150, 255, 0.15);
+  max-width: 680px;
+  margin: 24px auto;
+}
+
+#wv2-prayer-box h3 {
+  margin: 0 0 16px;
+  font-size: 22px;
+  color: #5a3d8c;
+  font-weight: 700;
+}
+
+/* Labels */
+#wv2-prayer-box label {
+  font-weight: 600;
+  color: #5b4f6d;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs + Textareas */
+#wv2-prayer-box input,
+#wv2-prayer-box textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(180, 150, 255, 0.4);
+  background: #faf7ff;
+  font-size: 15px;
+  color: #4a3d60;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#wv2-prayer-box input:focus,
+#wv2-prayer-box textarea:focus {
+  border-color: #b08cff;
+  box-shadow: 0 0 0 3px rgba(176, 140, 255, 0.25);
+  outline: none;
+}
+
+/* Buttons */
+#wv2-prayer-box button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+/* Primary button */
+#wv2GeneratePrayerBtn {
+  background: #896ABD;
+  color: white;
+  box-shadow: 0 4px 12px rgba(176, 140, 255, 0.3);
+}
+
+#wv2GeneratePrayerBtn:hover {
+  background: #a47aff;
+}
+
+/* Secondary button */
+#wv2RequestPrayerBtn {
+  background: #896ABD;
+  color: white;
+  border: 1px solid rgba(176, 140, 255, 0.4);
+}
+
+#wv2RequestPrayerBtn:hover {
+  background: #e8ddff;
+}
+
+/* Status text */
+#wv2PrayerStatus {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #5b4f6d;
 }
