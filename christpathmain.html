@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Witness V2?</title>
+    <!-- Add your CSS link here -->
+    <link rel="stylesheet" href="styles/cp.css">
+</head>
+<body>
+     <style>
+
+</style>
+<div class="episode-page">
+
+  <!-- Header -->
+  <header class="episode-header">
+  <div id="dynamic-hero" class="hero-image-block">
+  <img src="https://duge79ki51wc4.cloudfront.net/images/asset_19d32552cadd4132.png" alt="Mary Magdalene Hero Image">
+  <div class="hero-image-overlay"></div>
+  
+  <div class="hero-image-text">
+    <div class="scripture-card">
+    
+  <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    <div id="scripture-ref" class="scripture-ref">Romans 12:5</div>
+    <div id="scripture-text" class="scripture-text">In Christ we, though many, form one body</div>
+  </div>
+</div>
+    <div class="series-label">
+      <span class="series-dot"></span>
+      <span id="today-date"></span>
+    </div>    
+    <div class="meta-row">  
+      <span id="theme-pill" class="meta-pill"></span>
+      <span id="movement-pill" class="meta-pill"></span>          
+    </div>
+    </div>
+    </div>
+  </header>
+
+
+
+  <!-- Main content -->
+  <section class="content-grid">
+
+    <!-- Left: Core narrative -->
+    <article class="content-card">
+<a href="#bible-search" class="btn btn-outline">Check out Witness V2 Bible! It's the best bible search anywhere. </a>
+<p> </p>
+      <div class="content-heading">Reflect on these words </div>
+
+      <div class="content-body">
+     <em> <p>
+May the God who sees generations at once  guide your heart today.
+      </p>
+<p>May he lift the weight of fear that says, "everything depends on you"...
+     </p>
+        <p>
+           ...and replace it with the trust that faithfulness is never wasted. 
+        </p>
+<p>
+As you plant seeds through words, presence , patience, and prayer,
+</p>
+<p>
+May you remember that growtth belongs to God.
+</p>
+        <p>
+May you be released from anxiety over outcomes.
+</p>
+        <p>
+May you be rooted instead in obedience, consistency, and love.
+</p>
+                <p>
+Where you have tried to control,
+may you learn to entrust.
+</p>
+                        <p>
+Where you have grown weary,
+may hope rise again.
+</p>
+                                <p>
+So go in peace.
+
+</p>
+                                        <p>
+What is done in faith is never forgotten...
+
+</p>
+                                        <p>
+And what is is planted in love, will never be lost.
+
+</p>      
+                                               <p>
+Watch:
+
+</p>
+  </em>
+      </div>
+
+      <p></p>
+        <aside class="content-card">
+            <div class="custom-item">
+      <video id="sidebar-player" controls width="100%" playsinline>
+        <source src="https://duge79ki51wc4.cloudfront.net/video/asset_ee1a402f2794ac1f.mp4" type="video/mp4">        
+        Your browser does not support the video tag.
+      </video>     
+    </div>
+        </aside>
+<aside class="content-card">
+  
+<div id="bible-search" class="bible-search">
+
+  <div class="bs-hero">
+    <div class="bs-hero-title"><p style="font-size: 35px;">WitnessV2 Bible</p>
+      <p style="font-size: 15px;color: var(--accent)">Powered by Posture</p></div>
+    
+    <img class="bs-hero-image"
+         src="https://duge79ki51wc4.cloudfront.net/images/asset_19c4d908c3ced1ad.png"
+         alt="WitnessV2 Logo" />
+    
+  </div>
+
+  <div class="bs-fields">
+    
+    <div class="bs-field">        
+      <label for="searchQuery">Theme / Prompt</label>
+      <input id="searchQuery" placeholder="e.g., kingdom | fear not | adoption" />
+      <div class="bs-hint">Assisted local FTS query over the full WitnessV2 WEB canon.</div>
+    </div>
+
+    <div class="bs-field narrow">
+      <label for="searchLimit">Limit</label>
+      <select id="searchLimit">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+      </select>
+      <div class="bs-hint">results/page</div>
+    </div>
+  </div>
+
+  <div class="bs-actions">
+    <button id="btnSearch" type="button">Search</button>
+    <div class="bs-status" id="searchStatus"></div>
+  </div>
+  <div class="bs-divider"></div> 
+</div>
+</aside>
+
+
+
+    </article>
+
+<aside class="content-card">
+<div class="content-heading">New Covenant Writings</div>
+
+  <div id="custom-summary-output" class="content-body"> </div>
+  <p style="font-size: 15px;color: var(--accent)">Your Top Pick!</p>
+    </aside>
+
+  </section>
+
+  <!-- Reflection -->
+  <section class="reflection-card">
+    <div class="reflection-label">A quiet question to carry</div>
+    <div id="daily-question" class="question-offer">
+      When you think of Mary Magdalene, which image rises first—and where did that image come from?
+    </div>
+  </section>
+
+</div>
+<script>
+ 
+
+// Put this at the bottom of <body> or in a <script> tag after the element
+  document.getElementById("today-date").textContent = new Date().toLocaleDateString("en-US", {
+    weekday: "long",    // optional: "Sunday"
+    month: "long",      // "March"
+    day: "numeric",     // "15"
+    year: "numeric"     // "2026"
+  });
+const heroImg = document.querySelector('#dynamic-hero img');
+const hour = new Date().getHours();
+const collectionUrl = 'https://www.christpath.net/fear-not?format=json&limit=100';
+const collectionUrl2 = 'https://www.christpath.net/mary-magdalene?format=json';
+const videoCollectionUrl = 'https://www.christpath.net/videos?format=json'; 
+async function getVerse(ref) {
+  const res = await fetch(`https://bible-api.com/${encodeURIComponent(ref)}`);
+  const data = await res.json();
+
+  //https://duge79ki51wc4.cloudfront.net/images/asset_e008a03503dcec70.png
+  return data.text;
+}
+
+
+function updateHeroImage() {
+  // 1. Start the fade out
+  heroImg.classList.add('fade-out');
+
+  // 2. Wait 500ms (matching the CSS transition time)
+  setTimeout(() => {
+    if (hour >= 5 && hour < 9) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_19d32552cadd4132.png' 
+      heroImg.alt= 'Mary Magdalene Hero Image';
+    } else if (hour >= 9 && hour < 12) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_68affd9b494b6fb2.png';
+      heroImg.alt = 'Every climb up moves you closer to the source';
+    } else if (hour >= 12 && hour < 16) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_7d2f31f188bd25b2.png';
+      heroImg.alt = 'The ministry begins';
+    } else if (hour >= 12 && hour < 16) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png';
+      heroImg.alt = 'Sunrise with God';
+    } else if (hour >= 16 && hour < 20) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png';
+      heroImg.alt = 'Sunset with Dad';    
+    } else if (hour >= 20 && hour < 11) {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_a2dc66dffdb8e632.jpeg';
+      heroImg.alt = 'The top';  
+    } else {
+      heroImg.src = 'https://duge79ki51wc4.cloudfront.net/images/asset_c6e2dcc4c6c0f446.jpeg';
+      heroImg.alt = 'christpath.net';
+    }
+
+    // 3. Fade it back in once the source has changed
+    heroImg.classList.remove('fade-out');
+  }, 500);
+}
+
+function updateHeroSideBar() {
+  Promise.all([
+    fetch(collectionUrl).then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    }),
+    fetch(collectionUrl2).then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
+  ])
+  .then(([data1, data2]) => {
+    const container = document.getElementById('custom-summary-output');
+    if (!container) return; // Safety check
+
+    // From collectionUrl: latest + 2 random
+const allItems = data1.items;
+
+// 1. The Hero: Always the first item
+const latestItem = allItems[0];
+
+// 2. The Rest: Everything except the first item
+const pool = allItems.slice(1);
+
+// 3. Featured Pool: Only items that are starred
+const featuredPool = pool.filter(item => item.starred);
+
+// 4. Regular Pool: Only items that are NOT starred
+const regularPool = pool.filter(item => !item.starred);
+
+// Shuffle both pools
+const featuredShuffled = featuredPool.sort(() => 0.5 - Math.random());
+const regularShuffled = regularPool.sort(() => 0.5 - Math.random());
+
+// 5. Final Selection: [Latest, 1 Featured, 1 Random Non-Featured]
+const finalSelection = [
+  latestItem, 
+  ...featuredShuffled.slice(0, 1), 
+  ...regularShuffled.slice(0, 1)
+];
+    // From collectionUrl2: latest item only
+    //const latestFromUrl2 = data2.items && data2.items[0] ? data2.items[0] : null;
+    const latestFromUrl2 = data2.items || [];;
+
+    // Combine: 3 from first + 1 from second at bottom
+    const allResults = [...finalSelection,...latestFromUrl2];
+    /*if (latestFromUrl2) {
+      allResults.push(latestFromUrl2);      
+    }*/
+
+    let htmlContent = '';
+let titleFeatured='';
+    allResults.forEach((item, index) => {
+      if (item) {
+        if(item.starred){
+          titleFeatured='(featured)'
+        }
+        else{
+          titleFeatured='';
+        }
+        
+        htmlContent += `
+          <div class="custom-item" >
+            <img src="${item.assetUrl}?format=500w" alt="${item.title}">
+            <p><strong>${item.title}</strong> ${titleFeatured}</p>
+            <p>${item.excerpt || ''}</p>
+            <a href="${item.fullUrl}">Read More</a>
+          </div>
+        `;
+      }
+    });
+
+    container.innerHTML = htmlContent;
+  })
+  .catch(err => console.error('Error fetching Squarespace data:', err));
+}
+  
+// 1. Point this to your public S3 URL
+const manifestUrl = 'https://duge79ki51wc4.cloudfront.net/video/library_manifest.json';
+async function loadSidebarVideo() {
+
+  const sidebar = document.getElementById('video-sidebar');
+  
+  const fallbackUrl = "https://duge79ki51wc4.cloudfront.net/video/asset_ee1a402f2794ac1f.mp4";
+  
+  let videoToPlay = fallbackUrl; // Default to fallback
+  let videoTitle = "Featured Video";
+
+  try {
+    const response = await fetch('https://duge79ki51wc4.cloudfront.net/video/library_manifest.json');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.length > 0) {
+        // Pick the first video (or add your 'mood' logic here)
+        videoToPlay = "https://duge79ki51wc4.cloudfront.net/video/asset_ae355f57972c9f31.mp4";
+        videoTitle = "Seeds";
+      }
+    }
+  } catch (e) {
+    console.warn("Manifest failed, using fallback video.", e);
+  }
+
+  // Injecting the HTML
+  sidebar.innerHTML = `
+    <div class="custom-item">
+      <video id="sidebar-player" controls width="100%" playsinline>
+        <source src="${videoToPlay}" type="video/mp4">
+        <p><strong>${videoTitle}</strong></p>
+        Your browser does not support the video tag.
+      </video>     
+    </div>
+  `;
+
+  // FORCE THE LOAD: This is the secret sauce
+  const player = document.getElementById('sidebar-player');
+  player.load();
+}
+
+function loadPageData() {
+let dayThemes = {
+  "Monday": {
+    "title": "The Intention",
+    "primary_metric": "stability",
+    "pastoral_mode": "orientation",
+    "question": "How well did I stay connected to my chosen intention today, and in what moments did I feel most grounded and stable?"
+  },
+  "Tuesday": {
+    "title": "The Practice",
+    "primary_metric": "clarity",
+    "pastoral_mode": "focus",
+    "question": "What practice or disciplined action did I engage in today, and how clearly did it help me see what truly matters right now?"
+  },
+  "Wednesday": {
+    "title": "The Midpoint",
+    "primary_metric": "resilience",
+    "pastoral_mode": "renewal",
+    "question": "Where did I encounter resistance or fatigue this week so far, and how did I manage to renew my energy or bounce back in a resilient way?"
+  },
+  "Thursday": {
+    "title": "The Deepening",
+    "primary_metric": "presence",
+    "pastoral_mode": "attention",
+    "question": "In what moments today was I most fully present, and what did I notice when I gave my undivided, gentle attention to my experience?"
+  },
+  "Friday": {
+    "title": "The Offering",
+    "primary_metric": "gratitude",
+    "pastoral_mode": "release",
+    "question": "What did I give or offer today (of my time, care, work, or heart), and for what specific experiences or people am I feeling genuine gratitude as I release this week?"
+  },
+  "Saturday": {
+    "title": "The Rest",
+    "primary_metric": "restoration",
+    "pastoral_mode": "gentleness",
+    "question": "How kindly did I treat myself in terms of rest and restoration today, and what felt most replenishing or soothing to my body and spirit?"
+  },
+  "Sunday": {
+    "title": "The Return",
+    "primary_metric": "alignment",
+    "pastoral_mode": "reorientation",
+    "question": "Looking back over the week, where do I feel most aligned with my deeper values or purpose, and what small reorientation might help me step into the coming week more centered?"
+  }
+}
+
+// Map numeric day → name
+const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const todayName = dayNames[new Date().getDay()];
+
+// Get today's theme object
+const todayTheme = dayThemes[todayName];
+
+// Inject into your meta pills
+document.getElementById("theme-pill").textContent = `Theme: ${todayTheme.title}`;
+document.getElementById("movement-pill").textContent = `Movement: ${todayTheme.pastoral_mode}`;
+document.getElementById("daily-question").textContent = `${todayTheme.question}`;
+           
+}
+  async function loadScripture() {
+    const res = await fetch("https://bible-api.com/John%2016:23");
+    const data = await res.json();
+
+    document.getElementById("scripture-label").textContent = data.reference;
+    document.getElementById("scripture-ref").textContent = data.reference;
+    document.getElementById("scripture-text").textContent = data.text;
+
+    // fade-in
+    document.getElementById("scripture-container").classList.add("loaded");
+  }
+
+
+
+function initializeBibleSearch() {
+  const mount = document.querySelector(".bible-search");
+  if (!mount) return;
+
+  const btn = mount.querySelector("#btnSearch");
+  if (btn) {
+    btn.addEventListener("click", () => runSearch(mount));
+  }
+
+  const input = mount.querySelector("#searchQuery");
+  if (input) {
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") runSearch(mount);
+    });
+  }
+}
+
+async function runSearch(mount) {
+  const qEl = mount.querySelector("#searchQuery");
+  const limEl = mount.querySelector("#searchLimit");
+  const statusEl = mount.querySelector("#searchStatus");
+
+  const q = qEl ? qEl.value.trim() : "";
+  const lim = limEl ? limEl.value : "20";
+  if (!q) return;
+
+  if (statusEl) statusEl.textContent = "Searching…";
+
+  const url =
+    "https://www.witnessv2.net/api/bible/search?q=" +
+    encodeURIComponent(q) +
+    "&translation=WEB&limit=" +
+    encodeURIComponent(lim);
+
+  const data = await fetchJson(url);
+  renderResults(mount, data);
+
+  if (statusEl) statusEl.textContent = "";
+}
+
+// keep your existing fetchJson, renderResults, buildResultCard, verseBlock, copyVerse...
+
+function renderResults(mount, data) {
+  const container = mount; // mount IS .bible-search
+  if (!container) return;
+
+  // remove old result card
+  const oldCard = container.querySelector(".bs-result");
+  if (oldCard) oldCard.remove();
+
+  if (!data || !data.results || data.results.length === 0) {
+    const existingEmpty = container.querySelector(".bs-empty");
+    if (!existingEmpty) {
+      const empty = document.createElement("div");
+      empty.className = "bs-empty";
+      empty.textContent = "No results found.";
+      const divider = container.querySelector(".bs-divider");
+      if (divider) divider.insertAdjacentElement("afterend", empty);
+      else container.appendChild(empty);
+    }
+    return;
+  }
+
+  const card = buildResultCard(data);
+  const divider = container.querySelector(".bs-divider");
+  if (divider) divider.insertAdjacentElement("afterend", card);
+  else container.appendChild(card);
+}
+
+
+
+function buildResultCard(data) {
+  const card = document.createElement("div");
+  card.className = "bs-result";
+
+  card.dataset.hascluster = data.hascluster;
+  card.dataset.strength = data.context_pull_strength;
+
+  const topPickHTML = `
+  <div class="bs-top-pick">Your Top Pick!</div>
+`;
+
+const postureHTML = data.posture_bin
+  ? `<div class="bs-posture">Posture: <span>${data.posture_bin}</span></div>`
+  : "";
+
+const toneHTML = data.daily_tone
+  ? `<div class="bs-tone">Tone: <span>${data.daily_tone}</span></div>`
+  : "";
+
+card.innerHTML = `
+  <div class="bs-meta">
+    ${topPickHTML}
+    <div class="bs-primary-ref">${data.primary_verse}</div>
+    ${postureHTML}
+    ${toneHTML}
+  </div>
+
+  <div class="bs-notes">${data.notes || ""}</div>
+
+  <div class="bs-tags">
+    ${(data.tags || []).map(t => `<span>${t}</span>`).join("")}
+  </div>
+
+  <div class="bs-divider"></div>
+
+  <div class="bs-verses">
+    ${(data.results || []).map(v => verseBlock(v)).join("")}
+  </div>
+`;
+
+  // attach verse click + copy handlers
+  card.querySelectorAll(".bs-verse").forEach(verseEl => {
+    const ref = verseEl.dataset.ref;
+    const text = verseEl.dataset.text;
+
+    // whole verse click -> open
+    verseEl.addEventListener("click", () => {
+      if (!ref) return;
+      const encoded = encodeURIComponent(ref);
+      window.location.href =
+        "https://www.christpath.net/mybible?ref=" + encoded;
+    });
+
+    // copy button
+    const copyBtn = verseEl.querySelector(".bs-copy-btn");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        copyVerse(copyBtn, ref, text);
+      });
+    }
+
+    // open button
+    const openBtn = verseEl.querySelector(".bs-open-btn");
+    if (openBtn) {
+      openBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        if (!ref) return;
+        const encoded = encodeURIComponent(ref);
+        window.location.href =
+          "https://www.christpath.net/mybible?ref=" + encoded;
+      });
+    }
+  });
+
+  return card;
+}
+
+function verseBlock(v) {
+  const safeText = (v.text || "").replace(/`/g, "\\`").replace(/\\/g, "\\\\");
+  const safeRef = (v.ref || "").replace(/"/g, "&quot;");
+
+  return `
+    <div class="bs-verse" data-ref="${safeRef}" data-text="${safeText}">
+      <div class="bs-ref">${v.ref}</div>
+      <div class="bs-text">${v.text}</div>
+      <div class="bs-verse-actions">
+        <button type="button" class="bs-copy-btn">copy</button>
+        
+      </div>
+    </div>
+  `;
+}
+
+function copyVerse(btn, ref, text) {
+  if (!ref || !text) return;
+  const full = `${ref} — ${text}`;
+  navigator.clipboard.writeText(full).catch(() => {});
+
+  const original = btn.textContent;
+  btn.textContent = "copied";
+  setTimeout(() => {
+    btn.textContent = original;
+  }, 800);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  initializeBibleSearch();
+});
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Request failed");
+  return res.json();
+}
+  //loadScripture();
+//loadSidebarVideo();
+updateHeroImage();
+updateHeroSideBar();
+loadPageData();
+</script>
+  
+</div>
+</div></div></div></div></div>
+    </div>
+  
+  </div>
+  
+</section>
+
+  
+</article>
+
+          

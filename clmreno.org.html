@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Witness V2?</title>
+    <!-- Add your CSS link here -->
+    <link rel="stylesheet" href="styles/clm.css">
+</head>
+<body>
+<div class="episode-page">
+  <header class="episode-header">
+    <div class="series-label date-reflection">
+      <span class="series-dot"></span>
+      <span class="today-date"></span>
+    </div>
+
+
+    <h1 class="episode-title">Your Prayer Ministry is Active and Listening</h1>
+    <p id="daily-question1" class="episode-subtitle">Insights on prayer from the Christ Love community</p>
+  </header>
+
+
+ <div class="reflection-card ">
+    
+  <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    
+    <div class="prayer-title">"Whatsoever ye shall ask the Father in my name, he will give it to you."</div>
+    <div id="scripture-ref" class="scripture-ref">John 16:23</div>
+  </div>
+
+</div>
+
+
+  <!-- Main content -->
+  <section class="content-grid">
+
+    <!-- Left: Core narrative -->
+    <article class="content-card">
+      
+<div class="content-heading"> The Message</div>
+
+     <div class="content-body">
+
+      <p>
+       We believe the heart of prayer is revealed with what Jesus says in John 16:23. 
+        
+          Prayer spoken this way is not wishful thinking—it is faith in motion. 
+        </p>
+        <p>
+        To pray in His name is to stand in partnership with the living God, trusting that no word shaped by Christ is ever wasted.
+        </p>
+        <p>
+
+        To the degree that we know, love, and trust Jesus, our prayers are formed in Him. And when they are, not a single word returns empty.
+</p>        
+        <p>
+        Because we are divine beings having a human experience, there is always the temptation to pray in our own name—to ask God to bless what we have already decided. 
+        By praying in His name we reshape our will to match the Father’s, fulfilling the promise that <strong>“it is the Father’s good pleasure to give you the Kingdom” (Luke 12:32).</strong>
+        </p>
+        <p>
+        God hears the substance beneath our words, not the polish of the words themselves. Prayer does not require formality or performance—only honesty. It rises naturally from an authentic heart. True prayer flows from unity rather than division, from trust rather than control.
+        </p>
+        <p>
+
+        Prayer does not merely build faith. 
+        Prayer is faith. And when we live from that unitive awareness—the living presence of Christ within us—a quiet prayer of gratitude, or a simple “Thy will be done,” may be all the prayer we ever need. 
+      </p>
+          <div class="prayer-button-wrapper">
+  <a href="/prayer" class="prayer-button">
+    Submit a Prayer Request
+  </a>
+</div>
+
+      <p class="emoji-divider">🙏✨</p>
+ <p></p>
+      <aside class="content-card">
+      <div id="video-sidebar" class="content-body">  
+           <div class="custom-item">
+      <video id="sidebar-player" controls width="100%" playsinline>
+        <source src="https://duge79ki51wc4.cloudfront.net/video/asset_514073465ab590fb.mp4" type="video/mp4">
+        
+        Sorry, your browser does not support the video tag. You can always go direct:
+        <a href="https://duge79ki51wc4.cloudfront.net/video/asset_514073465ab590fb.mp4">Soothing, Healing</a>
+        
+      </video>     
+             <p><strong>10 Minutes of Quiet, Soft Melody</strong></p>
+    </div>
+    </div>
+
+      </aside>
+    <div class="meta-row">
+      <span class="meta-pill"><font size="5">Theme: A Church without Walls</font></span>
+    </div>
+       <p></p>
+          <div class="prayer-request-scripture">
+    <p class="label">The Word</p>
+    <p id="scrip-verse" class="verse">“Lord, help us to remember that the church has no roof but the sky and no walls but the reach of Your arms. Send us out to be Your hands and feet where people are hurting.”</p>
+    <p id="scrip-ref" class="reference">Christ Love Ministries</p>
+  </div>
+     
+    </article>
+
+<aside class="content-card">
+<div class="content-heading">Prayer</div>
+    <p class="signature">Light · Love · Joy</p>
+  <div id="custom-summary-output" class="content-body"> </div>
+    </aside>
+
+  </section>
+
+  <!-- Reflection -->
+  <section class="reflection-card">
+    <div class="reflection-label">A quiet question to carry</div>
+    <div id="daily-question" class="question-offer">
+      When you think of Mary Magdalene, which image rises first—and where did that image come from?></div>
+  </section>
+
+</div>
+<script>
+
+// Put this at the bottom of <body> or in a <script> tag after the element
+  const formattedDate = new Date().toLocaleDateString("en-US", {
+    weekday: "long",    // optional: "Sunday"
+    month: "long",      // "March"
+    day: "numeric",     // "15"
+    year: "numeric"     // "2026"
+  });
+  document.querySelectorAll(".today-date").forEach(node => {
+    node.textContent = formattedDate;
+  });
+const heroImg = document.querySelector('#dynamic-hero img');
+const hour = new Date().getHours();
+const collectionUrl = 'https://www.clmreno.org/prayers?format=json';
+
+
+function updateHeroSideBar() {  
+ fetch(collectionUrl)
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
+  .then(data => {
+    const allItems = data.items;
+    const container = document.getElementById('custom-summary-output');
+    
+    if (!container) return; // Safety check
+
+    // 1. Grab the absolute latest item (the first one)
+    const latestItem = allItems[0];
+
+    // 2. Take the rest of the items and shuffle them
+    const otherItems = allItems.slice(1); 
+    const shuffled = otherItems.sort(() => 0.5 - Math.random());
+
+    // 3. Combine the latest + the first 2 from the shuffled deck
+    const finalSelection = [latestItem, ...shuffled.slice(0, 2)];
+
+    let htmlContent = '';
+
+    finalSelection.forEach((item, index) => {
+      if (item) {
+      
+        htmlContent += `
+          <div class="custom-item" >
+            <img src="${item.assetUrl}?format=500w" alt="${item.title}">
+            <p><strong>${item.title}</strong></p>
+            <p>${item.excerpt || ''}</p>
+            <a href="${item.fullUrl}">Read More</a>
+          </div>
+        `;
+      }
+    });
+
+    container.innerHTML = htmlContent;
+  }) // Removed the semicolon that was here!
+  .catch(err => {
+    console.error('Error fetching Squarespace data:', err);
+    const container = document.getElementById('custom-summary-output');
+    if (container) {
+      container.innerHTML = `
+        <div class="custom-item">
+          <p><strong>Latest writings are unavailable right now.</strong></p>
+          <p>This is often caused by browser CORS rules on cross-domain requests.</p>
+        </div>
+      `;
+    }
+  });
+  }
+
+
+function loadPageData() {
+let dayThemes = {
+  "Monday": {
+    "title": "The Intention",
+    "primary_metric": "stability",
+    "pastoral_mode": "orientation",
+    "verse": "Lord, help us to remember that the church has no roof but the sky and no walls but the reach of Your arms.  Send us out to be Your hands and feet where people are hurting.",
+    "ref": "Christ Love Ministries",
+    "question": "How well did I stay connected to my chosen intention today, and in what moments did I feel most grounded and stable?"
+  },
+  "Tuesday": {
+    "title": "The Practice",
+    "primary_metric": "clarity",
+    "pastoral_mode": "focus",
+    "verse": "The God who made the world and everything in it... does not live in temples built by human hands.",
+    "ref": "Acts 17:24",
+    "question": "What practice or disciplined action did I engage in today, and how clearly did it help me see what truly matters right now?"
+  },
+  "Wednesday": {
+    "title": "The Midpoint",
+    "primary_metric": "resilience",
+    "pastoral_mode": "renewal",
+    "verse": "Don’t you know that you yourselves are God’s temple and that God’s Spirit dwells in your midst?",
+    "ref": "1 Corinthians 3:16",
+    "question": "Where did I encounter resistance or fatigue this week so far, and how did I manage to renew my energy or bounce back in a resilient way?"
+  },
+  "Thursday": {
+    "title": "The Deepening",
+    "primary_metric": "presence",
+    "pastoral_mode": "attention",
+    "verse": "For where two or three gather in my name, there am I with them.",
+    "ref": "Matthew 18:20",
+    "question": "In what moments today was I most fully present, and what did I notice when I gave my undivided, gentle attention to my experience?"
+  },
+  "Friday": {
+    "title": "The Offering",
+    "primary_metric": "gratitude",
+    "pastoral_mode": "release",
+    "verse": "However, the Most High does not dwell in houses made by human hands...",
+    "ref": "Acts 7:48-49",
+    "question": "What did I give or offer today (of my time, care, work, or heart), and for what specific experiences or people am I feeling genuine gratitude as I release this week?"
+  },
+  "Saturday": {
+    "title": "The Rest",
+    "primary_metric": "restoration",
+    "pastoral_mode": "gentleness",
+    "verse": "God is our refuge and strength, a very present help in trouble.",
+    "ref": "Psalms 29:11",
+    "question": "How kindly did I treat myself in terms of rest and restoration today, and what felt most replenishing or soothing to my body and spirit?"
+  },
+  "Sunday": {
+    "title": "The Return",
+    "primary_metric": "alignment",
+    "pastoral_mode": "reorientation",
+    "verse": "He will cover you with his feathers. Under his wings you will take refuge.",
+    "ref": "Psalms 91:4",    
+    "question": "Looking back over the week, where do I feel most aligned with my deeper values or purpose, and what small reorientation might help me step into the coming week more centered?"
+  }
+}
+// Map numeric day → name
+const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const todayName = dayNames[new Date().getDay()];
+// Get today's theme object
+const todayTheme = dayThemes[todayName];
+
+// Inject into your meta pills
+document.getElementById("scrip-verse").textContent = `${todayTheme.verse}`;
+ document.getElementById("scrip-ref").textContent = `${todayTheme.ref}`;
+//document.getElementById("movement-pill").textContent = `Movement: ${todayTheme.pastoral_mode}`;
+document.getElementById("daily-question").textContent = `${todayTheme.question}`;
+  document.getElementById("daily-question1").textContent = `${todayTheme.question}`;
+           
+}
+
+  
+updateHeroSideBar();
+loadPageData();
+</script>

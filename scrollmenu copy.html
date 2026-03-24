@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Witness V2?</title>
+    <!-- Add your CSS link here -->
+    <link rel="stylesheet" href="styles/clm.css">
+</head>
+<body>
+<div class="hide-on-mobile">
+  <!-- your code block content -->
+
+
+<div id="top-of-page"></div>
+
+<nav class="floating-nav" aria-label="Primary">
+  <ul class="nav-links">
+    <li><a href="/prayers">Pray Now</a></li>
+    <li><a href="/prayer">Request Prayer</a></li>
+    <li><a href="/faithlived">Faith Lived</a></li>
+    <li><a href="/pagem">Our Ministers</a></li>    
+
+    <!-- Bulletproof dropdown (no JS needed) -->
+    <li class="nav-more">
+      <details class="nav-details">
+        <summary class="nav-summary">More <span aria-hidden="true">▾</span></summary>
+        <div class="nav-menu">          
+          <li><a href="/videos-and-presentations">Media</a></li>
+          <li><a href="/spiritual-partners">Partners</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/donate">Donate</a></li>
+          
+        </div>
+      </details>
+    </li>
+
+    <li class="nav-icon">
+      <button id="scrollToTopBtn" type="button" aria-label="Scroll to top">↑</button>
+    </li>
+  </ul>
+</nav>
+
+<div class="hero-top-shade" aria-hidden="true"></div>
+</div>
+<style>
+/* Shared visual tokens aligned with clm styling */
+:root {
+  --sq-header-h: 84px;
+  --cp-bg-soft: #f4efff;
+  --cp-card: #ffffff;
+  --cp-accent: #b88ce9;
+  --cp-text-main: #4a3a5a;
+  --cp-text-soft: #7a6a8a;
+  --cp-border-soft: rgba(120, 80, 160, 0.18);
+  --cp-shadow-soft: 0 14px 34px rgba(120, 80, 160, 0.18);
+  --cp-shadow-strong: 0 18px 42px rgba(120, 80, 160, 0.22);
+}
+@media screen and (max-width: 767px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* ===== Floating pill ===== */
+.floating-nav{
+  position: fixed;
+  top: calc(var(--sq-header-h, 84px) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin: 0;
+
+  background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(244,239,255,0.94));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  border: 1px dashed rgba(184, 140, 233, 0.45);
+  box-shadow: var(--cp-shadow-soft);
+
+  max-width: min(1100px, calc(100vw - 24px));
+}
+
+/* Scroll state */
+.floating-nav.scrolled{
+  background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(244,239,255,0.96));
+  box-shadow: var(--cp-shadow-strong);
+}
+
+.floating-nav::before{
+  content: "";
+  position: absolute;
+  inset: -30%;
+  border-radius: inherit;
+  background: radial-gradient(circle at top, rgba(184, 140, 233, 0.16), transparent 60%);
+  pointer-events: none;
+}
+
+/* ===== UL ===== */
+.floating-nav .nav-links{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  margin:0;
+  padding:0;
+
+  overflow: visible;
+}
+
+.floating-nav .nav-links::-webkit-scrollbar{display:none;}
+
+/* ===== Links ===== */
+.floating-nav .nav-links a,
+.floating-nav .nav-summary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+
+  font-family: inherit;
+  font-size:16px;
+  font-weight:650;
+  letter-spacing:0.02em;
+
+  color: var(--cp-text-main);
+  text-decoration:none;
+
+  padding: 10px 14px;
+  border-radius:14px;
+
+  transition: background .18s ease, transform .18s ease;
+  white-space:nowrap;
+}
+
+/* Hover */
+.floating-nav .nav-links a:hover,
+.floating-nav .nav-summary:hover{
+  background: rgba(184, 140, 233, 0.18);
+  color: var(--cp-text-main);
+  transform: translateY(-1px);
+}
+
+.floating-nav .nav-links a:focus-visible,
+.floating-nav .nav-summary:focus-visible,
+.floating-nav #scrollToTopBtn:focus-visible{
+  outline: 2px solid rgba(184, 140, 233, 0.55);
+  outline-offset: 2px;
+}
+
+/* ===== Details dropdown ===== */
+.floating-nav .nav-details{
+  position: relative;
+}
+
+/* Remove default triangle marker */
+.floating-nav .nav-summary{
+  cursor: pointer;
+  list-style: none;
+}
+.floating-nav .nav-summary::-webkit-details-marker{ display:none; }
+
+.floating-nav .nav-menu{
+  position:absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  min-width: 180px;
+  padding: 8px;
+
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.98), rgba(244,239,255,0.95));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  border: 1px dashed rgba(184, 140, 233, 0.45);
+  box-shadow: var(--cp-shadow-soft);
+
+  display: grid;
+  gap: 4px;
+
+  z-index: 10000;
+}
+
+/* Make dropdown items big + friendly */
+.floating-nav .nav-menu a{
+  border-radius: 12px;
+  padding: 12px 12px;
+  font-weight: 600;
+}
+.floating-nav .nav-menu a:hover{
+  background: rgba(184, 140, 233, 0.18);
+}
+
+/* Only show menu when open */
+.floating-nav .nav-details:not([open]) .nav-menu{ display:none; }
+
+/* ===== Scroll-to-top ===== */
+.floating-nav .nav-icon{ display:flex; align-items:center; }
+
+.floating-nav #scrollToTopBtn{
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(184, 140, 233, 0.16);
+  color: var(--cp-text-main);
+  border: 1px solid var(--cp-border-soft);
+
+  cursor:pointer;
+  font-weight:800;
+  display:none;
+}
+
+/* ===== Top shade for video legibility ===== */
+.hide-on-mobile .hero-top-shade{
+  position: fixed;
+  top: var(--sq-header-h, 84px);
+  left: 0; right: 0;
+  height: 110px;
+  pointer-events:none;
+  z-index: 35;
+  background: linear-gradient(to bottom,
+    rgba(120, 80, 160, 0.20),
+    rgba(0,0,0,0.00)
+  );
+}
+
+@media (max-width:720px){
+  .floating-nav{ top: calc(var(--sq-header-h, 72px) + 8px); }
+  .floating-nav .nav-links a, .floating-nav .nav-summary{ font-size: 15px; padding: 9px 12px; }
+  .floating-nav #scrollToTopBtn{ width: 36px; height: 36px; }
+  .floating-nav { overflow: visible; }
+}
+
+.floating-nav .nav-menu{
+  z-index: 41;
+}
+
+.floating-nav .nav-details{
+  position: relative;
+  z-index: 41;
+}
+
+</style>
+
+
+<script>
+(() => {
+  const nav = document.querySelector('.floating-nav');
+  const btn = document.getElementById('scrollToTopBtn');
+
+  function setSqHeaderOffset() {
+    const header = document.querySelector('#header, .Header, [data-header], .sqs-announcement-bar-dropzone + header');
+    const headerHeight = header && header.offsetHeight ? header.offsetHeight : 84;
+    document.documentElement.style.setProperty('--sq-header-h', `${headerHeight}px`);
+  }
+
+  function onScroll(){
+    const y = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle('scrolled', y > 40);
+    if (btn) btn.style.display = (y > 450) ? 'inline-flex' : 'none';
+  }
+
+  window.addEventListener('resize', setSqHeaderOffset, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  setSqHeaderOffset();
+  onScroll();
+
+  if (btn) {
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+
+  // Close "More" when clicking anywhere else
+  document.addEventListener('click', (e) => {
+    const openDetails = nav ? nav.querySelector('.nav-details[open]') : null;
+    if (!openDetails) return;
+    if (!openDetails.contains(e.target)) openDetails.removeAttribute('open');
+  });
+})();
+</script>

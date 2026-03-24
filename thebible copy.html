@@ -1,0 +1,1232 @@
+
+<style>
+  
+/* ---------------------------------------------------------
+   WITNESS V2 BIBLE — CLEAN, CONTEMPLATIVE THEME
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed {
+  /* Theme */
+  color-scheme: dark;
+  --bg: #0f0c0a;
+  --panel: #1a1410;
+  --panel2: #15100d;
+  --text: #f2e8d6;
+  --muted: #b8aa94;
+  --border: #3a2d22;
+  --accent: #d8ae66;
+  --accent-2: #c8a26a;
+  --danger: #ff6b6b;
+  --ok: #5eead4;
+
+
+  --radius: 14px;
+  --pad: 12px;
+  --gap: 10px;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  font-family: var(--font);
+  color: var(--text);
+  box-sizing: border-box;
+
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+#wv2BibleEmbed * {
+  box-sizing: inherit;
+}
+#wv2BibleEmbed .hint {
+  font-family: "EB Garamond", serif;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------
+   BACKDROP GLOW LAYER
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+
+background:
+  radial-gradient(
+    900px 420px at 85% -10%,
+    color-mix(in srgb, var(--accent) 40%, transparent),
+    transparent 65%
+  ),
+  radial-gradient(
+    800px 380px at -10% 95%,
+    color-mix(in srgb, var(--accent) 25%, transparent),
+    transparent 70%
+  ),
+  radial-gradient(
+    700px 360px at 50% 110%,
+    color-mix(in srgb, #a57c52 22%, transparent),
+    transparent 68%
+  ),
+  color-mix(in srgb, var(--bg) 40%, transparent);
+
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* ---------------------------------------------------------
+   APP CONTAINER
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px;
+  min-height: 640px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+
+
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 18px;
+  box-shadow: 0 24px 76px rgba(0,0,0,0.52);
+  overflow: auto;
+}
+
+/* ---------------------------------------------------------
+   TOPBAR
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: var(--radius);
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  z-index: 5;
+}
+
+#wv2BibleEmbed .brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+#wv2BibleEmbed .brand b {
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #f6e9cf;
+  text-shadow:
+    0 2px 14px rgba(79,51,27,.45),
+    0 0 20px rgba(216,174,102,.22);
+}
+
+#wv2BibleEmbed .brand span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   TABS
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+
+  background: rgba(0,0,0,0.32);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+#wv2BibleEmbed .tab {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#wv2BibleEmbed .tab.active {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+/* ---------------------------------------------------------
+   PANELS
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .panel {
+background: linear-gradient(
+  180deg,
+  color-mix(in srgb, var(--panel) 58%, transparent),
+  color-mix(in srgb, var(--panel2) 58%, transparent)
+);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+#wv2BibleEmbed .row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#wv2BibleEmbed .row.wrap {
+  flex-wrap: wrap;
+}
+
+#wv2BibleEmbed label {
+  font-family: "EB Garamond", serif;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS & SELECTS
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed input,
+#wv2BibleEmbed select,
+#wv2BibleEmbed textarea {
+  width: 100%;
+  background: rgba(0,0,0,0.28);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px;
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+}
+
+#wv2BibleEmbed input:focus,
+#wv2BibleEmbed select:focus,
+#wv2BibleEmbed textarea:focus {
+  border-color: color-mix(in srgb, var(--accent) 78%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+#wv2BibleEmbed select {
+  color-scheme: dark;
+  background-color: rgba(0,0,0,0.25);
+  color: #eaf1ff;
+}
+
+#wv2BibleEmbed select option {
+  background: #0d1622;
+  color: #eaf1ff;
+}
+
+#wv2BibleEmbed #bookSelect {
+  background: rgba(0,0,0,0.25);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: #f5ecd9;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .btn {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  -webkit-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+#wv2BibleEmbed .btn.primary {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+#wv2BibleEmbed .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------
+   VERSE CONTENT
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .content {
+  font-family: "EB Garamond", serif;
+  font-size: 19px;
+  line-height: 1.74;
+  color: var(--text);
+  white-space: pre-wrap;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 6px;
+  color: var(--text);
+}
+
+#wv2BibleEmbed .verse-line {
+  padding: 7px 12px;
+  border-radius: 10px;
+  margin: 3px 0;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+  background: transparent;
+}
+
+#wv2BibleEmbed .verse-line .verse-num {
+  font-family: "EB Garamond", serif;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+
+#wv2BibleEmbed .verse-line.is-focus {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 48%, transparent);
+}
+/* Verse numbers */
+#wv2BibleEmbed .verse-line .verse-num {
+  font-family: "EB Garamond", serif;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* Hints */
+#wv2BibleEmbed .hint {
+  font-family: "EB Garamond", serif;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+@media (hover: hover) {
+  #wv2BibleEmbed .verse-line:hover {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+}
+
+/* ---------------------------------------------------------
+   RESULTS & CARDS
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+#wv2BibleEmbed .card {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 76%, transparent),
+    color-mix(in srgb, var(--panel2) 76%, transparent)
+  );
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+}
+
+#wv2BibleEmbed .card h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #f3dcae;
+}
+
+#wv2BibleEmbed .card p {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+#wv2BibleEmbed .card:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.34);
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .foot {
+  margin-top: auto;
+  padding-bottom: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.9;
+}
+
+/* ---------------------------------------------------------
+   SHARED READER UTILITIES
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .divider {
+  margin: 12px 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 44%, transparent),
+    transparent
+  );
+}
+
+#wv2BibleEmbed .refline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  border: 1px solid var(--border);
+}
+
+#wv2BibleEmbed .ref {
+  font-family: "Cinzel", serif;
+  font-size: 15px;
+  color: #f3dcae;
+  letter-spacing: 0.02em;
+}
+
+#wv2BibleEmbed .meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#wv2BibleEmbed .status,
+#wv2BibleEmbed .foot,
+#wv2BibleEmbed .mono {
+  font-family: "EB Garamond", serif;
+}
+
+#wv2BibleEmbed .mono {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--text) 92%, transparent);
+}
+
+#wv2BibleEmbed .status.ok {
+  color: #9dd9c9;
+}
+
+#wv2BibleEmbed .status.err {
+  color: #ff9a9a;
+}
+
+#wv2BibleEmbed .results .hint {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel2) 74%, transparent);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  #wv2BibleEmbed .app {
+    min-height: unset;
+    padding: 12px;
+  }
+
+  #wv2BibleEmbed .topbar,
+  #wv2BibleEmbed .refline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* Brand image + title lockup */
+#wv2BibleEmbed .brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The icon itself */
+#wv2BibleEmbed .brand-icon {
+  width: 118px;
+  height: 118px;
+  object-fit: contain;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  border-radius: 6px; /* optional, depending on your icon */
+}
+
+
+</style>
+<div id="wv2BibleEmbed">
+
+  <div class="overlay-backdrop" aria-hidden="true"></div>
+  <div class="app">
+    <div class="topbar">
+<div class="brand-wrap">
+  <img class="brand-icon" src="https://duge79ki51wc4.cloudfront.net/images/asset_19c4d908c3ced1ad.png" alt="">
+  <div class="brand">
+    <b>Witness V2 Bible</b>
+    <span><br>Powered by Posture</span>
+  </div>
+</div>
+
+      <div class="topbar-right">
+        <div class="tabs" role="tablist" aria-label="Mode">
+          <button class="tab active" id="tabPassage" role="tab" aria-selected="true" aria-controls="panelPassage" type="button">Passage</button>
+          <button class="tab" id="tabSearch" role="tab" aria-selected="false" aria-controls="panelSearch" type="button">Search</button>
+          <button class="tab" id="tabSettings" role="tab" aria-selected="false" aria-controls="panelSettings" type="button">Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passage Panel -->
+    <div class="panel" id="panelPassage" role="tabpanel" aria-labelledby="tabPassage">
+      <div class="row wrap">
+        <div style="flex: 1 1 180px;">
+          <label for="reference">Reference</label>
+          <input id="reference" placeholder="e.g., John 3:16-18 | Psalm 23 | 1 John 4:20" />
+          <div class="hint">Tip: it is forgiving with abbreviations (jn, ps, rom, etc.).</div>
+        </div>
+
+        <div id="translationWrap" style="flex: 0 0 130px;">
+          <label for="translation">Translation</label>
+          <select id="translation" disabled aria-disabled="true" ></select>
+          <div class="hint"><span class="mono">WEB</span> (local canon)</div>
+        </div>
+      </div>
+
+      <div class="row wrap" style="margin-top:10px;">
+        <div style="flex:1 1 180px;">
+          <label for="bookSelect">Book</label>
+          <select id="bookSelect"></select>
+        </div>
+        <div style="flex:0 0 110px;">
+          <label for="chapterInput">Chapter</label>
+          <input id="chapterInput" type="number" min="1" step="1" value="1" />
+        </div>
+        <div style="flex:0 0 110px;">
+          <label for="verseInput">Verse (optional)</label>
+          <input id="verseInput" type="number" min="1" step="1" placeholder="e.g. 16" />
+        </div>
+        <div style="flex:0 0 120px; align-self:flex-end;">
+          <button class="btn" id="btnPickPassage" type="button">Go Here</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <button class="btn primary" id="btnGo" type="button" style="display:none;">Go</button>
+        <button class="btn" id="btnPrev" type="button" title="Previous chapter">Prev</button>
+        <button class="btn" id="btnNext" type="button" title="Next chapter">Next</button>
+        <div class="status" id="passageStatus" style="margin-left:auto;"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="refline">
+        <div>
+          <div class="ref" id="refDisplay">-</div>
+          <div class="meta" id="metaDisplay">-</div>
+        </div>
+        <button class="btn" id="btnCopy" type="button" title="Copy text">Copy</button>
+      </div>
+
+      <div class="content" id="content">Enter a reference above and tap <b>Go Here</b>.</div>
+    </div>
+
+    <!-- Search Panel -->
+    <div class="panel" id="panelSearch" style="display:none;" role="tabpanel" aria-labelledby="tabSearch">
+      <div class="row wrap">
+        <div style="flex: 1 1 180px;">
+          <label for="searchQuery">Theme / Prompt</label>
+          <input id="searchQuery" placeholder="e.g., kingdom | fear not | adoption" />
+          <div class="hint">AI plans a local FTS query over the full WEB canon.</div>
+        </div>
+        <div style="flex: 0 0 130px;">
+          <label for="searchLimit">Limit</label>
+          <select id="searchLimit">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+          </select>
+          <div class="hint">results/page</div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <button class="btn primary" id="btnSearch" type="button">Search</button>
+        <button class="btn" id="btnSearchPrev" type="button">Prev</button>
+        <button class="btn" id="btnSearchNext" type="button">Next</button>
+        <div class="status" id="searchStatus" style="margin-left:auto;"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="results" id="results"></div>
+    </div>
+<!-- Settings Panel -->
+    <div class="panel" id="panelSettings" style="display:none;" role="tabpanel" aria-labelledby="tabSettings">
+      <div class="row wrap">
+        <div style="flex: 1 1 220px;">
+          <label for="apiBibleKey">API.Bible Key (optional)</label>
+          <input id="apiBibleKey" placeholder="Paste API key here (enables whole-Bible search)" />
+          <div class="hint">Used only in your browser (localStorage). Required for whole-Bible keyword search.</div>
+        </div>
+        <div style="flex: 0 0 220px;">
+          <label for="apiBibleId">API.Bible "Bible ID" (optional)</label>
+          <input id="apiBibleId" placeholder='e.g., 06125adad2d5898a-01 (ASV in docs)' />
+          <div class="hint">Your key determines which versions you can access.</div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <button class="btn primary" id="btnSaveSettings" type="button">Save</button>
+        <button class="btn" id="btnClearSettings" type="button">Clear</button>
+        <div class="status" id="settingsStatus" style="margin-left:auto;"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="hint">
+        <b>Note on bible translations:</b> NIV and other translations are copyrighted; If you would like to get a license, go to <a href="https://www.youversion.com/" target="_blank" rel="noopener noreferrer">YouVersion</a> or <a href="https://api.bible/" target="_blank" rel="noopener noreferrer">API.Bible</a> (e.g., YouVersion Platform or API.Bible with approved rights)      </div>
+    </div>
+
+    
+    <div class="foot">
+      Data sources: <span class="mono">WitnessV2 Curated Bible</span> (WEB canon, AI-planned FTS) with external fallback for non-WEB passage lookups.
+    </div>
+  </div>
+
+<script>
+(() => {
+  const tabPassage = document.getElementById('tabPassage');
+  const tabSearch = document.getElementById('tabSearch');
+  const tabSettings = document.getElementById('tabSettings');
+  const panelPassage = document.getElementById('panelPassage');
+  const panelSearch = document.getElementById('panelSearch');
+  const panelSettings = document.getElementById('panelSettings');
+
+  const reference = document.getElementById('reference');
+  const translation = document.getElementById('translation');
+  const translationWrap = document.getElementById('translationWrap');
+  const btnGo = document.getElementById('btnGo');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const btnCopy = document.getElementById('btnCopy');
+  const bookSelect = document.getElementById('bookSelect');
+  const chapterInput = document.getElementById('chapterInput');
+  const verseInput = document.getElementById('verseInput');
+  const btnPickPassage = document.getElementById('btnPickPassage');
+  const passageStatus = document.getElementById('passageStatus');
+
+  const refDisplay = document.getElementById('refDisplay');
+  const metaDisplay = document.getElementById('metaDisplay');
+  const content = document.getElementById('content');
+
+  const searchQuery = document.getElementById('searchQuery');
+  const searchLimit = document.getElementById('searchLimit');
+  const btnSearch = document.getElementById('btnSearch');
+  const btnSearchPrev = document.getElementById('btnSearchPrev');
+  const btnSearchNext = document.getElementById('btnSearchNext');
+  const searchStatus = document.getElementById('searchStatus');
+  const results = document.getElementById('results');
+
+  const apiBibleKey = document.getElementById('apiBibleKey');
+  const apiBibleId = document.getElementById('apiBibleId');
+  const btnSaveSettings = document.getElementById('btnSaveSettings');
+  const btnClearSettings = document.getElementById('btnClearSettings');
+  const settingsStatus = document.getElementById('settingsStatus');
+
+  const BIBLE_TRANSLATIONS = [
+    { id: 'web',  name: 'WEB (Local Canon)' },
+    { id: 'kjv',  name: 'KJV' },
+    { id: 'asv',  name: 'ASV (1901)' },
+    { id: 'bbe',  name: 'BBE' },
+    { id: 'darby', name: 'Darby' },
+    { id: 'dra',  name: 'Douay-Rheims' },
+    { id: 'ylt',  name: 'YLT (NT only)' },
+    { id: 'oeb-us', name: 'OEB (US)' },
+    { id: 'oeb-cw', name: 'OEB (Commonwealth)' },
+    { id: 'webbe', name: 'WEB (British)' }
+  ];
+  const FALLBACK_BOOKS = [
+    ['Genesis',50],['Exodus',40],['Leviticus',27],['Numbers',36],['Deuteronomy',34],['Joshua',24],['Judges',21],['Ruth',4],
+    ['1 Samuel',31],['2 Samuel',24],['1 Kings',22],['2 Kings',25],['1 Chronicles',29],['2 Chronicles',36],['Ezra',10],['Nehemiah',13],
+    ['Esther',10],['Job',42],['Psalms',150],['Proverbs',31],['Ecclesiastes',12],['Song of Solomon',8],['Isaiah',66],['Jeremiah',52],
+    ['Lamentations',5],['Ezekiel',48],['Daniel',12],['Hosea',14],['Joel',3],['Amos',9],['Obadiah',1],['Jonah',4],['Micah',7],
+    ['Nahum',3],['Habakkuk',3],['Zephaniah',3],['Haggai',2],['Zechariah',14],['Malachi',4],['Matthew',28],['Mark',16],['Luke',24],
+    ['John',21],['Acts',28],['Romans',16],['1 Corinthians',16],['2 Corinthians',13],['Galatians',6],['Ephesians',6],['Philippians',4],
+    ['Colossians',4],['1 Thessalonians',5],['2 Thessalonians',3],['1 Timothy',6],['2 Timothy',4],['Titus',3],['Philemon',1],['Hebrews',13],
+    ['James',5],['1 Peter',5],['2 Peter',3],['1 John',5],['2 John',1],['3 John',1],['Jude',1],['Revelation',22]
+  ].map(([book, chapters], idx) => ({ book, chapters, book_ord: idx + 1 }));
+
+  let lastChapterRef = '';
+  let lastChapterNumber = null;
+  let bibleBooks = [];
+  let pendingFocusVerse = null;
+
+  function updateNavButtons() {
+    const chap = Number(lastChapterNumber || 0);
+    if (!lastChapterRef || !Number.isFinite(chap) || chap < 1) {
+      btnPrev.disabled = true;
+      btnNext.disabled = true;
+      return;
+    }
+    btnPrev.disabled = chap <= 1;
+    btnNext.disabled = false;
+  }
+
+  function setTab(which) {
+    [tabPassage, tabSearch, tabSettings].forEach(t => t.classList.remove('active'));
+    tabPassage.setAttribute('aria-selected', 'false');
+    tabSearch.setAttribute('aria-selected', 'false');
+    tabSettings.setAttribute('aria-selected', 'false');
+    panelPassage.style.display = 'none';
+    panelSearch.style.display = 'none';
+    panelSettings.style.display = 'none';
+    if (which === 'passage') {
+      tabPassage.classList.add('active');
+      tabPassage.setAttribute('aria-selected', 'true');
+      panelPassage.style.display = '';
+      return;
+    }
+    if (which === 'search') {
+      tabSearch.classList.add('active');
+      tabSearch.setAttribute('aria-selected', 'true');
+      panelSearch.style.display = '';
+      return;
+    }
+    tabSettings.classList.add('active');
+    tabSettings.setAttribute('aria-selected', 'true');
+    panelSettings.style.display = '';
+  }
+
+  function setStatus(el, text, kind) {
+    el.textContent = text || '';
+    el.classList.remove('ok', 'err');
+    if (kind) el.classList.add(kind);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  async function fetchJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error(`HTTP ${res.status}${txt ? ` - ${txt.slice(0, 180)}` : ''}`);
+    }
+    return res.json();
+  }
+
+  function extractBookAndChapter(refText) {
+    const s = String(refText || '').trim().replace(/\s+/g, ' ');
+    const m = s.match(/^([1-3]\s)?([A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d+)(?::.*)?$/);
+    if (!m) return null;
+    const prefix = (m[1] || '').trim();
+    const book = (prefix ? `${prefix} ` : '') + m[2];
+    const chap = parseInt(m[3], 10);
+    if (!Number.isFinite(chap)) return null;
+    return { book: book.trim(), chap };
+  }
+
+  function extractReferenceParts(refText) {
+    const s = String(refText || '').trim().replace(/\s+/g, ' ');
+    const m = s.match(/^([1-3]\s)?([A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d+)(?::(\d+))?(?:[-–]\d+)?$/);
+    if (!m) return null;
+    const prefix = (m[1] || '').trim();
+    const book = (prefix ? `${prefix} ` : '') + m[2];
+    const chap = parseInt(m[3], 10);
+    const verse = m[4] ? parseInt(m[4], 10) : null;
+    if (!Number.isFinite(chap)) return null;
+    return {
+      book: book.trim(),
+      chap,
+      verse: Number.isFinite(verse) ? verse : null
+    };
+  }
+
+  function chapterRef(book, chap) {
+    return `${book} ${chap}`;
+  }
+
+  function getLaunchArgsFromUrl() {
+    try {
+      const params = new URLSearchParams(window.location.search || '');
+      const refRaw = String(params.get('ref') || params.get('reference') || '').trim();
+      const transRaw = String(params.get('translation') || params.get('trans') || '').trim().toLowerCase();
+      const trans = transRaw || 'web';
+      if (!refRaw) return null;
+
+      const parts = extractReferenceParts(refRaw);
+      if (!parts) {
+        return {
+          sourceRef: refRaw,
+          targetRef: refRaw,
+          verse: null,
+          trans
+        };
+      }
+
+      return {
+        sourceRef: refRaw,
+        targetRef: chapterRef(parts.book, parts.chap),
+        verse: Number.isFinite(Number(parts.verse)) && Number(parts.verse) > 0 ? Number(parts.verse) : null,
+        trans
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function loadTranslationSelect() {
+    translation.innerHTML = '';
+    for (const t of BIBLE_TRANSLATIONS) {
+      const opt = document.createElement('option');
+      opt.value = t.id;
+      opt.textContent = t.name;
+      translation.appendChild(opt);
+    }
+    translation.value = 'web';
+    localStorage.setItem('bibleMini_translation', 'web');
+  }
+
+  function hasValidApiBibleKey() {
+    return !!(localStorage.getItem('bibleMini_apiBibleKey') || '').trim();
+  }
+
+  function updateTranslationVisibility() {
+    const hasKey = hasValidApiBibleKey();
+    if (translationWrap) {
+      translationWrap.style.display = hasKey ? '' : 'none';
+    }
+    translation.disabled = !hasKey;
+    translation.setAttribute('aria-disabled', hasKey ? 'false' : 'true');
+    if (!hasKey) {
+      translation.value = 'web';
+      localStorage.setItem('bibleMini_translation', 'web');
+    }
+  }
+
+  async function loadBookSelector() {
+    bookSelect.innerHTML = '';
+    try {
+      const payload = await fetchJson('https://www.witnessv2.net/api/bible/books?translation=WEB');
+      bibleBooks = Array.isArray(payload?.books) ? payload.books : [];
+    } catch (_) {
+      bibleBooks = FALLBACK_BOOKS.slice();
+    }
+    if (!bibleBooks.length) {
+      const opt = document.createElement('option');
+      opt.value = '';
+      opt.textContent = 'No books available';
+      bookSelect.appendChild(opt);
+      return;
+    }
+    for (const b of bibleBooks) {
+      const opt = document.createElement('option');
+      opt.value = b.book;
+      opt.textContent = b.book;
+      opt.dataset.chapters = String(b.chapters || 1);
+      bookSelect.appendChild(opt);
+    }
+    const ps = bibleBooks.find(b => String(b.book).toLowerCase() === 'psalms');
+    if (ps) bookSelect.value = ps.book;
+    syncChapterMaxFromBook();
+  }
+
+  function syncChapterMaxFromBook() {
+    const sel = bookSelect.selectedOptions && bookSelect.selectedOptions[0];
+    if (!sel) return;
+    const maxChap = Number(sel.dataset.chapters || 1);
+    chapterInput.max = String(Math.max(1, maxChap));
+    const current = Number(chapterInput.value || 1);
+    if (!Number.isFinite(current) || current < 1) chapterInput.value = '1';
+    if (current > maxChap) chapterInput.value = String(maxChap);
+  }
+
+  function buildRefFromSelector() {
+    const book = (bookSelect.value || '').trim();
+    const chap = Math.max(1, Number(chapterInput.value || 1));
+    const verse = Number(verseInput.value || 0);
+    if (!book) return '';
+    if (Number.isFinite(verse) && verse > 0) return `${book} ${chap}:${verse}`;
+    return `${book} ${chap}`;
+  }
+
+  function syncSelectorFromReference(refText) {
+    const parts = extractReferenceParts(refText);
+    if (!parts) return false;
+    const wantedBook = String(parts.book || '').trim().toLowerCase();
+    const options = Array.from(bookSelect.options || []);
+    const match = options.find(opt => String(opt.value || '').trim().toLowerCase() === wantedBook);
+    if (!match) return false;
+    bookSelect.value = match.value;
+    syncChapterMaxFromBook();
+    chapterInput.value = String(parts.chap);
+    const verse = Number(parts.verse || 0);
+    verseInput.value = (Number.isFinite(verse) && verse > 0) ? String(verse) : '';
+    return true;
+  }
+
+  translation.onchange = () => {
+    localStorage.setItem('bibleMini_translation', translation.value);
+  };
+
+  async function loadPassage(ref, trans) {
+    setStatus(passageStatus, 'Loading...', '');
+    content.textContent = '';
+    refDisplay.textContent = '-';
+    metaDisplay.textContent = '-';
+
+    let data;
+    if (String(trans || '').toLowerCase() === 'web') {
+      data = await fetchJson(`https://www.witnessv2.net/api/bible/passage?reference=${encodeURIComponent(ref)}&translation=WEB`);
+    } else {
+      data = await fetchJson(`https://bible-api.com/${encodeURIComponent(ref)}?translation=${encodeURIComponent(trans)}`);
+    }
+
+    refDisplay.textContent = data.reference || ref;
+    metaDisplay.textContent = `${data.translation_name || trans} | ${data.translation_id || trans}`;
+
+    if (Array.isArray(data.verses) && data.verses.length > 1) {
+      content.innerHTML = data.verses.map(v => {
+        const n = Number(v.verse || 0);
+        const verseNo = Number.isFinite(n) && n > 0 ? n : '';
+        return `<div class="verse-line" data-verse="${verseNo}"><span class="verse-num">${escapeHtml(String(verseNo))}.</span>${escapeHtml(String(v.text || '').trim())}</div>`;
+      }).join('');
+    } else {
+      content.textContent = (data.text || '').trim() || '(No text returned)';
+    }
+
+    setStatus(passageStatus, 'Ready', 'ok');
+    localStorage.setItem('bibleMini_lastRef', ref);
+    localStorage.setItem('bibleMini_lastTrans', trans);
+
+    const primaryRef =
+      String(data.reference || '').trim() ||
+      (Array.isArray(data.verses) && data.verses[0] ? String(data.verses[0].reference || '').trim() : '') ||
+      ref;
+    const bc = extractBookAndChapter(primaryRef);
+    if (bc) {
+      lastChapterRef = bc.book;
+      lastChapterNumber = bc.chap;
+      localStorage.setItem('bibleMini_lastBook', lastChapterRef);
+      localStorage.setItem('bibleMini_lastChap', String(lastChapterNumber));
+      updateNavButtons();
+    }
+
+    // If a verse was selected in search, jump to it within the loaded chapter.
+    if (Array.isArray(data.verses) && data.verses.length > 1 && Number.isFinite(Number(pendingFocusVerse)) && Number(pendingFocusVerse) > 0) {
+      const wanted = String(Number(pendingFocusVerse));
+      const target = content.querySelector(`.verse-line[data-verse="${wanted}"]`);
+      if (target) {
+        content.querySelectorAll('.verse-line.is-focus').forEach((el) => el.classList.remove('is-focus'));
+        target.classList.add('is-focus');
+        target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    }
+    pendingFocusVerse = null;
+  }
+
+  function renderSearchResults(payload) {
+    results.innerHTML = '';
+    const rows = Array.isArray(payload?.results) ? payload.results : [];
+    if (!rows.length) {
+      results.innerHTML = `<div class="card"><h4>No results</h4><p>Try a different request.</p></div>`;
+      return;
+    }
+
+    const planner = document.createElement('div');
+    planner.className = 'hint';
+    planner.style.marginBottom = '8px';
+    const plannerBits = [
+      `FTS query: <span class="mono">${escapeHtml(payload.fts_query || '')}</span>`
+    ];
+    if (payload?.primary_verse) plannerBits.push(`Primary verse: <span class="mono">${escapeHtml(payload.primary_verse)}</span>`);
+    if (payload?.posture_bin) plannerBits.push(`Posture: <span class="mono">${escapeHtml(payload.posture_bin)}</span>`);
+    if (payload?.daily_tone) plannerBits.push(`Tone: <span class="mono">${escapeHtml(payload.daily_tone)}</span>`);
+    if (payload?.notes) plannerBits.push(`${escapeHtml(payload.notes)}`);
+    planner.innerHTML = plannerBits.join('<br>');
+    results.appendChild(planner);
+
+    rows.forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `<h4>${escapeHtml(v.ref || 'Result')}</h4><p>${escapeHtml((v.text || '').trim())}</p>`;
+      div.onclick = async () => {
+        const parts = extractReferenceParts(v.ref || '');
+        pendingFocusVerse = Number.isFinite(Number(parts?.verse)) && Number(parts.verse) > 0 ? Number(parts.verse) : null;
+        const trans = String(v.translation || translation.value || 'web').trim() || 'web';
+        let targetRef = String(v.ref || '').trim();
+        const bc = extractBookAndChapter(v.ref || '');
+        if (bc) {
+          targetRef = chapterRef(bc.book, bc.chap);
+        }
+        reference.value = targetRef;
+        syncSelectorFromReference(targetRef);
+        verseInput.value = '';
+        translation.value = trans;
+        localStorage.setItem('bibleMini_translation', trans);
+        setTab('passage');
+        try {
+          await loadPassage(targetRef, trans);
+          setStatus(
+            passageStatus,
+            pendingFocusVerse
+              ? `Loaded ${escapeHtml(targetRef)} and highlighted verse ${pendingFocusVerse}.`
+              : `Loaded ${escapeHtml(targetRef)}.`,
+            'ok'
+          );
+        } catch (err) {
+          setStatus(
+            passageStatus,
+            pendingFocusVerse
+              ? `Reference prefilled. Tap Go Here to load chapter and jump to verse ${pendingFocusVerse}.`
+              : 'Reference prefilled. Tap Go Here to load the full chapter.',
+            'ok'
+          );
+        }
+      };
+      results.appendChild(div);
+    });
+  }
+
+  btnGo.onclick = async () => {
+    const ref = reference.value.trim();
+    if (!ref) {
+      setStatus(passageStatus, 'Enter a reference.', 'err');
+      return;
+    }
+    const trans = translation.value || 'web';
+    try {
+      await loadPassage(ref, trans);
+    } catch (err) {
+      setStatus(passageStatus, err.message || 'Failed.', 'err');
+      content.textContent = 'Could not load passage.';
+    }
+  };
+
+  reference.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') btnGo.click();
+  });
+  bookSelect.addEventListener('change', syncChapterMaxFromBook);
+  btnPickPassage.addEventListener('click', () => {
+    const ref = buildRefFromSelector();
+    if (!ref) return;
+    reference.value = ref;
+    syncSelectorFromReference(ref);
+    btnGo.click();
+  });
+
+  btnPrev.onclick = async () => {
+    const book = localStorage.getItem('bibleMini_lastBook') || lastChapterRef;
+    const chap = parseInt(localStorage.getItem('bibleMini_lastChap') || lastChapterNumber || '0', 10);
+    if (!book || !chap || chap <= 1) return;
+    const trans = translation.value || 'web';
+    const newRef = chapterRef(book, chap - 1);
+    reference.value = newRef;
+    try {
+      await loadPassage(newRef, trans);
+      localStorage.setItem('bibleMini_lastChap', String(chap - 1));
+      lastChapterNumber = chap - 1;
+      lastChapterRef = book;
+      updateNavButtons();
+    } catch {
+      setStatus(passageStatus, 'No previous chapter found.', 'err');
+    }
+  };
+
+  btnNext.onclick = async () => {
+    const book = localStorage.getItem('bibleMini_lastBook') || lastChapterRef;
+    const chap = parseInt(localStorage.getItem('bibleMini_lastChap') || lastChapterNumber || '0', 10);
+    if (!book || !chap) return;
+    const trans = translation.value || 'web';
+    const newRef = chapterRef(book, chap + 1);
+    reference.value = newRef;
+    try {
+      await loadPassage(newRef, trans);
+      localStorage.setItem('bibleMini_lastChap', String(chap + 1));
+      lastChapterNumber = chap + 1;
+      lastChapterRef = book;
+      updateNavButtons();
+    } catch {
+      setStatus(passageStatus, 'No next chapter found.', 'err');
+    }
+  };
+
+  btnCopy.onclick = async () => {
+    const txt = `${refDisplay.textContent}\n${content.textContent}\n\n(${metaDisplay.textContent})`;
+    try {
+      await navigator.clipboard.writeText(txt);
+      setStatus(passageStatus, 'Copied', 'ok');
+      setTimeout(() => setStatus(passageStatus, 'Ready', 'ok'), 900);
+    } catch {
+      setStatus(passageStatus, 'Copy failed.', 'err');
+    }
+  };
+
+  btnSearch.onclick = async () => {
+    const q = searchQuery.value.trim();
+    if (!q) {
+      setStatus(searchStatus, 'Enter a search query.', 'err');
+      return;
+    }
+    setStatus(searchStatus, 'Searching...', '');
+    results.innerHTML = '';
+    try {
+      const lim = parseInt(searchLimit.value || '20', 10) || 20;
+      const data = await fetchJson(`https://www.witnessv2.net/api/bible/search?q=${encodeURIComponent(q)}&translation=WEB&limit=${encodeURIComponent(lim)}`);
+      renderSearchResults(data);
+      setStatus(searchStatus, 'Done', 'ok');
+    } catch (err) {
+      const msg = String(err.message || 'Search failed.');
+      if (msg.includes('HTTP 404')) {
+        setStatus(searchStatus, 'Search API unavailable (404).', 'err');
+        results.innerHTML = `<div class="card"><h4>Search API not found</h4><p>Your running server does not have <span class="mono">/api/bible/search</span> loaded yet. Restart AnchorV2, then hard refresh.</p></div>`;
+      } else {
+        setStatus(searchStatus, msg, 'err');
+        results.innerHTML = `<div class="card"><h4>Search unavailable</h4><p>${escapeHtml(msg)}</p></div>`;
+      }
+    }
+  };
+
+  searchQuery.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') btnSearch.click();
+  });
+
+  btnSearchPrev.onclick = () => {};
+  btnSearchNext.onclick = () => {};
+  btnSearchPrev.disabled = true;
+  btnSearchNext.disabled = true;
+
+  function loadSettingsUI() {
+    apiBibleKey.value = localStorage.getItem('bibleMini_apiBibleKey') || '';
+    apiBibleId.value = localStorage.getItem('bibleMini_apiBibleId') || '';
+    updateTranslationVisibility();
+  }
+
+  btnSaveSettings.onclick = () => {
+    localStorage.setItem('bibleMini_apiBibleKey', apiBibleKey.value.trim());
+    localStorage.setItem('bibleMini_apiBibleId', apiBibleId.value.trim());
+    updateTranslationVisibility();
+    setStatus(settingsStatus, 'Saved', 'ok');
+    setTimeout(() => setStatus(settingsStatus, '', ''), 900);
+  };
+
+  btnClearSettings.onclick = () => {
+    localStorage.removeItem('bibleMini_apiBibleKey');
+    localStorage.removeItem('bibleMini_apiBibleId');
+    loadSettingsUI();
+    updateTranslationVisibility();
+    setStatus(settingsStatus, 'Cleared.', 'ok');
+    setTimeout(() => setStatus(settingsStatus, '', ''), 900);
+  };
+
+  tabPassage.onclick = () => setTab('passage');
+  tabSearch.onclick = () => setTab('search');
+  tabSettings.onclick = () => setTab('settings');
+
+  async function bootstrap() {
+    loadTranslationSelect();
+    await loadBookSelector();
+    loadSettingsUI();
+    updateTranslationVisibility();
+
+    const launch = getLaunchArgsFromUrl();
+    const savedRef = localStorage.getItem('bibleMini_lastRef');
+    const savedBook = localStorage.getItem('bibleMini_lastBook');
+    const savedChap = localStorage.getItem('bibleMini_lastChap');
+    translation.value = 'web';
+
+    if (savedBook && savedChap) {
+      lastChapterRef = savedBook;
+      lastChapterNumber = Number(savedChap);
+    }
+    updateNavButtons();
+
+    if (launch?.targetRef) {
+      reference.value = launch.targetRef;
+      syncSelectorFromReference(launch.targetRef);
+      verseInput.value = launch.verse ? String(launch.verse) : '';
+      pendingFocusVerse = launch.verse || null;
+      setTab('passage');
+      try {
+        await loadPassage(launch.targetRef, launch.trans || 'web');
+        setStatus(
+          passageStatus,
+          launch.verse
+            ? `Loaded ${escapeHtml(launch.targetRef)} and highlighted verse ${launch.verse}.`
+            : `Loaded ${escapeHtml(launch.targetRef)}.`,
+          'ok'
+        );
+      } catch (err) {
+        setStatus(passageStatus, String(err?.message || 'Could not auto-load requested reference.'), 'err');
+      }
+      return;
+    }
+
+    if (savedRef) {
+      reference.value = savedRef;
+    } else {
+      reference.value = 'Psalm 23';
+    }
+
+    // Default selected tab per product request.
+    setTab('search');
+  }
+
+  bootstrap();
+})();
+</script>
+
