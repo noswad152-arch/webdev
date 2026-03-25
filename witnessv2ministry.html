@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Witness V2?</title>
     <!-- Add your CSS link here -->
-    <link rel="stylesheet" href="styles/cpPrimary.css">
+    <link rel="stylesheet" href="styles/cp.css">
 </head>
 <body>
 <div class="episode-page">
@@ -444,93 +444,61 @@ Suggested monthly support: $16.05
 
 </div>
 <script>
-(function () {
-  function fmt(seconds) {
-    return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
-  }
+function initCardPlayers() {
+  document.querySelectorAll('.card-player').forEach(player => {
+    const source = (player.dataset.src || '').trim();
+    const playBtn = player.querySelector('.play');
+    const stopBtn = player.querySelector('.stop');
+    const fill = player.querySelector('.card-player-progress-fill');
+    const time = player.querySelector('.card-player-time');
 
-  function initCardPlayers(root) {
-    const scope = root || document;
-    scope.querySelectorAll('.card-player').forEach(player => {
-      if (player.dataset.playerInit === '1') return;
-      player.dataset.playerInit = '1';
+    if (!source || !playBtn || !stopBtn || !fill || !time) {
+      return;
+    }
 
-      const source = (player.dataset.src || '').trim();
-      const playBtn = player.querySelector('.play');
-      const stopBtn = player.querySelector('.stop');
-      const fill = player.querySelector('.card-player-progress-fill');
-      const time = player.querySelector('.card-player-time');
+    const audio = new Audio(source);
 
-      if (!source || !playBtn || !stopBtn || !fill || !time) {
-        return;
-      }
+    function fmt(seconds) {
+      return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+    }
 
-      const audio = new Audio(source);
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+      fill.style.width = `${pct}%`;
+      time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration || 0)}`;
+    });
 
-      audio.addEventListener('timeupdate', () => {
-        const pct = (audio.currentTime / (audio.duration || 1)) * 100;
-        fill.style.width = `${pct}%`;
-        time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration || 0)}`;
-      });
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      fill.style.width = '0%';
+    });
 
-      audio.addEventListener('ended', () => {
-        playBtn.textContent = '▶';
-        fill.style.width = '0%';
-      });
-
-      playBtn.addEventListener('click', async () => {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            playBtn.textContent = '⏸';
-          } catch (_) {
-            playBtn.textContent = '▶';
-          }
-        } else {
-          audio.pause();
+    playBtn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          playBtn.textContent = '⏸';
+        } catch (error) {
           playBtn.textContent = '▶';
         }
-      });
-
-      stopBtn.addEventListener('click', () => {
+      } else {
         audio.pause();
-        audio.currentTime = 0;
         playBtn.textContent = '▶';
-        fill.style.width = '0%';
-      });
-    });
-  }
-
-  function runInit() {
-    initCardPlayers(document);
-  }
-
-  window.WitnessInitCardPlayers = runInit;
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runInit, { once: true });
-  } else {
-    runInit();
-  }
-
-  window.addEventListener('load', runInit);
-  window.addEventListener('pageshow', runInit);
-  window.addEventListener('popstate', runInit);
-
-  const observer = new MutationObserver(mutations => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (!(node instanceof Element)) continue;
-        if (node.matches?.('.card-player')) {
-          initCardPlayers(node.parentElement || document);
-          continue;
-        }
-        if (node.querySelector?.('.card-player')) {
-          initCardPlayers(node);
-        }
       }
-    }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      audio.pause();
+      audio.currentTime = 0;
+      playBtn.textContent = '▶';
+      fill.style.width = '0%';
+    });
   });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-})();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCardPlayers);
+} else {
+  initCardPlayers();
+}
 </script>

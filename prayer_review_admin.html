@@ -1,25 +1,40 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Prayer Review Admin</title>
-    <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Prayers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">   
+<link rel="stylesheet" href="styles/cpPrimary.css">
+
+   <style>
         :root {
             --bg: #0b0f14;
-            --panel: #151b22;
+            --panel: #5b90cd;
             --muted: #8b98a5;
             --accent: #2bb0ff;
-            --border: rgba(255,255,255,0.08);
+            --border: rgb(251 174 1 / 81%);
+            --font-body: Georgia, "Times New Roman", Times, serif;
+            --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
+            --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: radial-gradient(1200px 800px at 10% 10%, #111827, #0b0f14 55%);
+/*         html,
+body {
+  margin: 0 auto;
+  height: 100%;
+} */
+
+
+         .my-prayer-app {
+             /* background: var(--bg); */             
+             font-family: var(--font-body);
+            background: radial-gradient(1200px 800px at 10% 10%, #e8611a, #3152a0, #0e1721 45%);
             color: #e5e7eb;
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
             min-height: 100vh;
             padding: 18px;
-        }
+        } 
         .page {
             max-width: 1320px;
             margin: 0 auto;
@@ -31,11 +46,11 @@
             .page { grid-template-columns: 1fr; }
         }
         .panel {
-            background: var(--panel);
+           /* background: var(--panel);*/
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35); 
         }
         .panel.full { grid-column: 1 / -1; }
         .user-banner {
@@ -43,6 +58,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
+            max-width: 25%;
             padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid var(--border);
@@ -50,11 +66,27 @@
             font-size: 12px;
             color: var(--muted);
         }
-        h1 { font-size: 20px; letter-spacing: 0.3px; }
-        h2 { font-size: 16px; margin-bottom: 10px; }
+        h1 { font-family: var(--font-heading); font-size: 20px; letter-spacing: 0.3px; }
+        h2 { font-family: var(--font-heading); font-size: 16px; margin-bottom: 10px; }
         .muted { color: var(--muted); font-size: 12px; }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .mtop-4 { margin-top: 4px; }
+        .mtop-6 { margin-top: 6px; }
+        .mtop-10 { margin-top: 10px; }
+        .row-spaced { margin: 10px 0; }
         .row, .action-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         input, button, select {
+            font-family: var(--font-ui);
             border-radius: 10px;
             border: 1px solid var(--border);
             background: #0f141b;
@@ -67,10 +99,41 @@
             background: linear-gradient(135deg, #1f8fff, #2bb0ff);
             border: none;
             cursor: pointer;
+            transition: all 0.2s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(31, 143, 255, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(31, 143, 255, 0.5);
+            background: linear-gradient(135deg, #2d96ff, #39b8ff);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(31, 143, 255, 0.3);
+        }
+        button:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
         button.secondary {
             background: #0f141b;
             border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        button.secondary:hover {
+            background: rgba(246, 180, 91, 0.1);
+            border: 1px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(246, 180, 91, 0.2);
+            transform: translateY(-2px);
+        }
+        button.secondary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(246, 180, 91, 0.1);
+        }
+        button.secondary:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
         .list {
             display: grid;
@@ -101,20 +164,37 @@
             white-space: pre-wrap;
             font-size: 12px;
             color: #cbd5e1;
-            background: rgba(0,0,0,0.35);
+            background: rgba(239, 237, 237, 0.35);
             padding: 10px;
             border-radius: 10px;
             border: 1px solid var(--border);
         }
         .editor {
             min-height: 220px;
-            border: 1px solid var(--border);
+            border: 2px solid var(--border);
             border-radius: 12px;
             padding: 12px;
             background: rgba(255,255,255,0.02);
+            color: #f7f3ea;
             outline: none;
         }
+        .editor h1,
+        .editor h2 {
+            color: #f7f3ea !important;
+        }
+        .toolbar button[data-value="H1"],
+        .toolbar button[data-value="H2"] {
+            color: #f7f3ea !important;
+        }
         .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .prayer-review-image {
+            width: 50%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -142,22 +222,34 @@
             .action-row input { width: 100%; }
         }
     </style>
- </head>
+</head>
 <body>
+<div class="my-prayer-app">
     <div class="page">
-        <div class="panel user-banner full">
+        <div class="panel user-banner full ">
             <div>Signed in as <span id="userEmailText">...</span></div>
-            <button id="logoutBtn" class="secondary">Log out</button>
+            <button id="logoutBtn" class="secondary">Log in</button>
         </div>
-        <div class="panel">
-            <h1>Prayer Review</h1>
-            <div class="row" style="margin: 10px 0;">
-                <select id="statusFilter">
+        <div class="panel ">
+             <h2 class="content-heading">Prayer Review</h2>
+                        <img
+                class="prayer-review-image"
+                src="https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png"
+                alt="Prayer review"
+            />
+            <div class="muted mtop-6">New requests and response drafts now live together here.</div>
+
+            <div id="scopeNote" class="muted mtop-6"></div>
+            <div class="row row-spaced">
+                <label for="statusFilter" class="sr-only">Filter prayer requests by status</label>
+                <select id="statusFilter" title="Filter prayer requests by status" aria-label="Filter prayer requests by status">
+                    <option value="all" selected>All</option>
+                    <option value="submitted">New</option>
                     <option value="pending_review">Pending Review</option>
+                    <option value="escalated">Escalated</option>
                     <option value="sent">Sent</option>
                     <option value="approved">Approved</option>
                     <option value="rejected">Rejected</option>
-                    <option value="all">All</option>
                 </select>
                 <button id="refreshBtn">Refresh</button>
                 <span id="status" class="muted"></span>
@@ -166,10 +258,10 @@
         </div>
 
         <div class="panel">
-            <h2>Request Detail</h2>
+            <h2 class="content-heading">Request Detail</h2>
             <div id="detail" class="muted">Select an item to review.</div>
 
-            <h2 style="margin-top: 16px;">Response</h2>
+            <h2 class="content-heading">Response</h2>
             <div class="toolbar">
                 <button class="secondary" data-cmd="bold"><b>B</b></button>
                 <button class="secondary" data-cmd="italic"><i>I</i></button>
@@ -177,9 +269,10 @@
                 <button class="secondary" data-cmd="formatBlock" data-value="H1">H1</button>
                 <button class="secondary" data-cmd="formatBlock" data-value="H2">H2</button>
                 <button class="secondary" data-cmd="insertUnorderedList">List</button>
+                <button id="generatePrayerBtn" class="secondary" type="button">Generate</button>
             </div>
             <div id="editor" class="editor" contenteditable="true"></div>
-            <div class="action-row" style="margin-top: 10px;">
+            <div class="action-row mtop-10">
                 <input id="responderName" type="text" placeholder="Responder name" />
                 <button id="saveBtn">Save</button>
                 <button id="approveBtn">Approve</button>
@@ -188,17 +281,43 @@
                 <button id="sendNowBtn" class="secondary">Send Now</button>
             </div>
         </div>
-    </div>
+        <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_a2ba82ab096c38d3.mp3">
 
+        <div class="card-player-info">
+            <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+            <div class="card-player-meta">
+            <div class="card-player-title">Morning Reflection</div>
+            <div class="card-player-subtitle">Formation Series · 4:32</div>
+            </div>
+        </div>
+
+        <div class="card-player-progress">
+            <div class="card-player-progress-fill"></div>
+        </div>
+
+        <div class="card-player-controls">
+            <button class="card-player-btn play" title="Play/Pause">▶</button>
+            <button class="card-player-btn stop" title="Stop">■</button>
+            <span class="card-player-time">0:00 / 4:32</span>
+        </div>
+
+        </div>
+
+    </div>
+</div>
+   
     <script>
+        // NOTE: checkWitnessAccess() is provided globally by the Squarespace Code Injection harness
+        // (js/squarspaceHarnessinit.html). Do NOT duplicate it here.
         const listEl = document.getElementById("list");
         const detailEl = document.getElementById("detail");
         const statusEl = document.getElementById("status");
-        const authToken = localStorage.getItem("auth_token");
+        function getAuthToken() { return localStorage.getItem("auth_token") || ""; }
         const editorEl = document.getElementById("editor");
         const responderEl = document.getElementById("responderName");
         const statusFilter = document.getElementById("statusFilter");
         const userEmailText = document.getElementById("userEmailText");
+        const scopeNoteEl = document.getElementById("scopeNote");
 
         let current = null;
 
@@ -211,6 +330,12 @@
         });
 
         function setStatus(msg) { statusEl.textContent = msg || ""; }
+        function displayStatus(value) {
+            const raw = String(value || "").trim().toLowerCase();
+            if (raw === "submitted") return "new";
+            if (!raw) return "unknown";
+            return raw.replaceAll("_", " ");
+        }
         function esc(v) {
             return String(v || "")
                 .replaceAll("&", "&amp;")
@@ -226,11 +351,21 @@
             editorEl.innerHTML = "";
             responderEl.value = "";
             setStatus("Loading...");
-            const res = await fetch(`/api/prayer/review?status=${encodeURIComponent(statusFilter.value)}&limit=200`, {
-                headers: authToken ? { "Authorization": "Bearer " + authToken } : {}
+            const res = await fetch(`https://www.witnessv2.net/api/prayer/review?status=${encodeURIComponent(statusFilter.value)}&limit=200`, {
+                headers: getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {}
             });
             const json = await res.json();
             const items = Array.isArray(json.items) ? json.items : [];
+            const scopeBits = [];
+            if (json.scope === "ministry" && json.ministry_name) {
+                scopeBits.push(`Viewing ministry queue for ${json.ministry_name}`);
+            } else if (json.scope === "all") {
+                scopeBits.push("Viewing all ministries");
+            }
+            if (json.ministry_role) {
+                scopeBits.push(`role: ${displayStatus(json.ministry_role)}`);
+            }
+            if (scopeNoteEl) scopeNoteEl.textContent = scopeBits.join(" | ");
             if (!items.length) {
                 listEl.innerHTML = "<div class='muted'>No items found.</div>";
                 setStatus("");
@@ -238,9 +373,10 @@
             }
             listEl.innerHTML = items.map((it, i) => {
                 const r = it.request || {};
+                const hasResponse = Boolean(it.latest_response && (it.latest_response.response_text || it.latest_response.response_audio_path || it.latest_response.id));
                 return `
                     <div class="item" data-idx="${i}">
-                        <div><b>#${r.id}</b> <span class="pill">${esc(r.status)}</span></div>
+                        <div><b>#${r.id}</b> <span class="pill">${esc(displayStatus(r.status))}</span>${hasResponse ? '<span class="pill">response</span>' : ""}</div>
                         <div class="muted">${esc(r.created_at || "n/a")} | ${esc(r.category || "general")} | ${esc(r.urgency || "standard")}</div>
                         <div class="muted">${esc((r.request_text || "").slice(0, 80))}${(r.request_text || "").length > 80 ? "..." : ""}</div>
                     </div>
@@ -260,55 +396,105 @@
             const r = current.request || {};
             const resp = current.latest_response || {};
             const churchBlock = r.church_affiliation
-                ? `<div class="detail-block"><div class="detail-label">Church</div><div>${esc(r.church_affiliation)}</div><div class="muted" style="margin-top:4px;">${esc(r.church_email || "No church email saved")}</div></div>`
+                ? `<div class="detail-block"><div class="detail-label">Church</div><div>${esc(r.church_affiliation)}</div><div class="muted mtop-4">${esc(r.church_email || "No church email saved")}</div></div>`
                 : `<div class="detail-block"><div class="detail-label">Church</div><div class="muted">No church affiliation saved.</div></div>`;
+            const ministryBlock = r.ministry_name
+                ? `<div class="detail-block"><div class="detail-label">Ministry</div><div>${esc(r.ministry_name)}</div><div class="muted mtop-4">${esc(r.ministry_group_email || "No ministry group email saved")}</div></div>`
+                : `<div class="detail-block"><div class="detail-label">Ministry</div><div class="muted">No ministry assigned.</div></div>`;
             detailEl.innerHTML = `
-                <div><b>#${r.id}</b> <span class="pill">${esc(r.status)}</span></div>
-                <div class="muted" style="margin-top:6px;">${esc(r.created_at || "n/a")} | ${esc(r.category || "general")} | ${esc(r.urgency || "standard")}</div>
+                <div><b>#${r.id}</b> <span class="pill">${esc(displayStatus(r.status))}</span></div>
+                <div class="muted mtop-6">${esc(r.created_at || "n/a")} | ${esc(r.category || "general")} | ${esc(r.urgency || "standard")}</div>
                 <div class="detail-grid">
                     <div class="detail-block">
                         <div class="detail-label">Requestor</div>
                         <div>${esc(r.user_name || "Unnamed user")}</div>
-                        <div class="muted" style="margin-top:4px;">${esc(r.user_email || "No email")}</div>
+                        <div class="muted mtop-4">${esc(r.user_email || "No email")}</div>
                     </div>
+                    ${ministryBlock}
                     ${churchBlock}
                 </div>
-                <pre style="margin-top:10px;">${esc(r.request_text || "")}</pre>
+                <pre class="mtop-10">${esc(r.request_text || "")}</pre>
             `;
             editorEl.innerHTML = resp.response_text || "";
             responderEl.value = resp.responder_name || "";
+            setStatus(resp.id ? "Editing existing response draft." : "New request selected. Write a response and save to create the first draft.");
         }
 
         async function saveResponse() {
-            if (!current?.latest_response?.id) {
-                setStatus("No response to save. Use Send Now or create a draft first.");
+            if (!current?.request?.id) {
+                setStatus("Select a prayer request first.");
                 return;
             }
+            const text = editorEl.innerHTML.trim();
+            if (!text) {
+                setStatus("Write a response before saving.");
+                return;
+            }
+
+            const isNewDraft = !current?.latest_response?.id;
             setStatus("Saving...");
             const payload = {
                 responder_name: responderEl.value.trim() || null,
-                response_text: editorEl.innerHTML.trim()
+                response_text: text
             };
-            const res = await fetch(`/api/prayer/response/${current.latest_response.id}`, {
-                method: "PUT",
+
+            const endpoint = isNewDraft ? "https://www.witnessv2.net/api/prayerresponse/" : `https://www.witnessv2.net/api/prayer/response/${current.latest_response.id}`;
+            const method = isNewDraft ? "POST" : "PUT";
+            const body = isNewDraft
+                ? JSON.stringify({ prayer_id: current.request.id, ...payload })
+                : JSON.stringify(payload);
+            const res = await fetch(endpoint, {
+                method,
                 headers: {
                     "Content-Type": "application/json",
-                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                    ...(getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {})
                 },
-                body: JSON.stringify(payload)
+                body
             });
             const json = await res.json();
             if (!res.ok) {
                 setStatus(json.error || "Save failed");
                 return;
             }
-            setStatus("Saved.");
-            if (current?.latest_response) {
-                current.latest_response.response_text = payload.response_text;
-                current.latest_response.responder_name = payload.responder_name;
+            setStatus(isNewDraft ? "Draft created." : "Saved.");
+            await loadList();
+        }
+        async function onGeneratePrayer() {
+            try {
+            setStatus("Finding prayer...");
+            const r = current.request || {};
+            const promptReq = (r.request_text || "").trim();
+            if (!promptReq) {
+                setStatus("Select a request with text first.");
+                return;
+            }
+
+            const res = await fetch("https://www.witnessv2.net/api/prayer/ai-generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {})
+                },
+                body: JSON.stringify({ prompt: promptReq })
+            });
+            const out = await res.json();
+            if (!res.ok) {
+                setStatus(out.error || "Prayer generation failed.");
+                return;
+            }
+
+            const prayerText = String((out && out.prayer_text) || "").trim();
+            if (!prayerText) {
+                setStatus("No prayer text returned.");
+                return;
+            }
+
+            editorEl.innerHTML = `<p>${esc(prayerText).replaceAll("\n", "<br>")}</p>`;
+            setStatus("Prayer template ready in the editor. Review and save when ready.");
+            } catch (err) {
+            setStatus((err && err.message) || "Prayer generation failed.");
             }
         }
-
         async function approveRequest() {
             if (!current?.request?.id) return;
             setStatus("Approving...");
@@ -316,11 +502,11 @@
                 prayer_id: current.request.id,
                 response_id: current.latest_response?.id || null
             };
-            const res = await fetch("/api/prayer/approve", {
+            const res = await fetch("https://www.witnessv2.net/api/prayer/approve", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                    ...(getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {})
                 },
                 body: JSON.stringify(payload)
             });
@@ -340,11 +526,11 @@
                 prayer_id: current.request.id,
                 response_id: current.latest_response?.id || null
             };
-            const res = await fetch("/api/prayer/reject", {
+            const res = await fetch("https://www.witnessv2.net/api/prayer/reject", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                    ...(getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {})
                 },
                 body: JSON.stringify(payload)
             });
@@ -395,11 +581,11 @@
                 responder_name: responderEl.value.trim() || null,
                 response_text: text
             };
-            const res = await fetch("/api/prayer/send-now", {
+            const res = await fetch("https://www.witnessv2.net/api/prayer/send-now", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                    ...(getAuthToken() ? { "Authorization": "Bearer " + getAuthToken() } : {})
                 },
                 body: JSON.stringify(payload)
             });
@@ -418,34 +604,33 @@
         document.getElementById("rejectBtn").addEventListener("click", rejectRequest);
         document.getElementById("shareBtn").addEventListener("click", shareResponse);
         document.getElementById("sendNowBtn").addEventListener("click", sendNow);
+        document.getElementById("generatePrayerBtn").addEventListener("click", onGeneratePrayer);
+        document.getElementById("statusFilter").addEventListener("change", loadList);
 
-        async function requireAdmin() {
-            const token = localStorage.getItem("auth_token") || "";
-            if (!token) {
-                window.location.href = "/login";
-                return false;
-            }
-            const res = await fetch("/api/auth/me", {
-                headers: { "Authorization": "Bearer " + token }
-            });
-            const json = await res.json();
-            if (!res.ok || !json.admin) {
-                window.location.href = "/login";
-                return false;
-            }
-            userEmailText.textContent = json.email || "unknown";
-            return true;
-        }
+        // ── Initial page state ─────────────────────────────────────────────────────
+        // No auto-redirect on load. Auth runs only when the user clicks Log in.
+        // This keeps the Squarespace editor from deadlocking on this page.
+        userEmailText.textContent = "Not signed in";
+        setStatus("Click Log in to access prayer review.");
 
-        requireAdmin().then((ok) => {
-            if (ok) loadList();
+        // ── Log in button ──────────────────────────────────────────────────────────
+        // checkWitnessAccess() is provided by the Squarespace Code Injection harness
+        // (js/squarspaceHarnessinit.html). It validates the stored token, checks the
+        // can_review_prayers permission, and redirects to login on failure.
+        // On success it returns { ok: true, user, userEmail }.
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+            const auth = await checkWitnessAccess();
+            if (!auth || !auth.ok) return; // harness already handled the redirect
+            userEmailText.textContent = auth.userEmail;
+            if (auth.user && auth.user.ministry_name && !auth.user.admin) {
+                scopeNoteEl.textContent = `Viewing ministry queue for ${auth.user.ministry_name}`;
+            }
+            await loadList();
         });
 
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-            localStorage.removeItem("auth_token");
-            localStorage.removeItem("user_email");
-            window.location.href = "/login";
-        });
     </script>
+  
+
+    
 </body>
 </html>
