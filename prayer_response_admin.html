@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prayer Response Entry</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --panel: #151b22;
+            --muted: #8b98a5;
+            --accent: #2bb0ff;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: radial-gradient(1200px 800px at 10% 10%, #111827, #0b0f14 55%);
+            color: #e5e7eb;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .page { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        h1 { font-size: 20px; letter-spacing: 0.3px; }
+        .muted { color: var(--muted); font-size: 12px; }
+        .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        input, button {
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #0f141b;
+            color: #e5e7eb;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+        input { min-width: 220px; }
+        button {
+            background: linear-gradient(135deg, #1f8fff, #2bb0ff);
+            border: none;
+            cursor: pointer;
+        }
+        button.secondary {
+            background: #0f141b;
+            border: 1px solid var(--border);
+        }
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .editor {
+            min-height: 180px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            outline: none;
+        }
+        .card {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+        }
+        .pill {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(43,176,255,0.15);
+            color: #9ad7ff;
+            font-size: 11px;
+            border: 1px solid rgba(43,176,255,0.35);
+        }
+        pre {
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #cbd5e1;
+            background: rgba(0,0,0,0.35);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="panel">
+            <h1>Prayer Response Entry</h1>
+            <div class="muted">Enter a Prayer ID, review the request, and submit a response for review.</div>
+            <div class="row" style="margin-top: 12px;">
+                <input id="prayerId" type="number" placeholder="Prayer ID" />
+                <button id="loadBtn">Load Request</button>
+                <span id="status" class="muted"></span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Original Request</h2>
+            <div id="requestCard" class="card">
+                <div class="muted">Load a request to view details.</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Response</h2>
+            <div class="toolbar">
+                <button class="secondary" data-cmd="bold"><b>B</b></button>
+                <button class="secondary" data-cmd="italic"><i>I</i></button>
+                <button class="secondary" data-cmd="underline"><u>U</u></button>
+                <button class="secondary" data-cmd="formatBlock" data-value="H1">H1</button>
+                <button class="secondary" data-cmd="formatBlock" data-value="H2">H2</button>
+                <button class="secondary" data-cmd="insertUnorderedList">• List</button>
+            </div>
+            <div id="responseEditor" class="editor" contenteditable="true"></div>
+            <div class="row" style="margin-top: 12px;">
+                <input id="responderName" type="text" placeholder="Responder name (optional)" />
+                <button id="submitBtn">Submit for Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const requestCard = document.getElementById("requestCard");
+        const responseEditor = document.getElementById("responseEditor");
+        const prayerIdInput = document.getElementById("prayerId");
+        const responderNameInput = document.getElementById("responderName");
+        const authToken = localStorage.getItem("auth_token");
+
+        document.querySelectorAll("[data-cmd]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const cmd = btn.getAttribute("data-cmd");
+                const val = btn.getAttribute("data-value");
+                document.execCommand(cmd, false, val || null);
+            });
+        });
+
+        function setStatus(msg) {
+            statusEl.textContent = msg || "";
+        }
+
+        async function loadRequest() {
+            const id = prayerIdInput.value.trim();
+            if (!id) {
+                setStatus("Enter a prayer ID.");
+                return;
+            }
+            setStatus("Loading...");
+            const res = await fetch(`/api/prayer/request?prayer_id=${encodeURIComponent(id)}`, {
+                headers: authToken ? { "Authorization": "Bearer " + authToken } : {}
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                requestCard.innerHTML = `<div class="muted">${json.error || "Not found"}</div>`;
+                setStatus("");
+                return;
+            }
+
+            const r = json.request;
+            requestCard.innerHTML = `
+                <div><span class="pill">#${r.id}</span> <span class="pill">${r.status}</span></div>
+                <div class="muted" style="margin-top:8px;">${r.created_at || "n/a"} · ${r.category || "general"} · ${r.urgency || "standard"}</div>
+                <div class="muted" style="margin-top:8px;">User: ${r.user_email}</div>
+                <pre style="margin-top:10px;">${r.request_text || ""}</pre>
+            `;
+            setStatus("");
+        }
+
+        async function submitResponse() {
+            const id = prayerIdInput.value.trim();
+            if (!id) {
+                setStatus("Enter a prayer ID.");
+                return;
+            }
+
+            const payload = {
+                prayer_id: Number(id),
+                responder_name: responderNameInput.value.trim() || null,
+                response_text: responseEditor.innerHTML.trim()
+            };
+
+            setStatus("Submitting...");
+            const res = await fetch("/api/prayerresponse/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                setStatus(json.error || "Submit failed");
+                return;
+            }
+            setStatus(`Submitted. Response ID: ${json.response_id}`);
+        }
+
+        document.getElementById("loadBtn").addEventListener("click", loadRequest);
+        document.getElementById("submitBtn").addEventListener("click", submitResponse);
+    </script>
+</body>
+</html>

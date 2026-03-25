@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quote JSON Builder</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, Tahoma, sans-serif; background: #0e1521; color: #eaf1ff; }
+    .wrap { max-width: 860px; margin: 20px auto; padding: 0 14px; }
+    .card { background: #152033; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    .muted { color: #9fb1c6; font-size: 13px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .field { flex: 1 1 260px; }
+    label { display: block; font-size: 13px; color: #bdd2f3; margin: 0 0 6px; }
+    input, textarea { width: 100%; border: 1px solid rgba(255,255,255,.14); border-radius: 10px; background: #0f1726; color: #ecf4ff; padding: 10px; box-sizing: border-box; }
+    textarea { min-height: 92px; resize: vertical; }
+    button { border: 1px solid rgba(255,255,255,.2); border-radius: 9px; padding: 9px 12px; background: #1d4ed8; color: #fff; cursor: pointer; }
+    button.secondary { background: #0f1726; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; border-bottom: 1px solid rgba(255,255,255,.1); padding: 8px; vertical-align: top; }
+    .mono { font-family: Consolas, monospace; }
+    .right { text-align: right; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Quote JSON Builder</h1>
+      <div class="muted">Adds quote records with auto-generated IDs and exports a JSON array.</div>
+      <div class="muted" style="margin-top:6px;">Weight: higher values are picked more often when sampling content (for example, 3 appears ~3x as often as 1).</div>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label for="qTitle">Title</label>
+        <input id="qTitle" type="text" placeholder="Short title for stage card" />
+      </div>
+      <div class="field" style="margin-top:10px;">
+        <label for="qText">Text</label>
+        <textarea id="qText" placeholder="Enter quote text"></textarea>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="field">
+          <label for="qAuthor">Author</label>
+          <input id="qAuthor" type="text" placeholder="Author name" />
+        </div>
+        <div class="field">
+          <label for="qTags">Tags (comma-separated)</label>
+          <input id="qTags" type="text" placeholder="encouragement, fear-not" />
+        </div>
+        <div class="field">
+          <label for="qImageUrl">Image URL (optional)</label>
+          <input id="qImageUrl" type="text" placeholder="/images/example.png" />
+        </div>
+        <div class="field">
+          <label for="qWeight">Weight</label>
+          <input id="qWeight" type="number" min="1" step="1" value="1" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button id="addBtn">Save Quote</button>
+        <button id="clearBtn" class="secondary">Clear Form</button>
+        <button id="reloadBtn" class="secondary">Reload</button>
+      </div>
+      <div id="status" class="muted" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content: space-between; align-items:center;">
+        <strong>Saved Quotes</strong>
+        <div>
+          <button id="downloadBtn">Download JSON</button>
+          <button id="copyBtn" class="secondary">Copy JSON</button>
+        </div>
+      </div>
+      <table style="margin-top:10px;">
+        <thead>
+          <tr><th>ID</th><th>Title</th><th>Text</th><th>Author</th><th>Image</th><th>Tags</th><th>Weight</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <pre id="preview" class="mono" style="white-space:pre-wrap; margin-top:10px; background:#0f1726; border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:10px; max-height:280px; overflow:auto;"></pre>
+    </div>
+  </div>
+
+  <script>
+    const rows = document.getElementById('rows');
+    const preview = document.getElementById('preview');
+    const status = document.getElementById('status');
+    const state = [];
+    const token = localStorage.getItem('auth_token') || '';
+    const headers = token ? { Authorization: 'Bearer ' + token } : {};
+
+    function esc(s){
+      return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function setStatus(msg){ status.textContent = msg || ''; }
+
+    async function jfetch(url, opts = {}){
+      const r = await fetch(url, opts);
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || d.detail || `HTTP ${r.status}`);
+      return d;
+    }
+
+    function render() {
+      rows.innerHTML = '';
+      state.forEach((q) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="mono">${esc(q.id)}</td>
+          <td>${esc(q.title)}</td>
+          <td>${esc(q.text)}</td>
+          <td>${esc(q.author)}</td>
+          <td class="mono">${esc(q.image_url || '')}</td>
+          <td>${esc((q.tags || []).join(', '))}</td>
+          <td>${Number(q.weight || 1)}</td>
+        `;
+        rows.appendChild(tr);
+      });
+      preview.textContent = JSON.stringify(state, null, 2);
+    }
+
+    function getForm() {
+      const title = document.getElementById('qTitle').value.trim();
+      const text = document.getElementById('qText').value.trim();
+      const author = document.getElementById('qAuthor').value.trim();
+      const image_url = document.getElementById('qImageUrl').value.trim();
+      const tags = document.getElementById('qTags').value.split(',').map(x => x.trim()).filter(Boolean);
+      const weight = Math.max(1, parseInt(document.getElementById('qWeight').value || '1', 10));
+      return { title, text, author, image_url, tags, weight, active: true };
+    }
+
+    function clearForm() {
+      document.getElementById('qTitle').value = '';
+      document.getElementById('qText').value = '';
+      document.getElementById('qAuthor').value = '';
+      document.getElementById('qImageUrl').value = '';
+      document.getElementById('qTags').value = '';
+      document.getElementById('qWeight').value = '1';
+    }
+
+    async function loadSaved() {
+      try {
+        const out = await jfetch('/api/admin/quotes/local', { headers });
+        const items = Array.isArray(out.quotes) ? out.quotes : [];
+        state.length = 0;
+        items.forEach((x) => state.push(x));
+        render();
+        setStatus(`Loaded ${items.length} saved quotes from server.`);
+      } catch (e) {
+        setStatus(String(e.message || e));
+      }
+    }
+
+    document.getElementById('addBtn').addEventListener('click', async () => {
+      const f = getForm();
+      if (!f.title || !f.text) {
+        setStatus('Title and Text are required.');
+        return;
+      }
+      try {
+        const out = await jfetch('/api/admin/quotes/local/append', {
+          method: 'POST',
+          headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+          body: JSON.stringify(f)
+        });
+        clearForm();
+        await loadSaved();
+        setStatus(`Saved ${out?.quote?.id || 'quote'} and ingested into BD.`);
+      } catch (e) {
+        setStatus(String(e.message || e));
+      }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', clearForm);
+    document.getElementById('reloadBtn').addEventListener('click', () => { void loadSaved(); });
+
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'witnesslocal_quotes.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+        setStatus('JSON copied to clipboard.');
+      } catch (_) {
+        setStatus('Copy failed.');
+      }
+    });
+
+    void loadSaved();
+  </script>
+</body>
+</html>

@@ -1,24 +1,6 @@
-  /* =========================================================
-     WITNESS V2 / CP.CSS
-     Squarespace-safe shared styles
 
-     Quick find:
-     1. Theme tokens
-     2. Page shell + episode header
-     3. Hero panel
-     4. Content cards + media thumbnails
-     5. Reflection cards + reflection grid
-     6. Embedded media / hero image block
-     7. Custom summary cards
-     8. Scripture card
-     9. YouTube cards
-    10. Donate page
-    11. Bible search
-    12. Prayer UI
-    13. Shared list + button utilities
-     ========================================================= */
-
-  /* --- 1. Theme tokens --- */
+  /* Add your CSS styles here */
+    /* --- Episode 1 Styles (Squarespace Safe) --- */
   :root {
     --bg: #0b0b10;
     --bg-soft: #151521;
@@ -31,35 +13,15 @@
     --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.7);
     --radius-lg: 18px;
     --radius-pill: 999px;
-    --font-body: Georgia, "Times New Roman", Times, serif;
-    --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
-    --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  /* --- 2. Page shell + episode header --- */
-
   .episode-page {
-    font-family: var(--font-body);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: radial-gradient(circle at top, #2b2230 0, #0b0b10 55%);
     color: var(--text-main);
     padding: 30px 16px 64px;
     max-width: 100%;
     margin: 0 auto;
-  }
-
-  .episode-page p,
-  .episode-page li,
-  .episode-page blockquote {
-    font-family: var(--font-body);
-  }
-
-  .episode-page h1,
-  .episode-page h2,
-  .episode-page h3,
-  .episode-page h4,
-  .episode-page h5,
-  .episode-page h6 {
-    font-family: var(--font-heading);
   }
 
   .episode-header {
@@ -118,8 +80,6 @@
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* --- 3. Hero panel --- */
-
   .hero-panel {
     margin-top: 28px;
     padding: 20px 20px 22px;
@@ -144,7 +104,6 @@
   }
 
   .hero-tagline {
-    font-family: var(--font-heading);
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.18em;
@@ -169,8 +128,6 @@
     color: var(--text-soft);
   }
 
-  /* --- 4. Content cards + media thumbnails --- */
-
   .content-grid {
     margin-top: 30px;
     display: grid;
@@ -193,7 +150,6 @@
   }
 
   .content-label {
-    font-family: var(--font-heading);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
@@ -202,15 +158,13 @@
   }
 
   .content-heading {
-    font-family: var(--font-heading);
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 12px;
     color: var(--accent);
   }
 
   .content-body {
-    font-family: var(--font-body);
-    font-size: 18px;
+    font-size: 15px;
     line-height: 1.7;
     color: var(--text-soft);
   }
@@ -228,127 +182,23 @@
     margin-bottom: 6px;
   }
 
-  /* Content card media / thumbnails */
-
-  .content-card-media {
-    margin-top: 16px;
-  }
-
-  .content-card-image {
-    width: 100%;
-    display: block;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.32);
-    object-fit: cover;
-  }
-
-  .content-card-thumbs {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .content-card-thumbs.three-up {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .content-card-thumb {
-    display: block;
-    overflow: hidden;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.28);
-    text-decoration: none;
-  }
-
-  .content-card-thumb img {
-    width: 100%;
-    display: block;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    transition: transform 0.25s ease, filter 0.25s ease;
-  }
-
-  .content-card-thumbs.portrait-row {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 180px));
-    justify-content: center;
-  }
-
-  .content-card-thumb.portrait {
-    max-width: 180px;
-    margin: 0 auto;
-  }
-
-  .content-card-thumb.portrait img,
-  .content-card-image.portrait {
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    object-fit: cover;
-    object-position: top center;
-  }
-
-  .content-card-image.portrait {
-    max-width: 180px;
-    margin: 0 auto;
-  }
-
-  .content-card-thumb:hover img {
-    transform: scale(1.03);
-    filter: brightness(1.04);
-  }
-
-  .content-card-thumb-caption {
-    padding: 10px 12px 12px;
-    font-size: 13px;
-    line-height: 1.45;
-    color: var(--text-soft);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: rgba(0,0,0,0.18);
-  }
-
-  @media (max-width: 700px) {
-    .content-card-thumbs,
-    .content-card-thumbs.three-up {
-      grid-template-columns: 1fr;
-    }
-
-    .content-card-thumbs.portrait-row {
-      grid-template-columns: repeat(auto-fit, minmax(110px, 150px));
-    }
-
-    .content-card-thumb.portrait,
-    .content-card-image.portrait {
-      max-width: 150px;
-    }
-  }
-
-  /* --- 5. Reflection cards + reflection grid --- */
-
   .reflection-card {
     margin-top: 22px;
     padding: 16px 18px;
     border-radius: var(--radius-lg);
     border: 1px dashed rgba(246, 180, 91, 0.5);
     background: rgba(0, 0, 0, 0.35);
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-soft);
   }
 
   .reflection-label {
-    font-family: var(--font-heading);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--accent);
     margin-bottom: 6px;
   }
-  /* --- 6. Embedded media / hero image block --- */
-
-  /* Embedded video / iframe helpers */
-
   .mini-player-container {
   width: 250px; /* Or whatever your sidebar width is */
   padding: 10px;
@@ -370,8 +220,6 @@
   width: 100%;
   height: 100%;
 }
-  /* Hero image block */
-
     .hero-image-block {
     position: relative;
     border-radius: 18px;
@@ -381,7 +229,7 @@
     border: 1px solid rgba(255,255,255,0.06);
   }
 
-  .hero-image-block .hero-main-image {
+  .hero-image-block img {
     width: 100%;
     height: auto;
     display: block;
@@ -406,38 +254,15 @@
     bottom: 24px;
     left: 24px;
     right: 24px;
-    z-index: 4;
     color: #f7f3ea;
-    font-family: var(--font-heading);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     text-shadow: 0 4px 14px rgba(0,0,0,0.7);
-  }
-
-  .hero-image-block .hero-corner-overlay {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 184px;
-    height: 184px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.28);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.45);
-    z-index: 3;
   }
 
   .hero-image-title {
     font-size: 28px;
     letter-spacing: 0.04em;
     margin-bottom: 6px;
-  }
-
-  .hero-image-block .hero-image-text .hero-title {
-    margin: 0 0 6px;
-    font-size: clamp(28px, 4.2vw, 46px);
-    line-height: 1.05;
-    letter-spacing: 0.02em;
-    font-weight: 700;
-    color: var(--text-main) !important;
   }
 
   .hero-image-subtitle {
@@ -449,22 +274,13 @@
     .hero-image-title {
       font-size: 22px;
     }
-    .hero-image-block .hero-image-text .hero-title {
-      font-size: clamp(24px, 8vw, 34px);
-      line-height: 1.1;
-    }
     .hero-image-subtitle {
       font-size: 14px;
     }
-    .hero-image-block .hero-corner-overlay {
-      width: 64px;
-      height: 64px;
-      top: 10px;
-      left: 10px;
-      border-radius: 10px;
-    }
   }
-  /* --- 7. Custom summary cards --- */
+
+
+
 
   /* Container spacing */
   #custom-summary-output {
@@ -547,8 +363,6 @@
   #custom-summary-output a:hover {
     opacity: 0.8;
   }
-
-  /* --- 8. Scripture card --- */
 
  .scripture-card {
     background: radial-gradient(circle at top left,
@@ -696,8 +510,6 @@
     }
   }
   
-  /* --- 9. YouTube cards --- */
-
   .youtube-card {
   background: rgba(255,255,255,0.7);
   padding: 14px;
@@ -717,150 +529,7 @@
   transform: translateY(-3px);
   box-shadow: 0 8px 22px rgba(0,0,0,0.12);
 }
-
-/* --- 9b. Mini music player --- */
-
-.card-player {
-  margin-top: 18px;
-  background: rgba(0,0,0,0.28);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 16px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Track info row */
-.card-player-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.card-player-art {
-  width: 46px;
-  height: 46px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.card-player-art-placeholder {
-  width: 46px;
-  height: 46px;
-  border-radius: 8px;
-  background: rgba(246,180,91,0.15);
-  border: 1px solid rgba(246,180,91,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.card-player-meta {
-  min-width: 0;
-  flex: 1;
-}
-
-.card-player-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-player-subtitle {
-  font-size: 12px;
-  color: var(--text-soft);
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Progress bar */
-.card-player-progress {
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.card-player-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width 0.25s linear;
-}
-
-/* Controls row */
-.card-player-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-player-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  color: var(--text-main);
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-  flex-shrink: 0;
-}
-
-.card-player-btn:hover {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.2);
-  transform: scale(1.08);
-}
-
-/* Play button gets accent treatment */
-.card-player-btn.play {
-  width: 42px;
-  height: 42px;
-  font-size: 16px;
-  background: var(--accent);
-  color: #0b0b10;
-  border-color: transparent;
-  box-shadow: 0 4px 14px rgba(246,180,91,0.35);
-}
-
-.card-player-btn.play:hover {
-  background: #ffc97a;
-  box-shadow: 0 6px 20px rgba(246,180,91,0.5);
-  transform: scale(1.1);
-}
-
-/* Time display */
-.card-player-time {
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--text-soft);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-/* --- 10. Donate page --- */
-
-/* Donate page shell */
+/* --- DONATE PAGE FRAMEWORK --- */
 
 .donate-page {
   background: linear-gradient(135deg, #f8eaff, #f3f0ff, #ffffff);
@@ -872,7 +541,7 @@
   margin: 2rem 0;
 }
 
-/* Donate page glow */
+/* Floating glow */
 .donate-page::before {
   content: "";
   position: absolute;
@@ -901,7 +570,7 @@
   font-family: "Georgia", serif;
 }
 
-/* Donate scripture card */
+/* Scripture box */
 .donate-scripture {
   width: 85%;
   margin: 0 auto 2rem;
@@ -934,7 +603,7 @@
   color: #7a4b9e;
 }
 
-/* Donate intro */
+/* Intro paragraph */
 .donate-intro {
   max-width: 700px;
   margin: 0 auto 2.5rem;
@@ -945,7 +614,7 @@
   text-align: center;
 }
 
-/* Donate explainer */
+/* Explainer section */
 .donate-explainer {
   max-width: 700px;
   margin: 0 auto 2.5rem;
@@ -964,7 +633,7 @@
 }
 
 
-/* Donate form wrapper */
+/* Form wrapper */
 .donation-form-wrapper {
   background: #ffffff;
   padding: 2rem;
@@ -975,738 +644,11 @@
   margin: 0 auto 2.5rem;
 }
 
-/* Donate footer */
+/* Footer */
 .donate-footer {
   text-align: center;
   color: #7a4b9e;
   font-style: italic;
   font-size: 22px;
   margin-top: 1.5rem;
-}
-/* --- 11. Bible search --- */
-
-/* Bible search shell */
-
-.bible-search {
-  background: #111;
-  border: 1px solid #333;
-  padding: 1.5rem;
-  border-radius: 6px;
-  color: #ddd;
-  font-family: "Georgia", "Times New Roman", serif;
-  max-width: 100%;
-}
-
-.bible-search label {
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  color: #bbb;
-}
-
-.bs-fields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.bs-field {
-  flex: 1 1 240px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bs-field.narrow {
-  flex: 0 0 140px;
-}
-
-.bible-search input,
-.bible-search select {
-  margin-top: 4px;
-  padding: 0.5rem;
-  background: #1a1a1a;
-  border: 1px solid #444;
-  color: #eee;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.bs-hint {
-  margin-top: 4px;
-  font-size: 0.75rem;
-  color: #666;
-}
-
-.bs-actions {
-  display: flex;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-
-.bible-search button {
-  background: #444;
-  color: #eee;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #666;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
-}
-
-.bible-search button:hover {
-  background: #555;
-}
-
-.bs-status {
-  margin-left: auto;
-  font-size: 0.85rem;
-  color: #888;
-}
-
-.bs-divider {
-  margin: 1.5rem 0;
-  border-bottom: 1px solid #333;
-}
-
-.bs-results {
-  margin-top: 1rem;
-  line-height: 1.6;
-}
-.bs-result {
-  background: #0d0d0d;
-  border: 1px solid #222;
-  padding: 1.5rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  color: #ddd;
-  font-family: "Georgia", "Times New Roman", serif;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-/* Bible search highlighted result */
-.bs-result[data-hascluster="true"] {
-  box-shadow: 0 0 12px rgba(180, 140, 60, 0.25);
-  border-color: #4a3a1a;
-}
-
-.bs-result:hover {
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
-}
-
-.bs-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem;
-  font-size: 0.9rem;
-  color: #aaa;
-}
-
-.bs-primary-ref {
-  font-size: 1.1rem;
-  color: #eee;
-  letter-spacing: 0.5px;
-}
-
-.bs-meta span {
-  color: #ccc;
-}
-
-.bs-notes {
-  margin-top: 0.8rem;
-  font-size: 0.9rem;
-  color: #bbb;
-  line-height: 1.5;
-}
-
-.bs-tags {
-  margin-top: 0.8rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.bs-tags span {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: #888;
-}
-
-.bs-divider {
-  margin: 1.2rem 0;
-  border-bottom: 1px solid #222;
-}
-
-
-.bs-verse:hover {
-  background: #1a1a1a;
-  border-color: #444;
-}
-
-.bs-verse {
-  padding: 0.8rem 1rem;
-  background: #141414;
-  border: 1px solid #2a2a2a;
-  border-radius: 6px;
-  margin-bottom: 0.8rem;
-    cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.bs-verse:last-child {
-  margin-bottom: 0;
-}
-
-.bs-verses {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-
-
-.bs-ref {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-bottom: 0.2rem;
-}
-
-.bs-text {
-  font-size: 1rem;
-  color: #ddd;
-  line-height: 1.6;
-}
-.bs-verse-actions {
-  margin-top: 0.6rem;
-  display: flex;
-  gap: 0.6rem;
-}
-
-.bs-copy-btn,
-.bs-open-btn {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #aaa;
-  padding: 2px 5px;
-  font-size: 0.65rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.bs-copy-btn:hover,
-.bs-open-btn:hover {
-  background: #222;
-  border-color: #444;
-}
-.bs-hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #222;
-}
-
-.bs-hero-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #eee;
-  letter-spacing: 0.5px;
-  font-family: "Georgia", "Times New Roman", serif;
-}
-
-.bs-hero-image {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  border-radius: 4px;
-  opacity: 0.9;
-}
-
-.bs-top-pick {
-  font-size: 0.85rem;
-  color: #d2b47c;
-  opacity: 0.9;
-  font-style: italic;
-}
-/* --- 12. Prayer UI --- */
-
-/* Prayer textarea safeguards */
-
- /* Prevent horizontal resizing */
-#wv2-prayer-box textarea {
-  resize: vertical; /* only up/down */
-  max-height: 300px;
-  max-width: 100%;  /* never overflow the prayer box */
-  box-sizing: border-box; /* padding stays inside the width */
-}
-
-/* Optional: reduce oversized padding */
-#wv2PrayerPromptEmail,
-#wv2PrayerPrompt,
-#wv2PrayerText {
-  padding: 12px 14px !important; /* softer, more proportional */
-}
-
-/* Prayer layout wrapper */
-.prayer-flex-wrapper {
-  display: flex;
-  gap: 32px;
-  align-items: flex-start;
-  justify-content: center;
-  max-width: 1200px;
-  margin: 0 auto 40px;
-  padding: 0 20px;
-}
-
-/* Prayer columns */
-.prayer-flex-left,
-.prayer-flex-right {
-  flex: 1;
-  min-width: 0; /* prevents overflow */
-}
-
-/* Prayer height alignment */
-.prayer-instruction,
-#wv2-prayer-box {
-  height: 100%;
-}
-
-/* Prayer responsive layout */
-@media (max-width: 900px) {
-  .prayer-flex-wrapper {
-    flex-direction: column;
-    gap: 24px;
-  }
-}
-
-/* Prayer instruction card */
-.prayer-instruction {
-  background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
-  border-radius: 20px;
-  padding: 28px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(180, 150, 255, 0.15);
-  border: 1px solid rgba(200, 170, 255, 0.25);
-  max-width: 680px;
-  margin: 0 auto 32px;
-}
-
-.prayer-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #5a3d8c;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
-}
-
-.prayer-text {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #5b4f6d;
-  margin-bottom: 20px;
-}
-
-.prayer-image-wrapper {
-  margin-top: 16px;
-}
-
-.prayer-image {
-  width: 100%;
-  max-width: 260px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(150, 120, 220, 0.25);
-  opacity: 0.95;
-}
-
-/* Prayer box */
-#wv2-prayer-box {
-  background: #ffffff;
-  border: 1px solid rgba(210, 190, 255, 0.4);
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 6px 18px rgba(180, 150, 255, 0.15);
-  max-width: 680px;
-  margin: 24px auto;
-}
-
-#wv2-prayer-box h3 {
-  margin: 0 0 16px;
-  font-size: 22px;
-  color: #5a3d8c;
-  font-weight: 700;
-}
-
-/* Prayer labels */
-#wv2-prayer-box label {
-  font-weight: 600;
-  color: #5b4f6d;
-  margin-bottom: 6px;
-  display: block;
-}
-
-/* Prayer inputs + textareas */
-#wv2-prayer-box input,
-#wv2-prayer-box textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(180, 150, 255, 0.4);
-  background: #faf7ff;
-  font-size: 15px;
-  color: #4a3d60;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-#wv2-prayer-box input:focus,
-#wv2-prayer-box textarea:focus {
-  border-color: #b08cff;
-  box-shadow: 0 0 0 3px rgba(176, 140, 255, 0.25);
-  outline: none;
-}
-
-/* Prayer buttons */
-#wv2-prayer-box button {
-  padding: 10px 18px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 15px;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-
-/* Prayer primary button */
-#wv2GeneratePrayerBtn {
-  background: #896ABD;
-  color: white;
-  box-shadow: 0 4px 12px rgba(176, 140, 255, 0.3);
-}
-
-#wv2GeneratePrayerBtn:hover {
-  background: #a47aff;
-}
-
-/* Prayer secondary button */
-#wv2RequestPrayerBtn {
-  background: #896ABD;
-  color: white;
-  border: 1px solid rgba(176, 140, 255, 0.4);
-}
-
-#wv2RequestPrayerBtn:hover {
-  background: #e8ddff;
-}
-
-/* Prayer status text */
-#wv2PrayerStatus {
-  margin-top: 14px;
-  font-size: 14px;
-  color: #5b4f6d;
-}
-/* --- 13. Shared list + button utilities --- */
-
-/* Shared list spacing */
-
-.spaced-list li {
-  margin-bottom: 0.9em;
-}
-.content-body li {
-  margin-bottom: 0.95em;
-}
-
-/* Shared card buttons */
-
-/* Base shared reset */
-.btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border-radius: var(--radius-pill);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Solid amber — primary CTA inside content-card */
-.btn-primary {
-  background: var(--accent);
-  color: #0b0b10;
-  box-shadow: 0 4px 18px rgba(246, 180, 91, 0.35);
-}
-
-.btn-primary:hover {
-  background: #ffc97a;
-  box-shadow: 0 6px 24px rgba(246, 180, 91, 0.5);
-}
-
-/* Ghost / outline — secondary action */
-.btn-outline {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  box-shadow: none;
-}
-
-.btn-outline:hover {
-  background: rgba(246, 180, 91, 0.1);
-  box-shadow: 0 4px 16px rgba(246, 180, 91, 0.2);
-}
-.bible-search {
-  background: #111;
-  border: 1px solid #333;
-  padding: 1.5rem;
-  border-radius: 6px;
-  color: #ddd;
-  font-family: "Georgia", "Times New Roman", serif;
-  max-width: 100%;
-}
-
-.bible-search label {
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  color: #bbb;
-}
-
-.bs-fields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.bs-field {
-  flex: 1 1 240px;
-  display: flex;
-  flex-direction: column;
-}
-
-.bs-field.narrow {
-  flex: 0 0 140px;
-}
-
-.bible-search input,
-.bible-search select {
-  margin-top: 4px;
-  padding: 0.5rem;
-  background: #1a1a1a;
-  border: 1px solid #444;
-  color: #eee;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.bs-hint {
-  margin-top: 4px;
-  font-size: 0.75rem;
-  color: #666;
-}
-
-.bs-actions {
-  display: flex;
-  align-items: center;
-  margin-top: 1.5rem;
-}
-
-.bible-search button {
-  background: #444;
-  color: #eee;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #666;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
-}
-
-.bible-search button:hover {
-  background: #555;
-}
-
-.bs-status {
-  margin-left: auto;
-  font-size: 0.85rem;
-  color: #888;
-}
-
-.bs-divider {
-  margin: 1.5rem 0;
-  border-bottom: 1px solid #333;
-}
-
-.bs-results {
-  margin-top: 1rem;
-  line-height: 1.6;
-}
-.bs-result {
-  background: #0d0d0d;
-  border: 1px solid #222;
-  padding: 1.5rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  color: #ddd;
-  font-family: "Georgia", "Times New Roman", serif;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-/* Future: cluster emphasis */
-.bs-result[data-hascluster="true"] {
-  box-shadow: 0 0 12px rgba(180, 140, 60, 0.25);
-  border-color: #4a3a1a;
-}
-
-.bs-result:hover {
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
-}
-
-.bs-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem;
-  font-size: 0.9rem;
-  color: #aaa;
-}
-
-.bs-primary-ref {
-  font-size: 1.1rem;
-  color: #eee;
-  letter-spacing: 0.5px;
-}
-
-.bs-meta span {
-  color: #ccc;
-}
-
-.bs-notes {
-  margin-top: 0.8rem;
-  font-size: 0.9rem;
-  color: #bbb;
-  line-height: 1.5;
-}
-
-.bs-tags {
-  margin-top: 0.8rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.bs-tags span {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: #888;
-}
-
-.bs-divider {
-  margin: 1.2rem 0;
-  border-bottom: 1px solid #222;
-}
-
-
-.bs-verse:hover {
-  background: #1a1a1a;
-  border-color: #444;
-}
-
-.bs-verse {
-  padding: 0.8rem 1rem;
-  background: #141414;
-  border: 1px solid #2a2a2a;
-  border-radius: 6px;
-  margin-bottom: 0.8rem;
-    cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.bs-verse:last-child {
-  margin-bottom: 0;
-}
-
-.bs-verses {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-
-
-.bs-ref {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin-bottom: 0.2rem;
-}
-
-.bs-text {
-  font-size: 1rem;
-  color: #ddd;
-  line-height: 1.6;
-}
-.bs-verse-actions {
-  margin-top: 0.6rem;
-  display: flex;
-  gap: 0.6rem;
-}
-
-.bs-copy-btn,
-.bs-open-btn {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #aaa;
-  padding: 2px 5px;
-  font-size: 0.65rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.bs-copy-btn:hover,
-.bs-open-btn:hover {
-  background: #222;
-  border-color: #444;
-}
-.bs-hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #222;
-}
-
-.bs-hero-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #eee;
-  letter-spacing: 0.5px;
-  font-family: "Georgia", "Times New Roman", serif;
-}
-
-.bs-hero-image {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  border-radius: 4px;
-  opacity: 0.9;
-}
-
-.bs-top-pick {
-  font-size: 0.85rem;
-  color: #d2b47c;
-  opacity: 0.9;
-  font-style: italic;
 }

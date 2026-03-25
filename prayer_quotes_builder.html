@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prayer Quote Builder</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#121c30;--line:#2c4167;--ink:#e9f1ff;--muted:#9db2d6;--ok:#6fd4a8;--err:#ff9ca3}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(900px 520px at 10% -10%,#1d355a 0%,var(--bg) 58%);color:var(--ink);font:14px/1.4 ui-sans-serif,system-ui;padding:14px}
+    .shell{max-width:980px;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:rgba(12,20,34,.92);padding:14px}
+    h1{margin:0 0 8px 0;font-size:22px}
+    p{margin:0 0 12px 0;color:var(--muted)}
+    .card{border:1px solid var(--line);border-radius:12px;background:rgba(8,14,24,.7);padding:12px;margin-bottom:12px}
+    label{display:block;margin-bottom:6px;color:var(--muted);font-size:12px}
+    textarea,input,select{width:100%;border:1px solid rgba(144,176,232,.35);border-radius:10px;background:rgba(0,0,0,.25);color:var(--ink);padding:10px}
+    textarea{min-height:110px;resize:vertical}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    button{border:1px solid rgba(140,176,236,.45);border-radius:10px;background:rgba(16,34,59,.65);color:#e9f3ff;padding:8px 12px;cursor:pointer}
+    button.primary{border-color:rgba(216,180,108,.65);background:linear-gradient(130deg,#7b5a22,#d8b46c);color:#fff8e6}
+    .status{min-height:20px;margin-top:8px;color:var(--muted)}
+    .status.ok{color:var(--ok)} .status.err{color:var(--err)}
+    .list{display:grid;gap:8px;max-height:420px;overflow:auto}
+    .item{border:1px solid rgba(126,166,228,.23);border-radius:10px;background:rgba(10,21,38,.5);padding:9px}
+    .meta{font-size:12px;color:#a9bddf;margin-top:6px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <h1>Prayer Sanctuary Quotes</h1>
+    <p>Append quotes for top-of-page rotation on Prayer Sanctuary.</p>
+
+    <section class="card">
+      <label for="quoteText">Quote Text</label>
+      <textarea id="quoteText" placeholder="Enter quote text (line breaks are preserved)."></textarea>
+      <div class="row" style="margin-top:8px">
+        <label style="display:flex;align-items:center;gap:6px;margin:0;">
+          <input id="quoteActive" type="checkbox" checked style="width:auto" />
+          Active
+        </label>
+        <button id="appendBtn" class="primary" type="button">Append Quote</button>
+        <button id="reloadBtn" type="button">Reload</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="card">
+      <div class="list" id="quoteList"></div>
+    </section>
+  </div>
+  <script>
+  (() => {
+    const token = localStorage.getItem("auth_token") || "";
+    const headers = token ? { Authorization: "Bearer " + token } : {};
+    const q = (id) => document.getElementById(id);
+    const statusEl = q("status");
+    const listEl = q("quoteList");
+
+    function setStatus(msg, kind = "") {
+      statusEl.textContent = msg || "";
+      statusEl.className = "status" + (kind ? " " + kind : "");
+    }
+
+    function esc(s) {
+      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    async function jfetch(url, opts = {}) {
+      const r = await fetch(url, opts);
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || d.detail || ("HTTP " + r.status));
+      return d;
+    }
+
+    async function loadQuotes() {
+      try {
+        const out = await jfetch("/api/admin/prayer/sanctuary-quotes", { headers });
+        const rows = Array.isArray(out.quotes) ? out.quotes : [];
+        listEl.innerHTML = rows.map((x) => {
+          const text = esc(x.text || "").replace(/\n/g, "<br>");
+          return `
+            <div class="item">
+              <div>${text}</div>
+              <div class="meta mono">${esc(x.id)} | active=${x.active ? "true" : "false"} | ${esc(x.created_at || "")}</div>
+            </div>
+          `;
+        }).join("") || "<div class='meta'>No quotes found.</div>";
+        setStatus("Loaded " + rows.length + " quote(s).", "ok");
+      } catch (e) {
+        setStatus(String(e.message || e), "err");
+      }
+    }
+
+    async function appendQuote() {
+      try {
+        const text = String(q("quoteText").value || "").trim();
+        const active = !!q("quoteActive").checked;
+        if (!text) {
+          setStatus("Quote text is required.", "err");
+          return;
+        }
+        const out = await jfetch("/api/admin/prayer/sanctuary-quotes/append", {
+          method: "POST",
+          headers: Object.assign({ "Content-Type": "application/json" }, headers),
+          body: JSON.stringify({ text, active })
+        });
+        q("quoteText").value = "";
+        setStatus("Saved " + (out.quote?.id || "quote") + ".", "ok");
+        await loadQuotes();
+      } catch (e) {
+        setStatus(String(e.message || e), "err");
+      }
+    }
+
+    q("appendBtn").addEventListener("click", () => { void appendQuote(); });
+    q("reloadBtn").addEventListener("click", () => { void loadQuotes(); });
+    void loadQuotes();
+  })();
+  </script>
+</body>
+</html>

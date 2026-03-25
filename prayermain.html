@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Prayers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b1117;
+  --panel: #111a24;
+  --muted: #9fb1c6;
+  --border: rgba(255, 255, 255, 0.12);
+  --danger: #e88f8f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 8px 14px;
+  min-height: 100vh;
+  color: #e9f0fa;
+  background:
+    radial-gradient(1200px 820px at 12% 10%, rgba(46, 102, 162, 0.25), transparent 60%),
+    linear-gradient(160deg, #070b10, #0e1722);
+  font-family: "Cormorant Garamond", serif;
+}
+
+.page {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page > .panel:nth-child(-n+2) {
+  grid-column: 1 / -1;
+}
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(16, 25, 35, 0.96), rgba(16, 25, 35, 0.88));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 10px 24px rgba(0, 0, 0, 0.22);
+  animation: reverentGlow 6.8s ease-in-out infinite;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: -42% -24%;
+  pointer-events: none;
+  background:
+    radial-gradient(320px 180px at 14% 24%, rgba(232, 201, 140, 0.24), transparent 62%),
+    radial-gradient(420px 240px at 80% 75%, rgba(115, 214, 166, 0.16), transparent 66%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 42%);
+  mix-blend-mode: screen;
+  animation: panelFloat 9.5s ease-in-out infinite alternate;
+  opacity: 0.78;
+}
+
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: -12% -10%;
+  pointer-events: none;
+  background:
+    radial-gradient(2px 2px at 12% 24%, rgba(255, 242, 208, 0.48), transparent 75%),
+    radial-gradient(2px 2px at 74% 40%, rgba(245, 229, 188, 0.38), transparent 74%),
+    radial-gradient(1.6px 1.6px at 36% 78%, rgba(252, 242, 214, 0.34), transparent 72%),
+    linear-gradient(120deg, rgba(255, 242, 208, 0) 20%, rgba(255, 242, 208, 0.2) 50%, rgba(255, 242, 208, 0) 78%),
+    repeating-linear-gradient(110deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 16px);
+  opacity: 0.42;
+  animation:
+    panelSweep 13.5s ease-in-out infinite alternate,
+    reverentMotes 10.5s ease-in-out infinite;
+}
+
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .page > .panel:nth-child(-n+2) {
+    grid-column: auto;
+  }
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 10px;
+  font-family: "Cinzel", serif;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+button {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #2f8fed, #4bb0ff);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+}
+
+button.secondary {
+  background: #0f1823;
+  border-color: var(--border);
+}
+
+button.warn {
+  background: #2a1820;
+  border-color: #5c2f40;
+}
+
+button.cta {
+  background: linear-gradient(135deg, #ad7d29, #f4c56c);
+  color: #231807;
+  font-weight: 700;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0d1a26;
+  border: 1px solid var(--border);
+}
+
+.sanct-title {
+  font-family: "Cinzel", serif;
+  font-size: clamp(28px, 4.2vw, 48px);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin: 2px 0 6px;
+  text-transform: uppercase;
+  color: #f3f7ff;
+  text-shadow: 0 2px 14px rgba(29, 75, 130, 0.35), 0 0 20px rgba(244, 197, 108, 0.18);
+}
+
+.sanct-subtitle {
+  font-family: "Cinzel", serif;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7db8ff;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.sanctuary {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.quote {
+  margin-top: 12px;
+  border-left: 3px solid #73d6a6;
+  background: rgba(115, 214, 166, 0.08);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 19px;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+
+.prompt-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0e1621;
+  color: #e9f0fa;
+  padding: 10px;
+  font-size: 17px;
+}
+
+.editor {
+  width: 100%;
+  min-height: 130px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0e1621;
+  padding: 10px;
+  font-size: 17px;
+  line-height: 1.35;
+  outline: none;
+}
+
+.editor.small {
+  min-height: 90px;
+  font-size: 16px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.toolbar button {
+  font-family: inherit;
+  padding: 6px 10px;
+  background: #0f1926;
+  border: 1px solid var(--border);
+}
+
+.cards {
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(75, 176, 255, 0.38);
+  background: rgba(75, 176, 255, 0.16);
+  font-size: 12px;
+}
+
+.pill-gold {
+  border-color: rgba(244, 197, 108, 0.55);
+  background: linear-gradient(135deg, rgba(173, 125, 41, 0.5), rgba(244, 197, 108, 0.42));
+  color: #fcebc8;
+  font-weight: 700;
+}
+
+.witness-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 197, 108, 0.65);
+  background: linear-gradient(140deg, rgba(112, 84, 33, 0.9), rgba(226, 189, 114, 0.75));
+  color: #fff8e2;
+  font: 700 18px/1 "Cinzel", serif;
+}
+
+.witness-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cfddf4;
+  opacity: 0.8;
+}
+
+.prayer-meta-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 150px;
+}
+
+.prayer-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.toggle-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 8px;
+  background: #0f1823;
+  border: 1px solid var(--border);
+  font-family: "Cinzel", serif;
+}
+
+.card-body {
+  margin-top: 8px;
+}
+
+.stars span {
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 4px;
+  color: #556070;
+}
+
+.stars span.active {
+  color: #f4b400;
+}
+
+.reflection-list {
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.reflection-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 8, 12, 0.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+.modal {
+  width: min(740px, 100%);
+  background: #152233;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.modal textarea,
+.modal input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d1723;
+  color: #ecf4ff;
+  padding: 10px;
+}
+
+.disclaimer {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid rgba(244, 197, 108, 0.5);
+  border-radius: 10px;
+  background: rgba(244, 197, 108, 0.08);
+  color: #fcebc8;
+  font-size: 14px;
+}
+
+@keyframes panelFloat {
+  0% {
+    transform: translate3d(-3.2%, 0.6%, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(3.2%, -2.6%, 0) scale(1.04);
+  }
+}
+/* Gentle horizontal sweep without layout shift */
+@keyframes panelSweep {
+  0%   { transform: translateX(-8%); }
+  50%  { transform: translateX(8%); }
+  100% { transform: translateX(-8%); }
+}
+
+/* Soft, reverent glow with smoother transitions */
+@keyframes reverentGlow {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.03),
+      0 10px 22px rgba(0,0,0,0.18),
+      0 0 0 rgba(244,197,108,0);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.06),
+      0 16px 32px rgba(0,0,0,0.28),
+      0 0 26px rgba(244,197,108,0.18);
+  }
+}
+
+@keyframes reverentMotes{0%,100%{filter:blur(0px);opacity:.3}50%{filter:blur(.22px);opacity:.52}}
+@media (prefers-reduced-motion:reduce){.panel,.panel::before,.panel::after{animation:none!important}}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="panel">
+      <h1 class="sanct-title">Prayer Sanctuary</h1>
+      <div class="sanct-subtitle">Witness</div>
+      <img
+        id="sanctuaryImg"
+        class="sanctuary"
+        alt="Sanctuary"
+        src="https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png"
+      />
+      <div class="quote" id="sanctuaryQuote">Prayer opens the heart to possibilities we can’t yet see.
+It steadies the mind when life feels unsteady.
+In prayer, we remember we’re never walking alone.
+And with every whispered hope, courage begins to rise.</div>
+      <div class="muted" id="status" style="margin-top:8px"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Add or Request Prayer</h2>
+      <input
+        id="prayerPromptInput"
+        class="prompt-input"
+        type="text"
+        placeholder="I want prayer for..."
+        aria-label="Prayer request prompt"
+      />
+      <div class="row" style="margin:8px 0">
+        <button id="requestPrayerBtn" class="icon-btn">&#x1F64F; Request</button>
+        <button id="aiPrayBtn" class="icon-btn">&#x2728; Pray</button>
+      </div>
+      <input
+        id="prayerTitleInput"
+        class="prompt-input"
+        type="text"
+        maxlength="80"
+        placeholder="Optional title for share/testimony (e.g., Morning Surrender Prayer)"
+        aria-label="Prayer title"
+      />
+      <div class="toolbar" data-toolbar-target="prayerEditor">
+        <button data-cmd="bold"><b>B</b></button>
+        <button data-cmd="italic"><i>I</i></button>
+        <button data-cmd="underline"><u>U</u></button>
+        <button data-cmd="insertUnorderedList">List</button>
+        <button data-cmd="formatBlock" data-value="blockquote">Quote</button>
+      </div>
+      <div id="prayerEditor" class="editor" contenteditable="true"></div>
+      <div class="row" style="margin-top:10px">
+        <button id="submitPrayerBtn">Submit</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>My Prayers</h2>
+      <div id="personalList" class="cards"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Requested</h2>
+      <div id="pendingList" class="cards"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Received Responses</h2>
+      <div id="responsesList" class="cards"></div>
+    </div>
+  </div>
+
+  <div id="storyModalBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <h3>Publish to Witness community</h3>
+      <div class="muted">write a short testimony</div>
+      <textarea
+        id="storyTestimony"
+        rows="6"
+        placeholder="Share what changed, what was carried, and what you witnessed."
+      ></textarea>
+      <div class="row" style="margin-top:10px">
+        <label><input id="storyAnonymous" type="checkbox" checked /> Publish anonymously</label>
+      </div>
+      <div style="margin-top:8px">
+        <input id="storyName" type="text" placeholder="Your name" disabled />
+      </div>
+      <div class="disclaimer">
+        Submitting will place this in the Witness Testimonials for other members to stand witness to. Your
+        courage will inspire others
+      </div>
+      <div class="row" style="margin-top:12px;justify-content:flex-end">
+        <button id="storyCancelBtn" class="secondary">Cancel</button>
+        <button id="storySubmitBtn" class="cta">Submit to Witness Testimonials</button>
+      </div>
+    </div>
+  </div>

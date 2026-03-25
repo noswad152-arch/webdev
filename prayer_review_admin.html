@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prayer Review Admin</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --panel: #151b22;
+            --muted: #8b98a5;
+            --accent: #2bb0ff;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: radial-gradient(1200px 800px at 10% 10%, #111827, #0b0f14 55%);
+            color: #e5e7eb;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            min-height: 100vh;
+            padding: 18px;
+        }
+        .page {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: grid;
+            gap: 16px;
+            grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.25fr);
+        }
+        @media (max-width: 1080px) {
+            .page { grid-template-columns: 1fr; }
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        .panel.full { grid-column: 1 / -1; }
+        .user-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            font-size: 12px;
+            color: var(--muted);
+        }
+        h1 { font-size: 20px; letter-spacing: 0.3px; }
+        h2 { font-size: 16px; margin-bottom: 10px; }
+        .muted { color: var(--muted); font-size: 12px; }
+        .row, .action-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        input, button, select {
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #0f141b;
+            color: #e5e7eb;
+            padding: 9px 11px;
+            font-size: 13px;
+        }
+        input { flex: 1 1 220px; min-width: 0; }
+        button {
+            background: linear-gradient(135deg, #1f8fff, #2bb0ff);
+            border: none;
+            cursor: pointer;
+        }
+        button.secondary {
+            background: #0f141b;
+            border: 1px solid var(--border);
+        }
+        .list {
+            display: grid;
+            gap: 8px;
+            max-height: min(68vh, 760px);
+            overflow: auto;
+            padding-right: 4px;
+        }
+        .item {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+            cursor: pointer;
+        }
+        .item.active { outline: 1px solid #2bb0ff; background: rgba(43,176,255,0.08); }
+        .pill {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(43,176,255,0.15);
+            color: #9ad7ff;
+            font-size: 11px;
+            border: 1px solid rgba(43,176,255,0.35);
+            margin-left: 6px;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #cbd5e1;
+            background: rgba(0,0,0,0.35);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        .editor {
+            min-height: 220px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            outline: none;
+        }
+        .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .detail-block {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+        }
+        .detail-label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+        @media (max-width: 760px) {
+            body { padding: 12px; }
+            .panel { padding: 14px; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .action-row > * { flex: 1 1 100%; }
+            .action-row input { width: 100%; }
+        }
+    </style>
+ </head>
+<body>
+    <div class="page">
+        <div class="panel user-banner full">
+            <div>Signed in as <span id="userEmailText">...</span></div>
+            <button id="logoutBtn" class="secondary">Log out</button>
+        </div>
+        <div class="panel">
+            <h1>Prayer Review</h1>
+            <div class="row" style="margin: 10px 0;">
+                <select id="statusFilter">
+                    <option value="pending_review">Pending Review</option>
+                    <option value="sent">Sent</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="all">All</option>
+                </select>
+                <button id="refreshBtn">Refresh</button>
+                <span id="status" class="muted"></span>
+            </div>
+            <div id="list" class="list"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Request Detail</h2>
+            <div id="detail" class="muted">Select an item to review.</div>
+
+            <h2 style="margin-top: 16px;">Response</h2>
+            <div class="toolbar">
+                <button class="secondary" data-cmd="bold"><b>B</b></button>
+                <button class="secondary" data-cmd="italic"><i>I</i></button>
+                <button class="secondary" data-cmd="underline"><u>U</u></button>
+                <button class="secondary" data-cmd="formatBlock" data-value="H1">H1</button>
+                <button class="secondary" data-cmd="formatBlock" data-value="H2">H2</button>
+                <button class="secondary" data-cmd="insertUnorderedList">List</button>
+            </div>
+            <div id="editor" class="editor" contenteditable="true"></div>
+            <div class="action-row" style="margin-top: 10px;">
+                <input id="responderName" type="text" placeholder="Responder name" />
+                <button id="saveBtn">Save</button>
+                <button id="approveBtn">Approve</button>
+                <button id="rejectBtn" class="secondary">Reject</button>
+                <button id="shareBtn" class="secondary">Share</button>
+                <button id="sendNowBtn" class="secondary">Send Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const listEl = document.getElementById("list");
+        const detailEl = document.getElementById("detail");
+        const statusEl = document.getElementById("status");
+        const authToken = localStorage.getItem("auth_token");
+        const editorEl = document.getElementById("editor");
+        const responderEl = document.getElementById("responderName");
+        const statusFilter = document.getElementById("statusFilter");
+        const userEmailText = document.getElementById("userEmailText");
+
+        let current = null;
+
+        document.querySelectorAll("[data-cmd]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const cmd = btn.getAttribute("data-cmd");
+                const val = btn.getAttribute("data-value");
+                document.execCommand(cmd, false, val || null);
+            });
+        });
+
+        function setStatus(msg) { statusEl.textContent = msg || ""; }
+        function esc(v) {
+            return String(v || "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#39;");
+        }
+
+        async function loadList() {
+            current = null;
+            detailEl.innerHTML = '<div class="muted">Select an item to review.</div>';
+            editorEl.innerHTML = "";
+            responderEl.value = "";
+            setStatus("Loading...");
+            const res = await fetch(`/api/prayer/review?status=${encodeURIComponent(statusFilter.value)}&limit=200`, {
+                headers: authToken ? { "Authorization": "Bearer " + authToken } : {}
+            });
+            const json = await res.json();
+            const items = Array.isArray(json.items) ? json.items : [];
+            if (!items.length) {
+                listEl.innerHTML = "<div class='muted'>No items found.</div>";
+                setStatus("");
+                return;
+            }
+            listEl.innerHTML = items.map((it, i) => {
+                const r = it.request || {};
+                return `
+                    <div class="item" data-idx="${i}">
+                        <div><b>#${r.id}</b> <span class="pill">${esc(r.status)}</span></div>
+                        <div class="muted">${esc(r.created_at || "n/a")} | ${esc(r.category || "general")} | ${esc(r.urgency || "standard")}</div>
+                        <div class="muted">${esc((r.request_text || "").slice(0, 80))}${(r.request_text || "").length > 80 ? "..." : ""}</div>
+                    </div>
+                `;
+            }).join("");
+
+            listEl.querySelectorAll(".item").forEach(el => {
+                el.addEventListener("click", () => selectItem(items, Number(el.dataset.idx), el));
+            });
+            setStatus("");
+        }
+
+        function selectItem(items, idx, el) {
+            listEl.querySelectorAll(".item").forEach(e => e.classList.remove("active"));
+            el.classList.add("active");
+            current = items[idx];
+            const r = current.request || {};
+            const resp = current.latest_response || {};
+            const churchBlock = r.church_affiliation
+                ? `<div class="detail-block"><div class="detail-label">Church</div><div>${esc(r.church_affiliation)}</div><div class="muted" style="margin-top:4px;">${esc(r.church_email || "No church email saved")}</div></div>`
+                : `<div class="detail-block"><div class="detail-label">Church</div><div class="muted">No church affiliation saved.</div></div>`;
+            detailEl.innerHTML = `
+                <div><b>#${r.id}</b> <span class="pill">${esc(r.status)}</span></div>
+                <div class="muted" style="margin-top:6px;">${esc(r.created_at || "n/a")} | ${esc(r.category || "general")} | ${esc(r.urgency || "standard")}</div>
+                <div class="detail-grid">
+                    <div class="detail-block">
+                        <div class="detail-label">Requestor</div>
+                        <div>${esc(r.user_name || "Unnamed user")}</div>
+                        <div class="muted" style="margin-top:4px;">${esc(r.user_email || "No email")}</div>
+                    </div>
+                    ${churchBlock}
+                </div>
+                <pre style="margin-top:10px;">${esc(r.request_text || "")}</pre>
+            `;
+            editorEl.innerHTML = resp.response_text || "";
+            responderEl.value = resp.responder_name || "";
+        }
+
+        async function saveResponse() {
+            if (!current?.latest_response?.id) {
+                setStatus("No response to save. Use Send Now or create a draft first.");
+                return;
+            }
+            setStatus("Saving...");
+            const payload = {
+                responder_name: responderEl.value.trim() || null,
+                response_text: editorEl.innerHTML.trim()
+            };
+            const res = await fetch(`/api/prayer/response/${current.latest_response.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                setStatus(json.error || "Save failed");
+                return;
+            }
+            setStatus("Saved.");
+            if (current?.latest_response) {
+                current.latest_response.response_text = payload.response_text;
+                current.latest_response.responder_name = payload.responder_name;
+            }
+        }
+
+        async function approveRequest() {
+            if (!current?.request?.id) return;
+            setStatus("Approving...");
+            const payload = {
+                prayer_id: current.request.id,
+                response_id: current.latest_response?.id || null
+            };
+            const res = await fetch("/api/prayer/approve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                setStatus(json.error || "Approve failed");
+                return;
+            }
+            setStatus("Approved.");
+            await loadList();
+        }
+
+        async function rejectRequest() {
+            if (!current?.request?.id) return;
+            setStatus("Rejecting...");
+            const payload = {
+                prayer_id: current.request.id,
+                response_id: current.latest_response?.id || null
+            };
+            const res = await fetch("/api/prayer/reject", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                setStatus(json.error || "Reject failed");
+                return;
+            }
+            setStatus("Rejected.");
+            await loadList();
+        }
+
+        async function shareResponse() {
+            if (!current?.request?.id) return;
+            const r = current.request;
+            const text = editorEl.innerText.trim();
+            const title = `Prayer Response #${r.id}`;
+            const shareText = `${title}\nRequestor: ${r.user_email || r.user_id}\n\n${text}`;
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title, text: shareText });
+                    setStatus("Shared.");
+                    return;
+                } catch (_) {}
+            }
+            try {
+                await navigator.clipboard.writeText(shareText);
+                setStatus("Copied to clipboard.");
+            } catch {
+                setStatus("Share not available.");
+            }
+        }
+
+        async function sendNow() {
+            if (!current?.request?.id) return;
+            const text = editorEl.innerHTML.trim();
+            if (!text) {
+                setStatus("Write a response before sending.");
+                return;
+            }
+            const r = current.request;
+            const confirmed = window.confirm(`Send this response now to ${r.user_email || 'the requestor'}? This will mark the prayer as sent.`);
+            if (!confirmed) return;
+            setStatus("Sending...");
+            const payload = {
+                prayer_id: r.id,
+                response_id: current.latest_response?.id || null,
+                responder_name: responderEl.value.trim() || null,
+                response_text: text
+            };
+            const res = await fetch("/api/prayer/send-now", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { "Authorization": "Bearer " + authToken } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (!res.ok) {
+                setStatus(json.error || "Send failed");
+                return;
+            }
+            setStatus("Sent to requestor.");
+            await loadList();
+        }
+
+        document.getElementById("refreshBtn").addEventListener("click", loadList);
+        document.getElementById("saveBtn").addEventListener("click", saveResponse);
+        document.getElementById("approveBtn").addEventListener("click", approveRequest);
+        document.getElementById("rejectBtn").addEventListener("click", rejectRequest);
+        document.getElementById("shareBtn").addEventListener("click", shareResponse);
+        document.getElementById("sendNowBtn").addEventListener("click", sendNow);
+
+        async function requireAdmin() {
+            const token = localStorage.getItem("auth_token") || "";
+            if (!token) {
+                window.location.href = "/login";
+                return false;
+            }
+            const res = await fetch("/api/auth/me", {
+                headers: { "Authorization": "Bearer " + token }
+            });
+            const json = await res.json();
+            if (!res.ok || !json.admin) {
+                window.location.href = "/login";
+                return false;
+            }
+            userEmailText.textContent = json.email || "unknown";
+            return true;
+        }
+
+        requireAdmin().then((ok) => {
+            if (ok) loadList();
+        });
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("user_email");
+            window.location.href = "/login";
+        });
+    </script>
+</body>
+</html>
