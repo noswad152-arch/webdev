@@ -1,0 +1,796 @@
+﻿
+  <style>
+    #reflection-app {
+      --bg: #0b0f14;
+      --panel: #5b90cd;
+      --muted: #8b98a5;
+      --accent: #2bb0ff;
+      --border: rgb(251 174 1 / 81%);
+      --text: #e5e7eb;
+      --font-body: Georgia, "Times New Roman", Times, serif;
+      --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
+      --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      font-family: var(--font-body);
+      background: radial-gradient(1200px 800px at 10% 10%, #e8611a, #3152a0, #0e1721 45%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    #reflection-app,
+    #reflection-app * {
+      box-sizing: border-box;
+    }
+
+    #reflection-app .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    #reflection-app .panel {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    #reflection-app .panel-top {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    #reflection-app .hero-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(280px, 1.2fr);
+      gap: 14px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+
+    #reflection-app h1,
+    #reflection-app h2,
+    #reflection-app h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-heading);
+      letter-spacing: 0.3px;
+    }
+
+    #reflection-app h2:not(.content-heading) {
+      font-size: 16px;
+    }
+
+    #reflection-app .content-heading {
+      margin-bottom: 10px;
+    }
+
+    #reflection-app .muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    #reflection-app .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    #reflection-app .col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #reflection-app .grow {
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    #reflection-app .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #reflection-app input[type="text"],
+    #reflection-app input[type="date"],
+    #reflection-app input[type="search"],
+    #reflection-app textarea,
+    #reflection-app button {
+      font-family: var(--font-ui);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0f141b;
+      color: var(--text);
+      padding: 9px 11px;
+      font-size: 13px;
+    }
+
+    #reflection-app input[type="text"],
+    #reflection-app input[type="date"],
+    #reflection-app input[type="search"],
+    #reflection-app textarea {
+      width: 100%;
+      background: #0e1621;
+    }
+
+    #reflection-app textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    #reflection-app button {
+      background: linear-gradient(135deg, #1f8fff, #2bb0ff);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(31, 143, 255, 0.3);
+    }
+
+    #reflection-app button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(31, 143, 255, 0.5);
+      background: linear-gradient(135deg, #2d96ff, #39b8ff);
+    }
+
+    #reflection-app button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(31, 143, 255, 0.3);
+    }
+
+    #reflection-app button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    #reflection-app button.primary {
+      background: linear-gradient(135deg, #1f8fff, #2bb0ff);
+    }
+
+    #reflection-app #loginBtn {
+      font-weight: 700;
+      padding: 10px 16px;
+      position: relative;
+      box-shadow: 0 6px 16px rgba(31, 143, 255, 0.36), 0 0 0 0 rgba(43, 176, 255, 0.5);
+      animation: loginPulse 2.2s ease-in-out infinite;
+    }
+
+    #reflection-app #loginBtn:hover {
+      animation-play-state: paused;
+    }
+
+    #reflection-app #loginBtn::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 12px;
+      border: 1px solid rgba(43, 176, 255, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      animation: loginHalo 2.2s ease-out infinite;
+    }
+
+    @keyframes loginPulse {
+      0%,
+      100% {
+        box-shadow: 0 6px 16px rgba(31, 143, 255, 0.36), 0 0 0 0 rgba(43, 176, 255, 0.42);
+      }
+
+      50% {
+        box-shadow: 0 10px 24px rgba(31, 143, 255, 0.5), 0 0 0 6px rgba(43, 176, 255, 0.12);
+      }
+    }
+
+    @keyframes loginHalo {
+      0% {
+        transform: scale(0.98);
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1.06);
+        opacity: 0;
+      }
+    }
+
+    #reflection-app button.ok {
+      background: rgba(125, 225, 180, 0.16);
+      border: 1px solid rgba(125, 225, 180, 0.45);
+    }
+
+    #reflection-app button.warn {
+      background: rgba(245, 198, 122, 0.14);
+      border: 1px solid rgba(245, 198, 122, 0.35);
+    }
+
+    #reflection-app .chip,
+    #reflection-app .tab {
+      background: #0f141b;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #reflection-app .chip {
+      color: #9ad7ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    #reflection-app .tab {
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+
+    #reflection-app .tab.active {
+      outline: 1px solid #2bb0ff;
+      background: rgba(43, 176, 255, 0.08);
+      box-shadow: 0 4px 12px rgba(246, 180, 91, 0.2);
+    }
+
+    #reflection-app .status {
+      min-height: 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    #reflection-app .status.err {
+      color: #f7b0b0;
+    }
+
+    #reflection-app .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #reflection-app .list {
+      display: grid;
+      gap: 8px;
+      max-height: min(68vh, 760px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    #reflection-app .item {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    #reflection-app .title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+    }
+
+    #reflection-app .meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    #reflection-app .body {
+      white-space: pre-wrap;
+      margin-top: 8px;
+      color: #cbd5e1;
+    }
+
+    #reflection-app .selected {
+      outline: 1px solid #2bb0ff;
+      background: rgba(43, 176, 255, 0.08);
+    }
+    #reflection-app .prayer-review-image {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    #reflection-app .hero-copy {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #reflection-app .hero-copy h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+    #reflection-app .empty {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    @media (max-width: 760px) {
+      #reflection-app {
+        padding: 12px;
+      }
+
+      #reflection-app .panel {
+        padding: 14px;
+      }
+
+      #reflection-app .row > * {
+        flex: 1 1 100%;
+      }
+
+      #reflection-app .hero-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #reflection-app #loginBtn,
+      #reflection-app #loginBtn::after {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="reflection-app">
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-top">
+        <button id="loginBtn" type="button">Log In</button>
+      </div>
+      <h2 class="content-heading">Reflections</h2>
+      <div class="hero-row">
+        <img
+          class="prayer-review-image"
+          src="https://duge79ki51wc4.cloudfront.net/images/asset_da890790b22c3358.jpeg"
+          alt="reflections"
+        />
+        <div class="hero-copy">
+          <h3 class="content-heading">Daily Reflections</h3>
+          <div class="muted">Traditionally called a journal. We call it alignment.<br><br>
+            
+            Reflections are where you set intention — for the day, the week, or the distant horizon.<br><br>
+            You return. You refine. You remember.<br><br>
+            The fun part-- is a week from now you can't edit your past reflections.  But you can add to them.  You'll find that a powerful reminder of how you grow over time.</div>
+          <div class="muted">You can start a new reflection thread or add to an existing one as your story unfolds.</div>
+        </div>
+      </div>
+      <div class="muted"><br>Create a new reflection or append to a previous one. Title + reflection are required.</div>
+    </section>
+
+    <section class="panel col">
+      <div class="row">
+        <div class="grow col">
+          <label class="muted" for="reflectionTitle">Title</label>
+          <input id="reflectionTitle" type="text" maxlength="120" placeholder="e.g., The day is now" />
+        </div>
+      </div>
+
+      <div class="chips" id="titleChips"></div>
+
+      <div class="col">
+        <label class="muted" for="reflectionBody">Reflection</label>
+        <textarea id="reflectionBody" placeholder="Write your reflection..."></textarea>
+      </div>
+      <div class="row">
+        <button id="dictateStartBtn" type="button">Start Dictation</button>
+        <button id="dictateStopBtn" class="warn" type="button" style="display:none;">Stop Dictation</button>
+        <span id="dictateStatus" class="muted"></span>
+      </div>
+
+      <div id="selectedThread" class="muted" style="display:none;"></div>
+
+      <div class="row">
+        <button id="saveBtn" class="primary" type="button">Save New Reflection</button>
+        <button id="appendBtn" class="ok" type="button" style="display:none;">Add Entry To Selected</button>
+        <button id="clearSelectBtn" class="warn" type="button" style="display:none;">Clear Selection</button>
+      </div>
+      <div id="saveStatus" class="status"></div>
+    </section>
+
+    <section class="panel col">
+      <div class="row">
+        <div class="tabs">
+          <button id="tabToday" class="tab active" type="button">Today</button>
+          <button id="tabPick" class="tab" type="button">Pick day</button>
+          <button id="tabAll" class="tab" type="button">All</button>
+        </div>
+        <div class="grow" id="pickWrap" style="display:none;"><input id="pickDate" type="date" /></div>
+        <div class="grow"><input id="search" type="search" placeholder="Search title or reflection text" /></div>
+      </div>
+      <div id="listStatus" class="muted"></div>
+      <div id="items" class="list"></div>
+    </section>
+  </main>
+  </div>
+
+  <script>
+    const SUGGESTED_TITLES = [
+      "Steady", "Grateful", "Open", "Listening", "Patient", "Courage", "Mercy", "Rest", "Trust", "Clarity, Focus", "Joy", "Love", "Faith", "Hope", "Peace", "Kindness", "Growth", "Balance", "Presence", "Surrender"
+    ];
+
+    const els = {
+      title: document.getElementById('reflectionTitle'),
+      body: document.getElementById('reflectionBody'),
+      saveBtn: document.getElementById('saveBtn'),
+      appendBtn: document.getElementById('appendBtn'),
+      clearSelectBtn: document.getElementById('clearSelectBtn'),
+      dictateStartBtn: document.getElementById('dictateStartBtn'),
+      dictateStopBtn: document.getElementById('dictateStopBtn'),
+      dictateStatus: document.getElementById('dictateStatus'),
+      saveStatus: document.getElementById('saveStatus'),
+      selectedThread: document.getElementById('selectedThread'),
+      titleChips: document.getElementById('titleChips'),
+      tabToday: document.getElementById('tabToday'),
+      tabPick: document.getElementById('tabPick'),
+      tabAll: document.getElementById('tabAll'),
+      pickWrap: document.getElementById('pickWrap'),
+      pickDate: document.getElementById('pickDate'),
+      search: document.getElementById('search'),
+      listStatus: document.getElementById('listStatus'),
+      items: document.getElementById('items'),
+    };
+
+    const state = {
+      mode: (new URLSearchParams(location.search).get('view') === 'history') ? 'all' : 'today',
+      all: [],
+      query: '',
+      pickDate: null,
+      selectedReflection: null,
+      recording: false,
+      recorder: null,
+      stream: null,
+      chunks: [],
+    };
+
+    function esc(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+    function nowLocalLabel() {
+      try {
+        return new Date().toLocaleString(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+      } catch (_) { return String(Date.now()); }
+    }
+    function defaultTitle(){ return `${nowLocalLabel()} Reflection`; }
+    function toLocalDateKeyFromDate(d){
+      if (Number.isNaN(d.getTime())) return '';
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+    function toLocalDateKey(iso){
+      const d = new Date(String(iso || ''));
+      return toLocalDateKeyFromDate(d);
+    }
+    function entryDayKey(r){
+      // Prefer the user-facing local stamp when available to avoid UTC day-rollover surprises.
+      const localStamp = String(r?.created_at_local_str || '').trim();
+      if (localStamp) {
+        const dl = new Date(localStamp);
+        const lk = toLocalDateKeyFromDate(dl);
+        if (lk) return lk;
+      }
+      return toLocalDateKey(r?.created_at_utc);
+    }
+    function getTodayKey(){ return toLocalDateKey(new Date().toISOString()); }
+    function normalizeTitle(s){ return String(s || '').trim().toLowerCase(); }
+
+    function setStatus(text, isErr=false){
+      els.saveStatus.textContent = text || '';
+      els.saveStatus.className = `status${isErr ? ' err' : ''}`;
+    }
+    function setDictateStatus(text){ els.dictateStatus.textContent = text || ''; }
+
+    function getAuthToken() { return localStorage.getItem('auth_token') || ''; }
+
+    function renderChips(){
+      els.titleChips.innerHTML = '';
+      for (const t of SUGGESTED_TITLES) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip';
+        b.textContent = t;
+        b.onclick = () => {
+          const current = els.title.value.trim();
+          els.title.value = current ? current + ' • ' + t : t;
+        };
+        els.titleChips.appendChild(b);
+      }
+    }
+
+    function renderSelectedThread(){
+      const sel = state.selectedReflection;
+      if (!sel) {
+        els.selectedThread.style.display = 'none';
+        els.appendBtn.style.display = 'none';
+        els.clearSelectBtn.style.display = 'none';
+        els.saveBtn.style.display = '';
+        return;
+      }
+      els.selectedThread.style.display = '';
+      els.selectedThread.innerHTML = `Appending to: <b>${esc(sel.anchor || '(untitled)')}</b> (id ${sel.id})`;
+      els.appendBtn.style.display = '';
+      els.clearSelectBtn.style.display = '';
+      els.saveBtn.style.display = 'none';
+    }
+
+    function renderTabs(){
+      els.tabToday.classList.toggle('active', state.mode === 'today');
+      els.tabPick.classList.toggle('active', state.mode === 'pick');
+      els.tabAll.classList.toggle('active', state.mode === 'all');
+      els.pickWrap.style.display = state.mode === 'pick' ? '' : 'none';
+    }
+
+    function filteredReflections(){
+      let rows = [...state.all];
+      rows.sort((a,b) => {
+        const ta = Date.parse(a.created_at_utc || '') || 0;
+        const tb = Date.parse(b.created_at_utc || '') || 0;
+        if (tb !== ta) return tb - ta;
+        return (b.id || 0) - (a.id || 0);
+      });
+
+      if (state.mode === 'today') {
+        const k = getTodayKey();
+        rows = rows.filter(r => entryDayKey(r) === k);
+      } else if (state.mode === 'pick' && state.pickDate) {
+        rows = rows.filter(r => entryDayKey(r) === state.pickDate);
+      }
+
+      if (state.query) {
+        const q = state.query.toLowerCase();
+        rows = rows.filter(r => String(r.anchor||'').toLowerCase().includes(q) || String(r.reflection_text||'').toLowerCase().includes(q));
+      }
+
+      return rows;
+    }
+
+    function renderList(){
+      const rows = filteredReflections();
+      els.items.innerHTML = '';
+      els.listStatus.textContent = `${rows.length} reflection${rows.length===1?'':'s'} shown`;
+      if (!rows.length) {
+        els.items.innerHTML = `<div class="empty">No reflections found for this filter.</div>`;
+        return;
+      }
+
+      for (const r of rows) {
+        const d = new Date(r.created_at_utc || '');
+        const localTs = !Number.isNaN(d.getTime()) ? d.toLocaleString() : (r.created_at_local_str || '');
+        const isSel = state.selectedReflection && Number(state.selectedReflection.id) === Number(r.id);
+        const div = document.createElement('article');
+        div.className = `item${isSel ? ' selected' : ''}`;
+        div.innerHTML = `
+          <div class="row" style="justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div class="title">${esc(r.anchor || '(untitled)')}</div>
+              <div class="meta">${esc(localTs)}</div>
+            </div>
+            <div class="row">
+              <button type="button" class="ok" data-add-id="${r.id}">Add Entry</button>
+            </div>
+          </div>
+          <div class="body">${esc(r.reflection_text || '')}</div>
+        `;
+        div.querySelector('[data-add-id]').addEventListener('click', () => {
+          state.selectedReflection = r;
+          const normalized = normalizeTitle(r.anchor || '');
+          if (normalized) els.title.value = r.anchor;
+          renderSelectedThread();
+          renderList();
+          setStatus('Selected reflection thread.');
+          try {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            els.body.focus();
+          } catch (_) {}
+        });
+        els.items.appendChild(div);
+      }
+    }
+
+    async function loadAll(){
+      const token = getAuthToken();
+      if (!token) {
+        state.all = [];
+        renderList();
+        els.listStatus.textContent = 'Missing login token.';
+        return;
+      }
+      try {
+        const resp = await fetch('https://www.witnessv2.net/api/reflections', { headers: { Authorization: `Bearer ${token}` } });
+        const data = await resp.json().catch(() => []);
+        state.all = Array.isArray(data) ? data : (Array.isArray(data.reflections) ? data.reflections : []);
+      } catch (_) {
+        state.all = [];
+      }
+      renderList();
+    }
+
+    async function saveNew(){
+      const token = getAuthToken();
+      if (!token) return setStatus('Missing login token.', true);
+      const text = String(els.body.value || '').trim();
+      if (!text) return setStatus('Reflection text is required.', true);
+      const title = String(els.title.value || '').trim() || defaultTitle();
+      const now = new Date();
+      const payload = {
+        anchor: title,
+        reflection_text: text,
+        created_at_local_str: now.toLocaleString(),
+        created_at_utc: now.toISOString(),
+        time_zone: (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'),
+      };
+      setStatus('Saving...');
+      try {
+        const resp = await fetch('https://www.witnessv2.net/api/reflection', {
+          method:'POST',
+          headers: { 'Content-Type':'application/json', Authorization:`Bearer ${token}` },
+          body: JSON.stringify(payload),
+        });
+        const out = await resp.json().catch(() => ({}));
+        if (!resp.ok) return setStatus(out.error || 'Failed to save reflection.', true);
+        els.title.value = '';
+        els.body.value = '';
+        setStatus(out.action === 'appended' ? 'Added to existing reflection thread.' : 'Reflection saved.');
+        await loadAll();
+      } catch (_) {
+        setStatus('Failed to save reflection.', true);
+      }
+    }
+
+    async function appendSelected(){
+      const sel = state.selectedReflection;
+      if (!sel) return setStatus('Select a reflection first.', true);
+      const token = getAuthToken();
+      if (!token) return setStatus('Missing login token.', true);
+      const text = String(els.body.value || '').trim();
+      if (!text) return setStatus('Reflection text is required.', true);
+      const now = new Date();
+      setStatus('Appending...');
+      try {
+        const resp = await fetch('https://www.witnessv2.net/api/reflection/append', {
+          method:'POST',
+          headers: { 'Content-Type':'application/json', Authorization:`Bearer ${token}` },
+          body: JSON.stringify({
+            reflection_id: sel.id,
+            append_text: text,
+            created_at_local_str: now.toLocaleString(),
+            created_at_utc: now.toISOString(),
+            time_zone: (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'),
+          }),
+        });
+        const out = await resp.json().catch(() => ({}));
+        if (!resp.ok) return setStatus(out.error || 'Failed to append entry.', true);
+        els.body.value = '';
+        setStatus('Entry appended to selected reflection.');
+        await loadAll();
+      } catch (_) {
+        setStatus('Failed to append entry.', true);
+      }
+    }
+
+    async function startDictation(){
+      if (state.recording) return;
+      const hasMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+      const hasRecorder = typeof window.MediaRecorder !== 'undefined';
+      if (!hasMedia || !hasRecorder) {
+        setDictateStatus('Dictation not supported in this browser.');
+        return;
+      }
+      try {
+        state.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const rec = new MediaRecorder(state.stream, { mimeType: 'audio/webm' });
+        state.chunks = [];
+        rec.ondataavailable = (ev) => {
+          if (ev.data && ev.data.size > 0) state.chunks.push(ev.data);
+        };
+        rec.onstop = async () => {
+          try {
+            const blob = new Blob(state.chunks, { type: 'audio/webm' });
+            const fd = new FormData();
+            fd.append('audio', blob, 'reflection.webm');
+            const token = getAuthToken();
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            setDictateStatus('Transcribing...');
+            const resp = await fetch('https://www.witnessv2.net/api/reflection/transcribe', { method: 'POST', headers, body: fd });
+            const out = await resp.json().catch(() => ({}));
+            if (!resp.ok) throw new Error(out.error || 'Transcription failed.');
+            const text = String(out.text || '').trim();
+            if (text) {
+              const prior = String(els.body.value || '').trim();
+              els.body.value = prior ? `${prior}\n${text}` : text;
+              setDictateStatus('Transcription added.');
+            } else {
+              setDictateStatus('No speech detected.');
+            }
+          } catch (e) {
+            setDictateStatus(String(e.message || e));
+          } finally {
+            try { state.stream?.getTracks()?.forEach(t => t.stop()); } catch (_) {}
+            state.stream = null;
+            state.recorder = null;
+            state.chunks = [];
+            state.recording = false;
+            els.dictateStartBtn.style.display = '';
+            els.dictateStopBtn.style.display = 'none';
+          }
+        };
+        rec.start();
+        state.recorder = rec;
+        state.recording = true;
+        els.dictateStartBtn.style.display = 'none';
+        els.dictateStopBtn.style.display = '';
+        setDictateStatus('Recording...');
+      } catch (e) {
+        setDictateStatus('Microphone access denied or unavailable.');
+        try { state.stream?.getTracks()?.forEach(t => t.stop()); } catch (_) {}
+        state.stream = null;
+      }
+    }
+
+    function stopDictation(){
+      if (!state.recording || !state.recorder) return;
+      try { state.recorder.stop(); } catch (_) {}
+    }
+
+    els.saveBtn.addEventListener('click', () => { void saveNew(); });
+    els.appendBtn.addEventListener('click', () => { void appendSelected(); });
+    els.dictateStartBtn.addEventListener('click', () => { void startDictation(); });
+    els.dictateStopBtn.addEventListener('click', () => { stopDictation(); });
+    els.clearSelectBtn.addEventListener('click', () => {
+      state.selectedReflection = null;
+      renderSelectedThread();
+      renderList();
+      setStatus('');
+    });
+
+    els.tabToday.addEventListener('click', () => { state.mode = 'today'; renderTabs(); renderList(); });
+    els.tabPick.addEventListener('click', () => { state.mode = 'pick'; renderTabs(); renderList(); });
+    els.tabAll.addEventListener('click', () => { state.mode = 'all'; renderTabs(); renderList(); });
+    els.pickDate.addEventListener('change', () => { state.pickDate = els.pickDate.value || null; renderList(); });
+    els.search.addEventListener('input', () => { state.query = String(els.search.value || '').trim(); renderList(); });
+
+    (async function init(){
+      renderChips();
+      renderSelectedThread();
+      renderTabs();
+      if (state.mode === 'pick') {
+        els.pickDate.value = getTodayKey();
+        state.pickDate = els.pickDate.value;
+      }
+      await loadAll();
+    })();
+              // ── Log in button ──────────────────────────────────────────────────────────
+        // checkWitnessAccess() is provided by the Squarespace Code Injection harness
+        // (js/squarspaceHarnessinit.html). It validates the stored token, checks the
+        // can_review_prayers permission, and redirects to login on failure.
+        // On success it returns { ok: true, user, userEmail }.
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const auth = await checkWitnessAccess();
+            if (!auth || !auth.ok) return; // harness already handled the redirect
+/*             userEmailText.textContent = auth.userEmail;
+            if (auth.user && auth.user.ministry_name && !auth.user.admin) {
+                scopeNoteEl.textContent = `Viewing ministry queue for ${auth.user.ministry_name}`;
+            } */
+            await loadAll();
+        });
+  </script>
+
