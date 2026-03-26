@@ -7,91 +7,206 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/cpPrimary.css">
 <style>
-:root {
-  --bg: #0b1117;
-  --panel: #111a24;
-  --muted: #9fb1c6;
-  --border: rgba(255, 255, 255, 0.12);
-  --danger: #e88f8f;
-}
+      :root {
+        --bg: #0b0f14;
+        --panel: #5b90cd;
+        --muted: #8b98a5;
+        --accent: #2bb0ff;
+        --border: rgb(251 174 1 / 81%);
+        --font-body: Georgia, "Times New Roman", Times, serif;
+        --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
+        --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
 
-* {
-  box-sizing: border-box;
-}
+      * {
+        box-sizing: border-box;
+      }
 
-body {
-  margin: 0;
-  padding: 0 8px 14px;
-  min-height: 100vh;
-  color: #e9f0fa;
-  background:
-    radial-gradient(1200px 820px at 12% 10%, rgba(46, 102, 162, 0.25), transparent 60%),
-    linear-gradient(160deg, #070b10, #0e1722);
-  font-family: "Cormorant Garamond", serif;
-}
+      body {
+        margin: 0;
+        background: #0e1721;
+      }
 
-.page {
-  max-width: 1480px;
-  margin: 0 auto;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
+      .my-prayer-app {
+        font-family: var(--font-body);
+        background: radial-gradient(1200px 800px at 10% 10%, #e8611a, #3152a0, #0e1721 45%);
+        color: #e5e7eb;
+        min-height: 100vh;
+        padding: 18px;
+      }
 
-.page > .panel:nth-child(-n+2) {
-  grid-column: 1 / -1;
-}
+      .page {
+        max-width: 1320px;
+        margin: 0 auto;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.25fr);
+      }
 
-.panel {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(160deg, rgba(16, 25, 35, 0.96), rgba(16, 25, 35, 0.88));
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 18px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 10px 24px rgba(0, 0, 0, 0.22);
-  animation: reverentGlow 6.8s ease-in-out infinite;
-}
+      @media (max-width: 1080px) {
+        .page { grid-template-columns: 1fr; }
+      }
 
-.panel::before {
-  content: "";
-  position: absolute;
-  inset: -42% -24%;
-  pointer-events: none;
-  background:
-    radial-gradient(320px 180px at 14% 24%, rgba(232, 201, 140, 0.24), transparent 62%),
-    radial-gradient(420px 240px at 80% 75%, rgba(115, 214, 166, 0.16), transparent 66%),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 42%);
-  mix-blend-mode: screen;
-  animation: panelFloat 9.5s ease-in-out infinite alternate;
-  opacity: 0.78;
-}
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      }
 
-.panel::after {
-  content: "";
-  position: absolute;
-  inset: -12% -10%;
-  pointer-events: none;
-  background:
-    radial-gradient(2px 2px at 12% 24%, rgba(255, 242, 208, 0.48), transparent 75%),
-    radial-gradient(2px 2px at 74% 40%, rgba(245, 229, 188, 0.38), transparent 74%),
-    radial-gradient(1.6px 1.6px at 36% 78%, rgba(252, 242, 214, 0.34), transparent 72%),
-    linear-gradient(120deg, rgba(255, 242, 208, 0) 20%, rgba(255, 242, 208, 0.2) 50%, rgba(255, 242, 208, 0) 78%),
-    repeating-linear-gradient(110deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 16px);
-  opacity: 0.42;
-  animation:
-    panelSweep 13.5s ease-in-out infinite alternate,
-    reverentMotes 10.5s ease-in-out infinite;
-}
+      .panel.full {
+        grid-column: 1 / -1;
+      }
 
-.panel > * {
-  position: relative;
-  z-index: 1;
-}
+      .user-banner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.03);
+        font-size: 12px;
+        color: var(--muted);
+      }
 
+      .top-panel-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+      }
+
+      .top-panel-actions #status {
+        white-space: nowrap;
+      }
+
+      #loginBtn {
+        font-weight: 700;
+        padding: 10px 16px;
+        position: relative;
+        box-shadow: 0 6px 16px rgba(31, 143, 255, 0.36), 0 0 0 0 rgba(43, 176, 255, 0.5);
+        animation: loginPulse 2.2s ease-in-out infinite;
+      }
+
+      #loginBtn:hover {
+        animation-play-state: paused;
+      }
+
+      #loginBtn::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 12px;
+        border: 1px solid rgba(43, 176, 255, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        animation: loginHalo 2.2s ease-out infinite;
+      }
+
+      @keyframes loginPulse {
+        0%, 100% {
+          box-shadow: 0 6px 16px rgba(31, 143, 255, 0.36), 0 0 0 0 rgba(43, 176, 255, 0.42);
+        }
+        50% {
+          box-shadow: 0 10px 24px rgba(31, 143, 255, 0.5), 0 0 0 6px rgba(43, 176, 255, 0.12);
+        }
+      }
+
+      @keyframes loginHalo {
+        0% {
+          transform: scale(0.98);
+          opacity: 0;
+        }
+        30% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1.06);
+          opacity: 0;
+        }
+      }
+
+      h1 {
+        font-family: var(--font-heading);
+        font-size: 20px;
+        letter-spacing: 0.3px;
+      }
+
+      h2 {
+        font-family: var(--font-heading);
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .status-unmuted {
+        color: var(--border);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .section-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .section-heading h2,
+      .section-heading h3 {
+        margin: 0;
+      }
+
+      .section-copy {
+        margin: 0 0 14px;
+        max-width: 60ch;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .hero-copy .sanct-subtitle {
+        margin-bottom: 0;
+      }
+
+      .hero-status {
+        margin-top: 14px;
+      }
+
+      .list-panel {
+        min-height: 260px;
+      }
+
+      .composer-panel .toolbar button {
+        color: #f7f3ea;
+      }
+
+      .composer-actions {
+        justify-content: flex-start;
+      }
 .row {
   display: flex;
   gap: 10px;
@@ -104,8 +219,9 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .page > .panel:nth-child(-n+2) {
-    grid-column: auto;
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
@@ -122,18 +238,56 @@ h3 {
 }
 
 button {
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, #2f8fed, #4bb0ff);
-  color: #fff;
+  border: none;
+  background: linear-gradient(135deg, #1f8fff, #2bb0ff);
+  color: #e5e7eb;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 9px 11px;
   cursor: pointer;
-  font-family: "Cinzel", serif;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  transition: all 0.2s ease;
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(31, 143, 255, 0.3);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(31, 143, 255, 0.5);
+  background: linear-gradient(135deg, #2d96ff, #39b8ff);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(31, 143, 255, 0.3);
+}
+
+button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 button.secondary {
-  background: #0f1823;
-  border-color: var(--border);
+  background: #0f141b;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+button.secondary:hover {
+  background: rgba(246, 180, 91, 0.1);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(246, 180, 91, 0.2);
+  transform: translateY(-2px);
+}
+
+button.secondary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(246, 180, 91, 0.1);
+}
+
+button.secondary:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 button.warn {
@@ -151,7 +305,7 @@ button.cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #0d1a26;
+  background: #0f141b;
   border: 1px solid var(--border);
 }
 
@@ -190,9 +344,13 @@ button.cta {
   background: rgba(115, 214, 166, 0.08);
   border-radius: 8px;
   padding: 12px 14px;
-  font-size: 19px;
+  font-size: 14px;
   line-height: 1.3;
   white-space: pre-line;
+}
+
+.sanctuary-frame {
+  margin-top: 6px;
 }
 
 .prompt-input {
@@ -239,6 +397,16 @@ button.cta {
 .cards {
   display: grid;
   gap: 10px;
+}
+
+.cards:empty::before {
+  content: "No prayers here yet.";
+  display: block;
+  padding: 12px;
+  border: 1px dashed rgba(251, 174, 1, 0.45);
+  border-radius: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .card {
@@ -353,6 +521,26 @@ button.cta {
   font-size: 12px;
 }
 
+.rich-content h1,
+.rich-content h2,
+.rich-content h3,
+.rich-content h4,
+.rich-content h5,
+.rich-content h6 {
+  color: #f7f3ea !important;
+}
+
+.rich-content p,
+.rich-content li,
+.rich-content blockquote,
+.rich-content span {
+  color: #e5e7eb !important;
+}
+
+.rich-content a {
+  color: #9ad7ff !important;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -392,62 +580,77 @@ button.cta {
   font-size: 14px;
 }
 
-@keyframes panelFloat {
-  0% {
-    transform: translate3d(-3.2%, 0.6%, 0) scale(1);
-  }
+      @media (max-width: 760px) {
+        .my-prayer-app {
+          padding: 12px;
+        }
 
-  100% {
-    transform: translate3d(3.2%, -2.6%, 0) scale(1.04);
-  }
-}
-/* Gentle horizontal sweep without layout shift */
-@keyframes panelSweep {
-  0%   { transform: translateX(-8%); }
-  50%  { transform: translateX(8%); }
-  100% { transform: translateX(-8%); }
-}
+        .panel {
+          padding: 14px;
+        }
 
-/* Soft, reverent glow with smoother transitions */
-@keyframes reverentGlow {
-  0%, 100% {
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,0.03),
-      0 10px 22px rgba(0,0,0,0.18),
-      0 0 0 rgba(244,197,108,0);
-  }
-  50% {
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,0.06),
-      0 16px 32px rgba(0,0,0,0.28),
-      0 0 26px rgba(244,197,108,0.18);
-  }
-}
+        .composer-actions > * {
+          flex: 1 1 100%;
+        }
 
-@keyframes reverentMotes{0%,100%{filter:blur(0px);opacity:.3}50%{filter:blur(.22px);opacity:.52}}
-@media (prefers-reduced-motion:reduce){.panel,.panel::before,.panel::after{animation:none!important}}
+        .top-panel-actions {
+          width: 100%;
+          justify-content: flex-end;
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #loginBtn,
+        #loginBtn::after {
+          animation: none;
+        }
+      }
 </style>
 </head>
 <body>
-  <div class="page">
-    <div class="panel">
-      <h1 class="sanct-title">Prayer Sanctuary</h1>
-      <div class="sanct-subtitle">Witness</div>
-      <img
-        id="sanctuaryImg"
-        class="sanctuary"
-        alt="Sanctuary"
-        src="https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png"
-      />
-      <div class="quote" id="sanctuaryQuote">Prayer opens the heart to possibilities we can’t yet see.
+  <div class="my-prayer-app">
+    <div class="page">
+      <div class="panel user-banner full">
+        <div>
+          <div class="content-heading">Prayer Sanctuary</div>
+          <div class="muted">Log in to view your prayers.  If you don't have an account, please sign up.  It's free!</div>
+        </div>
+        <div class="top-panel-actions">
+          <!--<div id="status" class="muted"></div>-->
+          <button id="loginBtn" type="button">Log In</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="hero-copy">
+          <div class="sanct-subtitle">Witness</div>
+          <h1 class="sanct-title">Prayer Sanctuary</h1>
+          <p class="section-copy muted">A quiet place to request prayer, draft one with care, and revisit what has already been carried.</p>
+        </div>
+        <div class="sanctuary-frame">
+          <img
+            id="sanctuaryImg"
+            class="sanctuary"
+            alt="Sanctuary"
+            src="https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png"
+          />
+        </div>
+        <div class="quote" id="sanctuaryQuote">Prayer opens the heart to possibilities we can’t yet see.
 It steadies the mind when life feels unsteady.
 In prayer, we remember we’re never walking alone.
 And with every whispered hope, courage begins to rise.</div>
-      <div class="muted" id="status" style="margin-top:8px"></div>
-    </div>
+        <div class="hero-status muted">Use the prayer tools beside this panel to request prayer or compose your own response.</div>
+      </div>
 
-    <div class="panel">
-      <h2>Add or Request Prayer</h2>
+      <div class="panel composer-panel">
+        <div class="section-heading">
+          <div>
+            <h2 class="content-heading">Add or Request Prayer</h2>
+            <div id="status" class="status-unmuted"></div>
+            <!-- <p class="section-copy muted"></p> -->
+          </div>
+        </div>
       <input
         id="prayerPromptInput"
         class="prompt-input"
@@ -480,44 +683,721 @@ And with every whispered hope, courage begins to rise.</div>
       </div>
     </div>
 
-    <div class="panel">
-      <h2>My Prayers</h2>
-      <div id="personalList" class="cards"></div>
+      <div class="panel list-panel">
+        <div class="section-heading">
+          <h2 class="content-heading">My Prayers</h2>
+          <div class="muted">Saved and personal</div>
+        </div>
+        <div id="personalList" class="cards"></div>
+      </div>
+
+      <div class="panel list-panel">
+        <div class="section-heading">
+          <h2 class="content-heading">Requested</h2>
+          <div class="muted">Prayer requests awaiting response</div>
+        </div>
+        <div id="pendingList" class="cards"></div>
+      </div>
+
+      <div class="panel list-panel full">
+        <div class="section-heading">
+          <h2 class="content-heading">Received Responses</h2>
+          <div class="muted">Approved or delivered prayer responses</div>
+        </div>
+        <div id="responsesList" class="cards"></div>
+      </div>
     </div>
 
-    <div class="panel">
-      <h2>Requested</h2>
-      <div id="pendingList" class="cards"></div>
-    </div>
-
-    <div class="panel">
-      <h2>Received Responses</h2>
-      <div id="responsesList" class="cards"></div>
+    <div id="storyModalBackdrop" class="modal-backdrop">
+      <div class="modal">
+        <h3>Publish to Witness community</h3>
+        <div class="muted">write a short testimony</div>
+        <textarea
+          id="storyTestimony"
+          rows="6"
+          placeholder="Share what changed, what was carried, and what you witnessed."
+        ></textarea>
+        <div class="row" style="margin-top:10px">
+          <label><input id="storyAnonymous" type="checkbox" checked /> Publish anonymously</label>
+        </div>
+        <div style="margin-top:8px">
+          <input id="storyName" type="text" placeholder="Your name" disabled />
+        </div>
+        <div class="disclaimer">
+          Submitting will place this in the Witness Testimonials for other members to stand witness to. Your
+          courage will inspire others
+        </div>
+        <div class="row" style="margin-top:12px;justify-content:flex-end">
+          <button id="storyCancelBtn" class="secondary">Cancel</button>
+          <button id="storySubmitBtn" class="cta">Submit to Witness Testimonials</button>
+        </div>
+      </div>
     </div>
   </div>
+  <script>
+     function getAuthToken() { return localStorage.getItem("auth_token") ||"";}
+      const statusEl = document.getElementById("status");
+      const sanctuaryImg = document.getElementById("sanctuaryImg");
+      const sanctuaryQuote = document.getElementById("sanctuaryQuote");
+      const personalList = document.getElementById("personalList");
+      const pendingList = document.getElementById("pendingList");
+      const responsesList = document.getElementById("responsesList");
+      const prayerEditor = document.getElementById("prayerEditor");
+      const prayerPromptInput = document.getElementById("prayerPromptInput");
+      const prayerTitleInput = document.getElementById("prayerTitleInput");
 
-  <div id="storyModalBackdrop" class="modal-backdrop">
-    <div class="modal">
-      <h3>Publish to Witness community</h3>
-      <div class="muted">write a short testimony</div>
-      <textarea
-        id="storyTestimony"
-        rows="6"
-        placeholder="Share what changed, what was carried, and what you witnessed."
-      ></textarea>
-      <div class="row" style="margin-top:10px">
-        <label><input id="storyAnonymous" type="checkbox" checked /> Publish anonymously</label>
-      </div>
-      <div style="margin-top:8px">
-        <input id="storyName" type="text" placeholder="Your name" disabled />
-      </div>
-      <div class="disclaimer">
-        Submitting will place this in the Witness Testimonials for other members to stand witness to. Your
-        courage will inspire others
-      </div>
-      <div class="row" style="margin-top:12px;justify-content:flex-end">
-        <button id="storyCancelBtn" class="secondary">Cancel</button>
-        <button id="storySubmitBtn" class="cta">Submit to Witness Testimonials</button>
-      </div>
-    </div>
-  </div>
+      let selectedPrayerForStory = null;
+
+    const setStatus = (message, isError = false) => {
+      if (!statusEl) return;
+      statusEl.textContent = message || "";
+      statusEl.classList.add("status-unmuted");
+      statusEl.style.color = isError ? "#ffb4b4" : "";
+    };
+
+    const esc = (text) =>
+      String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const fmt = (dateValue) => {
+      if (!dateValue) return "n/a";
+      const raw = String(dateValue);
+      const hasTz = /[zZ]|[+\-]\d{2}:\d{2}$/.test(raw);
+      const parsed = new Date(hasTz ? raw : (raw + "Z"));
+      return Number.isNaN(parsed.getTime()) ? dateValue : parsed.toLocaleString();
+    };
+
+    const textOf = (element) => (element.innerText || "").trim();
+    const htmlOf = (element) => (element.innerHTML || "").trim();
+
+    const titleFrom = (text) => {
+      const compact = (text || "").replace(/\s+/g, " ").trim();
+      const summary = compact.slice(0, 42) || "Prayer";
+      return summary + (compact.length > 42 ? "..." : "");
+    };
+
+    const cleanText = (text) =>
+      String(text || "")
+        .replace(/\r/g, "")
+        .replace(/[ \t]+\n/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .replace(/[ \t]{2,}/g, " ")
+        .trim();
+
+    const textFromHtml = (html) => {
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = String(html || "");
+      return cleanText(wrapper.innerText || wrapper.textContent || "");
+    };
+
+    async function api(path, opts = {}) {
+      const token = getAuthToken();
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+      const headers = Object.assign(
+        {},
+        opts.headers || {},
+        token ? { Authorization: "Bearer " + token } : {},
+        { "X-User-Timezone": tz }
+      );
+      const response = await fetch(path, Object.assign({}, opts, { headers }));
+      let json = null;
+
+      try {
+        json = await response.json();
+      } catch (_) {
+        json = null;
+      }
+
+      if (!response.ok) {
+        throw new Error((json && (json.error || json.message)) || "Request failed");
+      }
+
+      return json || {};
+    }
+
+    function wireToolbar(toolbar, editor) {
+      if (!toolbar || !editor || toolbar.dataset.hooked) return;
+
+      toolbar.querySelectorAll("button[data-cmd]").forEach((button) => {
+        button.onclick = () => {
+          editor.focus();
+          document.execCommand(button.dataset.cmd, false, button.dataset.value || null);
+        };
+      });
+
+      toolbar.dataset.hooked = "1";
+    }
+
+    async function requestPrayer() {
+      const prompt = (prayerPromptInput.value || "").trim();
+      const bodyText = textOf(prayerEditor);
+      const text = prompt || bodyText;
+
+      if (!text) {
+        return setStatus("Please enter a prayer request before sending.", true);
+      }
+
+      setStatus("Submitting request...");
+
+      try {
+        await api("https://www.witnessv2.net/api/prayer/request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ request_text: text })
+        });
+        prayerEditor.innerHTML = "";
+        setStatus("Prayer request submitted to ministry.");
+        await loadAll();
+      } catch (error) {
+        setStatus(error.message || "Request failed.", true);
+      }
+    }
+
+    async function aiPray() {
+      const prompt = (prayerPromptInput.value || "").trim();
+      const fallback = textOf(prayerEditor);
+      const source = prompt || fallback;
+
+      if (!source) {
+        return setStatus("Enter a prompt first, then select Pray.", true);
+      }
+
+      setStatus("Generating prayer...");
+
+      try {
+        const out = await api("https://www.witnessv2.net/api/prayer/ai-generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: source })
+        });
+        prayerEditor.innerHTML = esc(out.prayer_text || "").replace(/\n/g, "<br>");
+        setStatus("Prayer generated. Review and submit to save in My Prayers.");
+      } catch (error) {
+        setStatus(error.message || "Generation failed.", true);
+      }
+    }
+
+    async function submitPrayer() {
+      const html = htmlOf(prayerEditor);
+      const editorText = textOf(prayerEditor);
+      const prompt = (prayerPromptInput.value || "").trim();
+      const customTitle = (prayerTitleInput.value || "").trim();
+      const text = editorText || prompt;
+      const htmlOut = html || esc(text);
+
+      if (!text) {
+        return setStatus("Please enter a prayer before submitting.", true);
+      }
+
+      setStatus("Saving prayer...");
+
+      try {
+        await api("https://www.witnessv2.net/api/prayer/personal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: customTitle || titleFrom(text),
+            prayer_text: htmlOut
+          })
+        });
+        prayerEditor.innerHTML = "";
+        prayerTitleInput.value = "";
+        setStatus("Prayer saved to My Prayers.");
+        await loadAll();
+      } catch (error) {
+        setStatus(error.message || "Save failed.", true);
+      }
+    }
+
+    async function shareText(title, text) {
+      const cleanTitle = cleanText(title) || "Prayer";
+      const cleanBody = cleanText(text);
+      const payload = cleanBody ? `${cleanTitle}\n\n${cleanBody}` : cleanTitle;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: cleanTitle,
+            text: cleanBody || cleanTitle
+          });
+          setStatus("Shared.");
+          return;
+        } catch (_) {}
+      }
+
+      await navigator.clipboard.writeText(payload);
+      setStatus("Copied to clipboard.");
+    }
+
+    function stars(element, current, onRate) {
+      let value = Number(current || 0);
+
+      const render = () => {
+        element.innerHTML = "";
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement("span");
+          star.textContent = "\u2605";
+          if (i <= value) {
+            star.classList.add("active");
+          }
+          star.onclick = async () => {
+            const previousValue = value;
+            value = i;
+            render();
+            const ok = await onRate(i);
+            if (!ok) {
+              value = previousValue;
+              render();
+            }
+          };
+          element.appendChild(star);
+        }
+      };
+
+      render();
+    }
+
+    async function ratePrayer(prayerType, targetId, rating) {
+      try {
+        await api("https://www.witnessv2.net/api/prayer/rating", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prayer_type: prayerType,
+            target_id: targetId,
+            rating
+          })
+        });
+        setStatus("Rating saved.");
+        return true;
+      } catch (error) {
+        setStatus(error.message || "Could not save rating.", true);
+        return false;
+      }
+    }
+
+    async function saveReflection(prayerType, targetId, editor) {
+      const html = htmlOf(editor);
+      const text = textOf(editor);
+
+      if (!text) {
+        return setStatus("Write a reflection before saving.", true);
+      }
+
+      try {
+        await api("https://www.witnessv2.net/api/prayer/reflection", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prayer_type: prayerType,
+            target_id: targetId,
+            reflection_text: html
+          })
+        });
+        editor.innerHTML = "";
+        setStatus("Reflection saved.");
+        await loadAll();
+      } catch (error) {
+        setStatus(error.message || "Could not save reflection.", true);
+      }
+    }
+
+    async function escalatePrayer(id) {
+      try {
+        await api("/api/prayer/escalate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prayer_id: id })
+        });
+        setStatus("Escalated.");
+        await loadAll();
+      } catch (error) {
+        setStatus(error.message || "Escalation failed.", true);
+      }
+    }
+
+    function storyOpen(id) {
+      selectedPrayerForStory = id;
+      document.getElementById("storyTestimony").value = "";
+      document.getElementById("storyAnonymous").checked = true;
+      document.getElementById("storyName").value = "";
+      document.getElementById("storyName").disabled = true;
+      document.getElementById("storyModalBackdrop").style.display = "flex";
+    }
+
+    function storyClose() {
+      document.getElementById("storyModalBackdrop").style.display = "none";
+      selectedPrayerForStory = null;
+    }
+
+    async function storySubmit() {
+      const testimonyText = document.getElementById("storyTestimony").value.trim();
+      const publishAnonymously = document.getElementById("storyAnonymous").checked;
+      const displayName = document.getElementById("storyName").value.trim();
+
+      if (!selectedPrayerForStory) {
+        return setStatus("No prayer selected for testimony.", true);
+      }
+
+      if (!testimonyText) {
+        return setStatus("Please write a short testimony.", true);
+      }
+
+      try {
+        setStatus("Submitting testimony...");
+        await api("https://www.witnessv2.net/api/prayer/testimony", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prayer_id: selectedPrayerForStory,
+            testimony_text: testimonyText,
+            publish_anonymously: publishAnonymously,
+            display_name: publishAnonymously ? null : displayName
+          })
+        });
+        storyClose();
+        setStatus("Testimony submitted to Witness feed and queued for Balaam's Donkey arbitration.");
+        await loadAll();
+      } catch (error) {
+        setStatus(error.message || "Could not submit testimony.", true);
+      }
+    }
+
+    function reflectionToolbar(targetId) {
+      return `
+        <div class="toolbar" data-toolbar-target="${targetId}">
+          <button data-cmd="bold"><b>B</b></button>
+          <button data-cmd="italic"><i>I</i></button>
+          <button data-cmd="underline"><u>U</u></button>
+          <button data-cmd="insertUnorderedList">List</button>
+          <button data-cmd="formatBlock" data-value="blockquote">Quote</button>
+        </div>
+      `;
+    }
+
+    function hookToolbars() {
+      document.querySelectorAll(".toolbar[data-toolbar-target]").forEach((toolbar) => {
+        wireToolbar(toolbar, document.getElementById(toolbar.dataset.toolbarTarget));
+      });
+    }
+
+    function collapseCard(title, badge, meta, body, id) {
+      return `
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <button class="toggle-btn" type="button" data-collapse-toggle="${id}" aria-expanded="false">+</button>
+              <b>${title}</b>
+            </div>
+            <div class="prayer-meta-col">
+              ${badge || ""}
+              <div class="muted">${meta || ""}</div>
+            </div>
+          </div>
+          <div class="card-body" id="${id}" style="display:none">${body || ""}</div>
+        </div>
+      `;
+    }
+
+    async function loadSanctuaryQuote() {
+      try {
+        const out = await api("https://www.witnessv2.net/api/prayer/sanctuary-quotes");
+        const list = Array.isArray(out.quotes) ? out.quotes : [];
+        if (!list.length) return;
+
+        const key = "prayer_sanctuary_quote_idx_v1";
+        const previous = Number(localStorage.getItem(key) || "-1");
+        const idx = ((previous + 1) % list.length + list.length) % list.length;
+        localStorage.setItem(key, String(idx));
+
+        const quote = String(list[idx].text || "").trim();
+        if (quote && sanctuaryQuote) {
+          sanctuaryQuote.textContent = quote;
+        }
+      } catch (_) {}
+    }
+    async function loadAll() {
+      if (!getAuthToken()) return;
+
+      sanctuaryImg.src = "https://duge79ki51wc4.cloudfront.net/images/asset_d49bf474c3d981ae.png";
+
+      const [
+        personalJson,
+        requestsJson,
+        personalRefsJson,
+        requestRefsJson
+      ] = await Promise.all([
+        api("https://www.witnessv2.net/api/prayer/personal?limit=100"),
+        api("https://www.witnessv2.net/api/prayer/requests?limit=100"),
+        api("https://www.witnessv2.net/api/prayer/reflections?prayer_type=personal&limit=500"),
+        api("https://www.witnessv2.net/api/prayer/reflections?prayer_type=request&limit=500")
+      ]);
+
+      const personal = personalJson.prayers || [];
+      const requests = requestsJson.requests || [];
+      const personalRefs = personalRefsJson.items || [];
+      const requestRefs = requestRefsJson.items || [];
+
+      const mapBy = (rows) => {
+        const map = new Map();
+        rows.forEach((row) => {
+          const values = map.get(row.target_id) || [];
+          values.push(row);
+          map.set(row.target_id, values);
+        });
+        return map;
+      };
+
+      const personalRefMap = mapBy(personalRefs);
+      const requestRefMap = mapBy(requestRefs);
+
+      personalList.innerHTML = personal.map((prayer) => {
+        const refs = personalRefMap.get(prayer.id) || [];
+        const editorId = `reflect-personal-${prayer.id}`;
+        const collapseId = `collapse-personal-${prayer.id}`;
+        const witnessed = Number(prayer.witnessed_count || 0);
+        const rating = Number(prayer.rating || 0);
+        const reflectionHtml = refs.length
+          ? `<div class="reflection-list">${refs.map((row) => `
+              <div>
+                <div class="reflection-meta">${esc(fmt(row.created_at))}</div>
+                <div class="rich-content">${row.reflection_text || ""}</div>
+              </div>
+            `).join("")}</div>`
+          : "<div class='muted'>No reflections yet.</div>";
+
+        const body = `
+          <div class="rich-content" style="margin-top:6px">${prayer.prayer_text || ""}</div>
+          <div class="row" style="margin-top:8px">
+            <button class="secondary" data-share-personal="${prayer.id}">Share</button>
+            <button class="cta" data-story-personal="${prayer.id}">Tell my Story</button>
+            <div class="stars" data-stars-personal="${prayer.id}"></div>
+          </div>
+          <h3 class="content-heading" style="margin-top:10px">Reflections</h3>
+          ${reflectionHtml}
+          ${reflectionToolbar(editorId)}
+          <div class="editor small" id="${editorId}" contenteditable="true"></div>
+          <button class="secondary" style="margin-top:8px" data-save-reflect-personal="${prayer.id}" data-editor-id="${editorId}">
+            Save Reflection
+          </button>
+        `;
+
+        return collapseCard(
+          esc(prayer.title),
+          `<div class="prayer-pill-row"><span class="pill" title="Personal prayer you created">Personal</span><span class="witness-pill">${witnessed}</span><span class="witness-label">witnessed</span></div>`,
+          esc(fmt(prayer.created_at)),
+          body,
+          collapseId
+        ).replace(
+          `data-stars-personal="${prayer.id}"`,
+          `data-stars-personal="${prayer.id}" data-stars-current="${rating}"`
+        );
+      }).join("") || "<div class='muted'>No personal prayers yet.</div>";
+
+      const pending = requests.filter((request) =>
+        ["submitted", "pending_review", "escalated"].includes(request.status)
+      );
+
+      pendingList.innerHTML = pending.map((request) => {
+        const refs = requestRefMap.get(request.id) || [];
+        const editorId = `reflect-request-${request.id}`;
+        const collapseId = `collapse-request-${request.id}`;
+        const rating = Number(request.rating || 0);
+        const reflectionHtml = refs.length
+          ? `<div class="reflection-list">${refs.map((row) => `
+              <div>
+                <div class="reflection-meta">${esc(fmt(row.created_at))}</div>
+                <div class="rich-content">${row.reflection_text || ""}</div>
+              </div>
+            `).join("")}</div>`
+          : "<div class='muted'>No reflections yet.</div>";
+
+        const body = `
+          <div style="margin-top:6px">${esc(request.request_text)}</div>
+          <div class="row" style="margin-top:8px">
+            <button class="warn" data-escalate="${request.id}">Escalate</button>
+            <div class="stars" data-stars-request="${request.id}"></div>
+          </div>
+          <h3 class="content-heading" style="margin-top:10px">Reflections</h3>
+          ${reflectionHtml}
+          ${reflectionToolbar(editorId)}
+          <div class="editor small" id="${editorId}" contenteditable="true"></div>
+          <button class="secondary" style="margin-top:8px" data-save-reflect-request="${request.id}" data-editor-id="${editorId}">
+            Save Reflection
+          </button>
+        `;
+
+        return collapseCard(
+          `Prayer #${request.id}`,
+          `<div class="prayer-pill-row"><span class="pill">${esc(request.status)}</span></div>`,
+          esc(fmt(request.created_at)),
+          body,
+          collapseId
+        ).replace(
+          `data-stars-request="${request.id}"`,
+          `data-stars-request="${request.id}" data-stars-current="${rating}"`
+        );
+      }).join("") || "<div class='muted'>No pending requests.</div>";
+
+      const responseCards = [];
+      for (const request of requests) {
+        try {
+          const responseData = await api(`https://www.witnessv2.net/api/prayer/responses?prayer_id=${request.id}`);
+          (responseData.responses || []).forEach((response) => {
+            const collapseId = `collapse-response-${response.id}`;
+            const body = `<div style="margin-top:6px">${esc(response.response_text || "")}</div>`;
+            responseCards.push(
+              collapseCard(
+                `Response for #${request.id}`,
+                ` <span class="pill">${esc(response.responder_name || "ministry")}</span>`,
+                esc(fmt(response.created_at)),
+                body,
+                collapseId
+              )
+            );
+          });
+        } catch (_) {}
+      }
+
+      responsesList.innerHTML = responseCards.join("") || "<div class='muted'>No responses yet.</div>";
+
+      document.querySelectorAll("[data-share-personal]").forEach((button) => {
+        button.onclick = () => {
+          const id = Number(button.dataset.sharePersonal);
+          const prayer = personal.find((row) => row.id === id);
+          if (prayer) {
+            shareText(prayer.title, textFromHtml(prayer.prayer_text || ""));
+          }
+        };
+      });
+
+      document.querySelectorAll("[data-story-personal]").forEach((button) => {
+        button.onclick = () => storyOpen(Number(button.dataset.storyPersonal));
+      });
+
+      document.querySelectorAll("[data-escalate]").forEach((button) => {
+        button.onclick = () => escalatePrayer(Number(button.dataset.escalate));
+      });
+
+      document.querySelectorAll("[data-save-reflect-personal]").forEach((button) => {
+        button.onclick = () =>
+          saveReflection(
+            "personal",
+            Number(button.dataset.saveReflectPersonal),
+            document.getElementById(button.dataset.editorId)
+          );
+      });
+
+      document.querySelectorAll("[data-save-reflect-request]").forEach((button) => {
+        button.onclick = () =>
+          saveReflection(
+            "request",
+            Number(button.dataset.saveReflectRequest),
+            document.getElementById(button.dataset.editorId)
+          );
+      });
+
+      document.querySelectorAll("[data-stars-personal]").forEach((element) => {
+        stars(
+          element,
+          Number(element.dataset.starsCurrent || 0),
+          (rating) => ratePrayer("personal", Number(element.dataset.starsPersonal), rating)
+        );
+      });
+
+      document.querySelectorAll("[data-stars-request]").forEach((element) => {
+        stars(
+          element,
+          Number(element.dataset.starsCurrent || 0),
+          (rating) => ratePrayer("request", Number(element.dataset.starsRequest), rating)
+        );
+      });
+
+      document.querySelectorAll("[data-collapse-toggle]").forEach((button) => {
+        button.onclick = () => {
+          const id = button.dataset.collapseToggle;
+          const element = document.getElementById(id);
+          const isOpen = element && element.style.display !== "none";
+          if (!element) return;
+          element.style.display = isOpen ? "none" : "block";
+          button.textContent = isOpen ? "+" : "-";
+          button.setAttribute("aria-expanded", isOpen ? "false" : "true");
+        };
+      });
+
+      hookToolbars();
+    }
+
+    async function initUser() {
+      return;
+      const token = localStorage.getItem("auth_token") || "";
+      
+      // Handle external redirects (e.g., from external.com/pray)
+      // This preserves the original location so we can return after login
+      if (!token) {
+        // Check if this was triggered by an external redirect
+        const storedSource = WitnessAuthRedirect.getStoredRedirectSource();
+        const sourceUrl = storedSource || window.location.href;
+        WitnessAuthRedirect.redirectToLogin(sourceUrl);
+        return;
+      }
+
+      try {
+        const response = await fetch("https://www.witnessv2.net/api/auth/me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        await response.json();
+        if (!response.ok) {
+          WitnessAuthRedirect.redirectToLogin(window.location.href);
+          return;
+        }
+        await loadSanctuaryQuote();
+        await loadAll();
+      } catch (_) {
+        WitnessAuthRedirect.redirectToLogin(window.location.href);
+      }
+    }
+
+    wireToolbar(document.querySelector('[data-toolbar-target="prayerEditor"]'), prayerEditor);
+
+    document.getElementById("requestPrayerBtn").addEventListener("click", requestPrayer);
+    document.getElementById("aiPrayBtn").addEventListener("click", aiPray);
+    document.getElementById("submitPrayerBtn").addEventListener("click", submitPrayer);
+    document.getElementById("storyAnonymous").addEventListener("change", (event) => {
+      document.getElementById("storyName").disabled = !!event.target.checked;
+      if (event.target.checked) {
+        document.getElementById("storyName").value = "";
+      }
+    });
+    document.getElementById("storyCancelBtn").addEventListener("click", storyClose);
+    document.getElementById("storySubmitBtn").addEventListener("click", storySubmit);
+    document.getElementById("storyModalBackdrop").addEventListener("click", (event) => {
+      if (event.target.id === "storyModalBackdrop") {
+        storyClose();
+      }
+    });
+
+    //initUser();
+
+          // ── Log in button ──────────────────────────────────────────────────────────
+        // checkWitnessAccess() is provided by the Squarespace Code Injection harness
+        // (js/squarspaceHarnessinit.html). It validates the stored token, checks the
+        // can_review_prayers permission, and redirects to login on failure.
+        // On success it returns { ok: true, user, userEmail }.
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const auth = await checkWitnessAccess();
+            if (!auth || !auth.ok) return; // harness already handled the redirect
+/*             userEmailText.textContent = auth.userEmail;
+            if (auth.user && auth.user.ministry_name && !auth.user.admin) {
+                scopeNoteEl.textContent = `Viewing ministry queue for ${auth.user.ministry_name}`;
+            } */
+            await loadSanctuaryQuote();
+            await loadAll();
+        });
+  </script>
+</body>
+</html>
