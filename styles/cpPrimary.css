@@ -215,6 +215,24 @@
     color: var(--text-soft);
   }
 
+  .content-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1.5px;
+    font-weight: 600;
+  }
+
+  .content-body a:hover,
+  .content-body a:focus-visible {
+    color: var(--text-main);
+    text-decoration-thickness: 2px;
+  }
+
+  .content-body a:visited {
+    color: var(--accent);
+  }
+
   .content-body p + p {
     margin-top: 10px;
   }
@@ -1063,8 +1081,8 @@
   color: #888;
 }
 
-.bs-divider {
-  margin: 1.5rem 0;
+.bible-search > .bs-divider {
+  margin: 1rem 0;
   border-bottom: 1px solid #333;
 }
 
@@ -1135,9 +1153,44 @@
   color: #888;
 }
 
-.bs-divider {
-  margin: 1.2rem 0;
+.bs-result .bs-divider {
+  margin: 1rem 0;
   border-bottom: 1px solid #222;
+}
+
+@media (max-width: 700px) {
+  .bible-search > .bs-divider,
+  .bs-result .bs-divider {
+    margin: 0.75rem 0;
+  }
+
+  .reflection-card {
+    padding: 10px 10px;
+  }
+
+  .bible-search {
+    padding: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .bs-results {
+    margin-top: 0.6rem;
+  }
+
+  .bs-result {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .bs-verse {
+    padding: 0.6rem 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bs-meta {
+    gap: 0.55rem;
+  }
 }
 
 
@@ -1540,11 +1593,6 @@
   color: #888;
 }
 
-.bs-divider {
-  margin: 1.5rem 0;
-  border-bottom: 1px solid #333;
-}
-
 .bs-results {
   margin-top: 1rem;
   line-height: 1.6;
@@ -1611,12 +1659,6 @@
   font-size: 0.75rem;
   color: #888;
 }
-
-.bs-divider {
-  margin: 1.2rem 0;
-  border-bottom: 1px solid #222;
-}
-
 
 .bs-verse:hover {
   background: #1a1a1a;
