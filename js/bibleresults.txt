@@ -1,0 +1,573 @@
+  
+     Example search results:
+     {
+    "query": "jacob wrestles",
+    "fts_query": "\"jacob\" OR \"wrestles\" OR \"israel\" OR \"wrestled\" OR \"angel\" OR \"peniel\" OR \"break\" OR \"of\" OR \"day\"",
+    "tags": [
+        "jacob",
+        "israel",
+        "wrestled",
+        "angel",
+        "peniel",
+        "break of day"
+    ],
+    "notes": "Jacob wrestling with the angel at Peniel.",
+    "primary_verse": "Genesis 32:24",
+    "primary_result": {
+        "id": 953,
+        "ref": "Genesis 32:24",
+        "text": "Jacob was left alone, and wrestled with a man there until the breaking of the day.",
+        "book": "Genesis",
+        "chapter": 32,
+        "verse": 24,
+        "translation": "WEB",
+        "pool": "default",
+        "rank": 0.0,
+        "cluster_id": "genesis_32_wrestling_renaming",
+        "cluster_candidate": false,
+        "cluster_range": "Genesis 32:22 - Genesis 32:28",
+        "cluster_pull_strength": 0.86,
+        "cluster_role": "isolation/entry",
+        "cluster_importance": 0.92,
+        "cluster_entry_ref": "Genesis 32:28",
+        "cluster_context_gain": 0.95,
+        "cluster_nudge_strength": 0.9,
+        "cluster_nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+        "cluster_hit": true,
+        "cluster": {
+            "cluster_id": "genesis_32_wrestling_renaming",
+            "title": "Jacob Wrestles and Is Renamed Israel",
+            "theme": [
+                "struggle",
+                "pursuit",
+                "dependence",
+                "identity",
+                "encounter with God",
+                "transformation",
+                "encounter",
+                "perseverance",
+                "blessing",
+                "divine blessing",
+                "tradition",
+                "divine encounter"
+            ],
+            "posture_bins": [
+                "isolation",
+                "rest",
+                "worship",
+                "movement",
+                "formation",
+                "trust",
+                "struggle",
+                "prayer",
+                "love",
+                "humility"
+            ],
+            "primary_tone": "transformation",
+            "entry_ref": "Genesis 32:28",
+            "entry_role": "isolation/entry",
+            "flow_order": [
+                "Genesis 32:22",
+                "Genesis 32:23",
+                "Genesis 32:24",
+                "Genesis 32:25",
+                "Genesis 32:26",
+                "Genesis 32:27",
+                "Genesis 32:28"
+            ],
+            "pivot": "Genesis 32:28",
+            "cta_text": "This is the turning point where Jacob becomes Israel.",
+            "importance": 0.92,
+            "context_gain": 0.95,
+            "nudge_strength": 0.9,
+            "nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+            "rationale": "A coherent, weighty scene (Jacob alone, wrestling, wounded, pleading) but this window stops before the renaming, so it is an important local unit rather than a book-defining hinge.",
+            "range": "Genesis 32:22 - Genesis 32:28"
+        }
+    },
+    "posture_bin": "perseverance",
+    "daily_tone": "intense",
+    "tokens_used": {
+        "prompt": 438,
+        "completion": 120,
+        "total": 558
+    },
+    "clusters": [
+        {
+            "cluster_id": "genesis_32_wrestling_renaming",
+            "title": "Jacob Wrestles and Is Renamed Israel",
+            "theme": [
+                "struggle",
+                "pursuit",
+                "dependence",
+                "identity",
+                "encounter with God",
+                "transformation",
+                "encounter",
+                "perseverance",
+                "blessing",
+                "divine blessing",
+                "tradition",
+                "divine encounter"
+            ],
+            "posture_bins": [
+                "isolation",
+                "rest",
+                "worship",
+                "movement",
+                "formation",
+                "trust",
+                "struggle",
+                "prayer",
+                "love",
+                "humility"
+            ],
+            "primary_tone": "transformation",
+            "entry_ref": "Genesis 32:28",
+            "entry_role": "isolation/entry",
+            "flow_order": [
+                "Genesis 32:22",
+                "Genesis 32:23",
+                "Genesis 32:24",
+                "Genesis 32:25",
+                "Genesis 32:26",
+                "Genesis 32:27",
+                "Genesis 32:28"
+            ],
+            "pivot": "Genesis 32:28",
+            "cta_text": "This is the turning point where Jacob becomes Israel.",
+            "importance": 0.92,
+            "context_gain": 0.95,
+            "nudge_strength": 0.9,
+            "nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+            "rationale": "A coherent, weighty scene (Jacob alone, wrestling, wounded, pleading) but this window stops before the renaming, so it is an important local unit rather than a book-defining hinge.",
+            "range": "Genesis 32:22 - Genesis 32:28"
+        },
+        {
+            "cluster_id": "genesis_31_command_and_departure",
+            "title": "The Command to Leave and the Departure Begins",
+            "theme": [
+                "divine guidance",
+                "vindication",
+                "departure",
+                "divine justice",
+                "family tension",
+                "divine direction",
+                "family decision",
+                "return/home",
+                "protection",
+                "divine instruction",
+                "household solidarity",
+                "movement/flight",
+                "divine protection",
+                "family grievance",
+                "obedience to God",
+                "household conflict",
+                "secrecy/theft",
+                "narrative turning_point"
+            ],
+            "posture_bins": [
+                "formation",
+                "wisdom",
+                "trust",
+                "challenge",
+                "decision",
+                "action"
+            ],
+            "primary_tone": "formation",
+            "entry_ref": "Genesis 31:13",
+            "entry_role": "interruption/voice",
+            "flow_order": [
+                "Genesis 31:11",
+                "Genesis 31:12",
+                "Genesis 31:13",
+                "Genesis 31:14",
+                "Genesis 31:15",
+                "Genesis 31:16",
+                "Genesis 31:17"
+            ],
+            "pivot": "Genesis 31:13",
+            "cta_text": "Read the instruction together with the household reply and Jacob’s immediate preparations.",
+            "importance": 0.64,
+            "context_gain": 0.86,
+            "nudge_strength": 0.78,
+            "nudge_reason": "The dream image and the angelic explanation culminate in a divine command; the seed verse is much clearer in this narrative context.",
+            "rationale": "A coherent narrative unit: Jacob's complaint, the dream vision, the angelic revelation, and God's call to leave Laban — significant for Jacob's decision to return home.",
+            "range": "Genesis 31:11 - Genesis 31:17"
+        },
+        {
+            "cluster_id": "genesis_31_jacob_flees_laban_pursuit",
+            "title": "Jacob Flees; Laban Pursues and Is Warned",
+            "theme": [
+                "flight",
+                "deception",
+                "divine protection",
+                "pursuit",
+                "divine warning",
+                "accusation",
+                "tension",
+                "divine_protection",
+                "confrontation",
+                "protection",
+                "divine_intervention",
+                "family conflict",
+                "divine_restriction",
+                "household_idols",
+                "defense",
+                "divine guidance",
+                "hidden betrayal",
+                "idolatry",
+                "fear",
+                "idols",
+                "family tension",
+                "revelation",
+                "trust"
+            ],
+            "posture_bins": [
+                "wisdom",
+                "providence",
+                "deception",
+                "conflict",
+                "identity",
+                "formation",
+                "courage"
+            ],
+            "primary_tone": "tension",
+            "entry_ref": "Genesis 31:24",
+            "entry_role": "report",
+            "flow_order": [
+                "Genesis 31:21",
+                "Genesis 31:22",
+                "Genesis 31:23",
+                "Genesis 31:24",
+                "Genesis 31:25",
+                "Genesis 31:26",
+                "Genesis 31:27"
+            ],
+            "pivot": "Genesis 31:24",
+            "cta_text": "Read the verses together to see the escape, divine warning, and the immediate confrontation.",
+            "importance": 0.62,
+            "context_gain": 0.88,
+            "nudge_strength": 0.72,
+            "nudge_reason": "The meaning of Jacob's flight (motives, Rachel's theft, pursuit) and the turning point (God's warning to Laban) is substantially clearer when read together.",
+            "rationale": "Coherent local unit: Jacob's covert departure, Rachel's theft, Laban's pursuit, and God's dream form a stronger narrative together than as isolated verses.",
+            "range": "Genesis 31:21 - Genesis 31:27"
+        }
+    ],
+    "results": [
+        {
+            "id": 953,
+            "ref": "Genesis 32:24",
+            "text": "Jacob was left alone, and wrestled with a man there until the breaking of the day.",
+            "book": "Genesis",
+            "chapter": 32,
+            "verse": 24,
+            "translation": "WEB",
+            "pool": "default",
+            "rank": 0.0,
+            "cluster_id": "genesis_32_wrestling_renaming",
+            "cluster_candidate": false,
+            "cluster_range": "Genesis 32:22 - Genesis 32:28",
+            "cluster_pull_strength": 0.86,
+            "cluster_role": "isolation/entry",
+            "cluster_importance": 0.92,
+            "cluster_entry_ref": "Genesis 32:28",
+            "cluster_context_gain": 0.95,
+            "cluster_nudge_strength": 0.9,
+            "cluster_nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+            "cluster_hit": true,
+            "cluster": {
+                "cluster_id": "genesis_32_wrestling_renaming",
+                "title": "Jacob Wrestles and Is Renamed Israel",
+                "theme": [
+                    "struggle",
+                    "pursuit",
+                    "dependence",
+                    "identity",
+                    "encounter with God",
+                    "transformation",
+                    "encounter",
+                    "perseverance",
+                    "blessing",
+                    "divine blessing",
+                    "tradition",
+                    "divine encounter"
+                ],
+                "posture_bins": [
+                    "isolation",
+                    "rest",
+                    "worship",
+                    "movement",
+                    "formation",
+                    "trust",
+                    "struggle",
+                    "prayer",
+                    "love",
+                    "humility"
+                ],
+                "primary_tone": "transformation",
+                "entry_ref": "Genesis 32:28",
+                "entry_role": "isolation/entry",
+                "flow_order": [
+                    "Genesis 32:22",
+                    "Genesis 32:23",
+                    "Genesis 32:24",
+                    "Genesis 32:25",
+                    "Genesis 32:26",
+                    "Genesis 32:27",
+                    "Genesis 32:28"
+                ],
+                "pivot": "Genesis 32:28",
+                "cta_text": "This is the turning point where Jacob becomes Israel.",
+                "importance": 0.92,
+                "context_gain": 0.95,
+                "nudge_strength": 0.9,
+                "nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+                "rationale": "A coherent, weighty scene (Jacob alone, wrestling, wounded, pleading) but this window stops before the renaming, so it is an important local unit rather than a book-defining hinge.",
+                "range": "Genesis 32:22 - Genesis 32:28"
+            }
+        },
+        {
+            "id": 959,
+            "ref": "Genesis 32:30",
+            "text": "Jacob called the name of the place Peniel; for he said, “I have seen God face to face, and my life is preserved.”",
+            "book": "Genesis",
+            "chapter": 32,
+            "verse": 30,
+            "translation": "WEB",
+            "pool": "default",
+            "rank": -14.228164902373909,
+            "cluster_id": "",
+            "cluster_candidate": false,
+            "cluster_range": "",
+            "cluster_pull_strength": null,
+            "cluster_role": "",
+            "cluster_importance": null,
+            "cluster_entry_ref": "",
+            "cluster_context_gain": null,
+            "cluster_nudge_strength": null,
+            "cluster_nudge_reason": "",
+            "cluster_hit": false,
+            "cluster": null
+        },
+        {
+            "id": 954,
+            "ref": "Genesis 32:25",
+            "text": "When he saw that he didn’t prevail against him, the man touched the hollow of his thigh, and the hollow of Jacob’s thigh was strained as he wrestled.",
+            "book": "Genesis",
+            "chapter": 32,
+            "verse": 25,
+            "translation": "WEB",
+            "pool": "default",
+            "rank": -12.548707046461182,
+            "cluster_id": "genesis_32_wrestling_renaming",
+            "cluster_candidate": false,
+            "cluster_range": "Genesis 32:22 - Genesis 32:28",
+            "cluster_pull_strength": 0.84,
+            "cluster_role": "struggle/wound",
+            "cluster_importance": 0.92,
+            "cluster_entry_ref": "Genesis 32:28",
+            "cluster_context_gain": 0.95,
+            "cluster_nudge_strength": 0.9,
+            "cluster_nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+            "cluster_hit": true,
+            "cluster": {
+                "cluster_id": "genesis_32_wrestling_renaming",
+                "title": "Jacob Wrestles and Is Renamed Israel",
+                "theme": [
+                    "struggle",
+                    "pursuit",
+                    "dependence",
+                    "identity",
+                    "encounter with God",
+                    "transformation",
+                    "encounter",
+                    "perseverance",
+                    "blessing",
+                    "divine blessing",
+                    "tradition",
+                    "divine encounter"
+                ],
+                "posture_bins": [
+                    "isolation",
+                    "rest",
+                    "worship",
+                    "movement",
+                    "formation",
+                    "trust",
+                    "struggle",
+                    "prayer",
+                    "love",
+                    "humility"
+                ],
+                "primary_tone": "transformation",
+                "entry_ref": "Genesis 32:28",
+                "entry_role": "isolation/entry",
+                "flow_order": [
+                    "Genesis 32:22",
+                    "Genesis 32:23",
+                    "Genesis 32:24",
+                    "Genesis 32:25",
+                    "Genesis 32:26",
+                    "Genesis 32:27",
+                    "Genesis 32:28"
+                ],
+                "pivot": "Genesis 32:28",
+                "cta_text": "This is the turning point where Jacob becomes Israel.",
+                "importance": 0.92,
+                "context_gain": 0.95,
+                "nudge_strength": 0.9,
+                "nudge_reason": "The scene of wrestling and Jacob’s refusal to let go (v.26) gives fuller meaning to isolated verses like v.24 or v.27; the cluster improves understanding though the renaming (v.28) is outside this window.",
+                "rationale": "A coherent, weighty scene (Jacob alone, wrestling, wounded, pleading) but this window stops before the renaming, so it is an important local unit rather than a book-defining hinge.",
+                "range": "Genesis 32:22 - Genesis 32:28"
+            }
+        }        
+    ]
+}
+     
+     
+     <style>
+        .card {
+  flex: 0 0 auto;
+}
+
+
+     .cluster-signal{
+      padding:10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+        radial-gradient(circle at 0% 50%, rgba(122,167,255,0.12), transparent 40%);
+    }
+    .cluster-signal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .cluster-signal-title{
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+    .cluster-signal-score{
+      font-size:12px;
+      font-weight:700;
+      color:#dce8ff;
+    }
+    .cluster-signal-bar{
+      height:10px;
+      border-radius:999px;
+      overflow:hidden;
+      background: rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .cluster-signal-fill{
+      height:100%;
+      border-radius:999px;
+      background: linear-gradient(90deg, #5eead4 0%, #7aa7ff 45%, #f6bf57 100%);
+      box-shadow: 0 0 18px rgba(122,167,255,0.28);
+    }
+    .cluster-signal-meta{
+      margin-top:7px;
+      font-size:11px;
+      color: var(--muted);
+    }
+    </style>
+  
+  function renderSearchResults(payload) {
+    results.innerHTML = '';
+    const rows = Array.isArray(payload?.results) ? payload.results : [];
+    if (!rows.length) {
+      results.innerHTML = `<div class="card"><h4>No results</h4><p>Try a different request.</p></div>`;
+      return;
+    }
+
+    const planner = document.createElement('div');
+    planner.className = 'hint';
+    planner.style.marginBottom = '8px';
+    const plannerBits = [
+      `FTS query: <span class="mono">${escapeHtml(payload.fts_query || '')}</span>`
+    ];
+    if (payload?.primary_verse) plannerBits.push(`Primary verse: <span class="mono">${escapeHtml(payload.primary_verse)}</span>`);
+    if (payload?.posture_bin) plannerBits.push(`Posture: <span class="mono">${escapeHtml(payload.posture_bin)}</span>`);
+    if (payload?.daily_tone) plannerBits.push(`Tone: <span class="mono">${escapeHtml(payload.daily_tone)}</span>`);
+    if (payload?.notes) plannerBits.push(`${escapeHtml(payload.notes)}`);
+    planner.innerHTML = plannerBits.join('<br>');
+    results.appendChild(planner);
+
+    const primaryRef = String(payload?.primary_result?.ref || payload?.primary_verse || '').trim();
+
+    rows.forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      const isPrimary = primaryRef && String(v?.ref || '').trim() === primaryRef;
+      if (isPrimary) div.classList.add('is-primary-pick');
+      const cluster = (v && typeof v.cluster === 'object' && v.cluster) ? v.cluster : null;
+      const clusterBits = [];
+      if (cluster?.title) clusterBits.push(`Title: <span class="mono">${escapeHtml(cluster.title)}</span>`);
+      if (v?.cluster_role) clusterBits.push(`Role: <span class="mono">${escapeHtml(v.cluster_role)}</span>`);
+      if (v?.cluster_range) clusterBits.push(`Range: <span class="mono">${escapeHtml(v.cluster_range)}</span>`);
+
+      if (cluster?.pivot) clusterBits.push(`Pivot: <span class="mono">${escapeHtml(cluster.pivot)}</span>`);
+      if (v?.cluster_nudge_reason) clusterBits.push(escapeHtml(v.cluster_nudge_reason));
+      if (cluster?.cta_text) clusterBits.push(escapeHtml(cluster.cta_text));
+      const signal = compositeSignal(v);
+      const fallbackSignal = clamp01(signal != null ? signal : (cluster && cluster.importance != null ? cluster.importance : v?.cluster_pull_strength));
+      const signalMarkup = !cluster ? '' : `<div class="cluster-signal">
+        <div class="cluster-signal-head">
+          <div class="cluster-signal-title">Cluster Signal</div>
+          <div class="cluster-signal-score">${escapeHtml(toPct(fallbackSignal != null ? fallbackSignal : 0.5))}</div>
+        </div>
+        <div class="cluster-signal-bar"><div class="cluster-signal-fill" style="width:${Math.round((fallbackSignal != null ? fallbackSignal : 0.5) * 100)}%"></div></div>
+        <div class="cluster-signal-meta">Weighted from importance, context strength, and pull relevance.</div>
+      </div>`;
+      const flags = [];
+      if (isPrimary) flags.push('<span class="result-chip primary">Primary Pick</span>');
+      if (cluster?.title) flags.push('<span class="result-chip">Big Story Here!</span>');
+      div.innerHTML = `<div class="result-head">
+        <h4>${escapeHtml(v.ref || 'Result')}</h4>
+        ${flags.length ? `<div class="result-flags">${flags.join('')}</div>` : ''}
+      </div><p>${escapeHtml((v.text || '').trim())}</p>${signalMarkup}${
+        clusterBits.length ? `<div class="hint" style="margin-top:8px">${clusterBits.join('<br>')}</div>` : ''
+      }`;
+      div.onclick = async () => {
+        const parts = extractReferenceParts(v.ref || '');
+        pendingFocusVerse = Number.isFinite(Number(parts?.verse)) && Number(parts.verse) > 0 ? Number(parts.verse) : null;
+        const trans = String(v.translation || translation.value || 'web').trim() || 'web';
+        let targetRef = String(v.ref || '').trim();
+        const bc = extractBookAndChapter(v.ref || '');
+        if (bc) {
+          targetRef = chapterRef(bc.book, bc.chap);
+        }
+        reference.value = targetRef;
+        syncSelectorFromReference(targetRef);
+        verseInput.value = '';
+        translation.value = trans;
+        localStorage.setItem('bibleMini_translation', trans);
+        setTab('passage');
+        try {
+          await loadPassage(targetRef, trans);
+          setStatus(
+            passageStatus,
+            pendingFocusVerse
+              ? `Loaded ${escapeHtml(targetRef)} and highlighted verse ${pendingFocusVerse}.`
+              : `Loaded ${escapeHtml(targetRef)}.`,
+            'ok'
+          );
+        } catch (err) {
+          setStatus(
+            passageStatus,
+            pendingFocusVerse
+              ? `Reference prefilled. Tap Go Here to load chapter and jump to verse ${pendingFocusVerse}.`
+              : 'Reference prefilled. Tap Go Here to load the full chapter.',
+            'ok'
+          );
+        }
+      };
+      results.appendChild(div);
+    });
+  }

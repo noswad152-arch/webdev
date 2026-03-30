@@ -7,14 +7,14 @@
 
 #wv2BibleEmbed {
   /* Theme */
-  color-scheme: dark;
-  --bg: #0b0f14;
-  --panel: #0f1620;
-  --panel2: #0c121a;
-  --text: #e7eef8;
-  --muted: #9fb0c3;
-  --border: #223044;
-  --accent: #7aa7ff;
+--bg: #0b0f14;
+  --panel: #5b90cd;
+  --panel2: #15100d;
+  --text: #e5e7eb;
+  --muted: #b8aa94;
+        --border: rgb(251 174 1 / 81%);
+  --accent: #2bb0ff;
+  --accent-2: #c8a26a;
   --danger: #ff6b6b;
   --ok: #5eead4;
 
@@ -30,9 +30,10 @@
   font-family: var(--font);
   color: var(--text);
   box-sizing: border-box;
-
+      background: radial-gradient(1200px 800px at 10% 10%, #e8611a, #3152a0, #0e1721 45%);
   border-radius: 18px;
   overflow: hidden;
+
 }
 
 #wv2BibleEmbed * {
@@ -68,11 +69,16 @@ background:
     color-mix(in srgb, var(--accent) 25%, transparent),
     transparent 70%
   ),
+  radial-gradient(
+    700px 360px at 50% 110%,
+    color-mix(in srgb, #a57c52 22%, transparent),
+    transparent 68%
+  ),
   color-mix(in srgb, var(--bg) 40%, transparent);
 
 
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 /* ---------------------------------------------------------
@@ -93,9 +99,9 @@ background:
 
 
 
-  border: 1px solid rgba(126,165,221,0.30);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
   border-radius: 18px;
-  box-shadow: 0 22px 70px rgba(0,0,0,0.45);
+  box-shadow: 0 24px 76px rgba(0,0,0,0.52);
   overflow: auto;
 }
 
@@ -114,10 +120,11 @@ background:
 
   background: linear-gradient(
     180deg,
-    rgba(255,255,255,0.06),
-    rgba(255,255,255,0.03)
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02)
   );
   border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 5;
 }
@@ -133,10 +140,10 @@ background:
   font-size: 20px;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: #f3f7ff;
+  color: #f6e9cf;
   text-shadow:
-    0 2px 14px rgba(29,75,130,.35),
-    0 0 20px rgba(244,197,108,.18);
+    0 2px 14px rgba(79,51,27,.45),
+    0 0 20px rgba(216,174,102,.22);
 }
 
 #wv2BibleEmbed .brand span {
@@ -153,7 +160,7 @@ background:
   gap: 6px;
   padding: 4px;
 
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.32);
   border: 1px solid var(--border);
   border-radius: 999px;
 }
@@ -166,13 +173,14 @@ background:
   padding: 7px 10px;
   border-radius: 999px;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
 }
 
 #wv2BibleEmbed .tab.active {
-  background: rgba(122,167,255,0.18);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
   color: var(--text);
-  box-shadow: inset 0 0 0 1px rgba(122,167,255,0.35);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 42%, transparent);
 }
 
 /* ---------------------------------------------------------
@@ -182,13 +190,15 @@ background:
 #wv2BibleEmbed .panel {
 background: linear-gradient(
   180deg,
-  color-mix(in srgb, var(--panel) 42%, transparent),
-  color-mix(in srgb, var(--panel2) 42%, transparent)
+  color-mix(in srgb, var(--panel) 58%, transparent),
+  color-mix(in srgb, var(--panel2) 58%, transparent)
 );
 
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--pad);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 #wv2BibleEmbed .row {
@@ -217,7 +227,7 @@ background: linear-gradient(
 #wv2BibleEmbed select,
 #wv2BibleEmbed textarea {
   width: 100%;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.28);
   border: 1px solid var(--border);
   color: var(--text);
   padding: 10px;
@@ -229,8 +239,8 @@ background: linear-gradient(
 #wv2BibleEmbed input:focus,
 #wv2BibleEmbed select:focus,
 #wv2BibleEmbed textarea:focus {
-  border-color: rgba(122,167,255,0.7);
-  box-shadow: 0 0 0 3px rgba(122,167,255,0.15);
+  border-color: color-mix(in srgb, var(--accent) 78%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 #wv2BibleEmbed select {
@@ -246,8 +256,8 @@ background: linear-gradient(
 
 #wv2BibleEmbed #bookSelect {
   background: rgba(0,0,0,0.25);
-  border-color: #35507a;
-  color: #f0f6ff;
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: #f5ecd9;
   font-weight: 600;
 }
 
@@ -263,13 +273,15 @@ background: linear-gradient(
   border-radius: 12px;
   cursor: pointer;
   font-size: 13px;
+  -webkit-user-select: none;
   user-select: none;
   white-space: nowrap;
 }
 
 #wv2BibleEmbed .btn.primary {
-  border-color: rgba(122,167,255,0.55);
-  background: rgba(122,167,255,0.16);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 #wv2BibleEmbed .btn:disabled {
@@ -283,8 +295,8 @@ background: linear-gradient(
 
 #wv2BibleEmbed .content {
   font-family: "EB Garamond", serif;
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: 19px;
+  line-height: 1.74;
   color: var(--text);
   white-space: pre-wrap;
   max-height: 420px;
@@ -294,9 +306,9 @@ background: linear-gradient(
 }
 
 #wv2BibleEmbed .verse-line {
-  padding: 4px 10px;
+  padding: 7px 12px;
   border-radius: 10px;
-  margin: 2px 0;
+  margin: 3px 0;
   transition: background-color 200ms ease, box-shadow 200ms ease;
   background: transparent;
 }
@@ -310,8 +322,8 @@ background: linear-gradient(
 
 
 #wv2BibleEmbed .verse-line.is-focus {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 48%, transparent);
 }
 /* Verse numbers */
 #wv2BibleEmbed .verse-line .verse-num {
@@ -341,29 +353,134 @@ background: linear-gradient(
 #wv2BibleEmbed .results {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   max-height: 420px;
   overflow-y: auto;
-  padding-right: 6px;
+  padding-right: 8px;
 }
 
 #wv2BibleEmbed .card {
-  background: rgba(0,0,0,0.20);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 76%, transparent),
+    color-mix(in srgb, var(--panel2) 76%, transparent)
+  );
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+}
+
+#wv2BibleEmbed .card.is-primary-pick {
+  border-color: color-mix(in srgb, var(--accent-2) 72%, transparent);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.34),
+    inset 0 0 0 1px color-mix(in srgb, var(--accent-2) 40%, transparent);
+}
+
+#wv2BibleEmbed .result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+#wv2BibleEmbed .result-flags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+#wv2BibleEmbed .result-chip {
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: color-mix(in srgb, var(--panel2) 82%, transparent);
+  color: #f4ede0;
+}
+
+#wv2BibleEmbed .result-chip.primary {
+  background: color-mix(in srgb, var(--accent-2) 30%, transparent);
+  border-color: color-mix(in srgb, var(--accent-2) 68%, transparent);
+  color: #ffecc8;
+  font-weight: 700;
+}
+
+#wv2BibleEmbed .cluster-signal {
+  margin-top: 10px;
   padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+    radial-gradient(circle at 0% 50%, rgba(122,167,255,0.12), transparent 40%);
+}
+
+#wv2BibleEmbed .cluster-signal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+#wv2BibleEmbed .cluster-signal-title {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#wv2BibleEmbed .cluster-signal-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dce8ff;
+}
+
+#wv2BibleEmbed .cluster-signal-bar {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+#wv2BibleEmbed .cluster-signal-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #5eead4 0%, #7aa7ff 45%, #f6bf57 100%);
+  box-shadow: 0 0 18px rgba(122,167,255,0.28);
+}
+
+#wv2BibleEmbed .cluster-signal-meta {
+  margin-top: 7px;
+  font-size: 11px;
+  color: var(--muted);
 }
 
 #wv2BibleEmbed .card h4 {
-  margin: 0 0 6px 0;
-  font-size: 13px;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #f3dcae;
 }
 
 #wv2BibleEmbed .card p {
   margin: 0;
   color: var(--text);
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+#wv2BibleEmbed .card:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.34);
 }
 
 /* ---------------------------------------------------------
@@ -376,6 +493,74 @@ background: linear-gradient(
   font-size: 11px;
   color: var(--muted);
   opacity: 0.9;
+}
+
+/* ---------------------------------------------------------
+   SHARED READER UTILITIES
+   --------------------------------------------------------- */
+
+#wv2BibleEmbed .divider {
+  margin: 12px 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 44%, transparent),
+    transparent
+  );
+}
+
+#wv2BibleEmbed .refline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  border: 1px solid var(--border);
+}
+
+#wv2BibleEmbed .ref {
+  font-family: "Cinzel", serif;
+  font-size: 15px;
+  color: #f3dcae;
+  letter-spacing: 0.02em;
+}
+
+#wv2BibleEmbed .meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#wv2BibleEmbed .status,
+#wv2BibleEmbed .foot,
+#wv2BibleEmbed .mono {
+  font-family: "EB Garamond", serif;
+}
+
+#wv2BibleEmbed .mono {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--text) 92%, transparent);
+}
+
+#wv2BibleEmbed .status.ok {
+  color: #9dd9c9;
+}
+
+#wv2BibleEmbed .status.err {
+  color: #ff9a9a;
+}
+
+#wv2BibleEmbed .results .hint {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel2) 74%, transparent);
+  line-height: 1.5;
 }
 
 /* ---------------------------------------------------------
@@ -394,61 +579,7 @@ background: linear-gradient(
     align-items: stretch;
   }
 }
-/* Sacred Voice */
-#wv2BibleEmbed .brand b,
-#wv2BibleEmbed .sacred-title {
-  font-family: "Cinzel", serif;
-  font-weight: 300;
-  letter-spacing: 0.05em;
-      font-size: 30px;
-
-}
-
-/* Scripture Voice */
-#wv2BibleEmbed .content {
-  font-family: "EB Garamond", serif;
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-/* Marginalia Voice */
-#wv2BibleEmbed .verse-line .verse-num {
-  font-family: "EB Garamond", serif;
-  font-size: 13px;
-  opacity: 0.75;
-}
-
-#wv2BibleEmbed .hint {
-  font-family: "EB Garamond", serif;
-  font-size: 12px;
-  opacity: 0.8;
-  margin-top: 4px;
-}
-
-/* Interface Voice */
-#wv2BibleEmbed .btn,
-#wv2BibleEmbed .tab,
-#wv2BibleEmbed label {
-  font-family: var(--font);
-  font-size: 13px;
-  letter-spacing: 0.01em;
-}
-
-/* Whisper Voice */
-#wv2BibleEmbed .status,
-#wv2BibleEmbed .foot {
-  font-family: "EB Garamond", serif;
-  font-size: 11px;
-  opacity: 0.75;
-}
-
-#wv2BibleEmbed .card p {
-  font-family: "Spectral", serif;
-  font-size: 14px;
-  line-height: 1.5;
-  opacity: 0.95;
-}
-/* Wrap image + brand text */
+/* Brand image + title lockup */
 #wv2BibleEmbed .brand-wrap {
   display: flex;
   align-items: center;
@@ -482,15 +613,15 @@ background: linear-gradient(
 
       <div class="topbar-right">
         <div class="tabs" role="tablist" aria-label="Mode">
-          <button class="tab active" id="tabPassage" type="button">Passage</button>
-          <button class="tab" id="tabSearch" type="button">Search</button>
-          <button class="tab" id="tabSettings" type="button">Settings</button>
+          <button class="tab active" id="tabPassage" role="tab" aria-selected="true" aria-controls="panelPassage" type="button">Passage</button>
+          <button class="tab" id="tabSearch" role="tab" aria-selected="false" aria-controls="panelSearch" type="button">Search</button>
+          <button class="tab" id="tabSettings" role="tab" aria-selected="false" aria-controls="panelSettings" type="button">Settings</button>
         </div>
       </div>
     </div>
 
     <!-- Passage Panel -->
-    <div class="panel" id="panelPassage">
+    <div class="panel" id="panelPassage" role="tabpanel" aria-labelledby="tabPassage">
       <div class="row wrap">
         <div style="flex: 1 1 180px;">
           <label for="reference">Reference</label>
@@ -544,7 +675,7 @@ background: linear-gradient(
     </div>
 
     <!-- Search Panel -->
-    <div class="panel" id="panelSearch" style="display:none;">
+    <div class="panel" id="panelSearch" style="display:none;" role="tabpanel" aria-labelledby="tabSearch">
       <div class="row wrap">
         <div style="flex: 1 1 180px;">
           <label for="searchQuery">Theme / Prompt</label>
@@ -573,7 +704,7 @@ background: linear-gradient(
       <div class="results" id="results"></div>
     </div>
 <!-- Settings Panel -->
-    <div class="panel" id="panelSettings" style="display:none;">
+    <div class="panel" id="panelSettings" style="display:none;" role="tabpanel" aria-labelledby="tabSettings">
       <div class="row wrap">
         <div style="flex: 1 1 220px;">
           <label for="apiBibleKey">API.Bible Key (optional)</label>
@@ -595,7 +726,7 @@ background: linear-gradient(
 
       <div class="divider"></div>
       <div class="hint">
-        <b>Note on bible translations:</b> NIV and other translations are copyrighted; If you would like to get a license, go to <a href="https://www.youversion.com/" target="_blank">YouVersion</a> or <a href="https://api.bible/" target="_blank">API.Bible</a> (e.g., YouVersion Platform or API.Bible with approved rights)      </div>
+        <b>Note on bible translations:</b> NIV and other translations are copyrighted; If you would like to get a license, go to <a href="https://www.youversion.com/" target="_blank" rel="noopener noreferrer">YouVersion</a> or <a href="https://api.bible/" target="_blank" rel="noopener noreferrer">API.Bible</a> (e.g., YouVersion Platform or API.Bible with approved rights)      </div>
     </div>
 
     
@@ -685,20 +816,26 @@ background: linear-gradient(
 
   function setTab(which) {
     [tabPassage, tabSearch, tabSettings].forEach(t => t.classList.remove('active'));
+    tabPassage.setAttribute('aria-selected', 'false');
+    tabSearch.setAttribute('aria-selected', 'false');
+    tabSettings.setAttribute('aria-selected', 'false');
     panelPassage.style.display = 'none';
     panelSearch.style.display = 'none';
     panelSettings.style.display = 'none';
     if (which === 'passage') {
       tabPassage.classList.add('active');
+      tabPassage.setAttribute('aria-selected', 'true');
       panelPassage.style.display = '';
       return;
     }
     if (which === 'search') {
       tabSearch.classList.add('active');
+      tabSearch.setAttribute('aria-selected', 'true');
       panelSearch.style.display = '';
       return;
     }
     tabSettings.classList.add('active');
+    tabSettings.setAttribute('aria-selected', 'true');
     panelSettings.style.display = '';
   }
 
@@ -712,6 +849,42 @@ background: linear-gradient(
     return String(s).replace(/[&<>"']/g, c => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[c]));
+  }
+
+  function asFiniteNumber(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function clamp01(v) {
+    const n = asFiniteNumber(v);
+    if (n == null) return null;
+    if (n <= 0) return 0;
+    if (n >= 1) return 1;
+    return n;
+  }
+
+  function toPct(v) {
+    const n = clamp01(v);
+    return `${Math.round((n == null ? 0 : n) * 100)}%`;
+  }
+
+  function compositeSignal(v) {
+    const cluster = (v && typeof v.cluster === 'object' && v.cluster) ? v.cluster : null;
+    const importance = clamp01(v?.cluster_importance ?? cluster?.importance);
+    const context = clamp01(v?.cluster_context_gain ?? cluster?.context_gain);
+    const pull = clamp01(v?.cluster_pull_strength);
+
+    const weighted = [
+      { value: importance, weight: 0.45 },
+      { value: context, weight: 0.35 },
+      { value: pull, weight: 0.20 }
+    ].filter((x) => x.value != null);
+
+    if (!weighted.length) return null;
+    const sum = weighted.reduce((acc, x) => acc + x.value * x.weight, 0);
+    const totalWeight = weighted.reduce((acc, x) => acc + x.weight, 0);
+    return clamp01(sum / totalWeight);
   }
 
   async function fetchJson(url, opts) {
@@ -954,10 +1127,46 @@ background: linear-gradient(
     planner.innerHTML = plannerBits.join('<br>');
     results.appendChild(planner);
 
+    const primaryRef = String(payload?.primary_result?.ref || payload?.primary_verse || '').trim();
+
     rows.forEach(v => {
       const div = document.createElement('div');
       div.className = 'card';
-      div.innerHTML = `<h4>${escapeHtml(v.ref || 'Result')}</h4><p>${escapeHtml((v.text || '').trim())}</p>`;
+      const isPrimary = primaryRef && String(v?.ref || '').trim() === primaryRef;
+      if (isPrimary) div.classList.add('is-primary-pick');
+
+      const cluster = (v && typeof v.cluster === 'object' && v.cluster) ? v.cluster : null;
+      const hasClusterData = !!(cluster || v?.cluster_id || v?.cluster_hit);
+
+      const clusterBits = [];
+      if (cluster?.title) clusterBits.push(`Title: <span class="mono">${escapeHtml(cluster.title)}</span>`);
+      if (v?.cluster_role) clusterBits.push(`Role: <span class="mono">${escapeHtml(v.cluster_role)}</span>`);
+      if (v?.cluster_range) clusterBits.push(`Range: <span class="mono">${escapeHtml(v.cluster_range)}</span>`);
+      if (cluster?.pivot) clusterBits.push(`Pivot: <span class="mono">${escapeHtml(cluster.pivot)}</span>`);
+      if (v?.cluster_nudge_reason) clusterBits.push(escapeHtml(v.cluster_nudge_reason));
+      if (cluster?.cta_text) clusterBits.push(escapeHtml(cluster.cta_text));
+
+      const signal = compositeSignal(v);
+      const fallbackSignal = clamp01(signal != null ? signal : (cluster?.importance ?? v?.cluster_pull_strength ?? 0.5));
+      const signalMarkup = hasClusterData ? `<div class="cluster-signal">
+        <div class="cluster-signal-head">
+          <div class="cluster-signal-title">Cluster Signal</div>
+          <div class="cluster-signal-score">${escapeHtml(toPct(fallbackSignal))}</div>
+        </div>
+        <div class="cluster-signal-bar"><div class="cluster-signal-fill" style="width:${Math.round((fallbackSignal == null ? 0.5 : fallbackSignal) * 100)}%"></div></div>
+        <div class="cluster-signal-meta">Weighted from importance, context strength, and pull relevance.</div>
+      </div>` : '';
+
+      const flags = [];
+      if (isPrimary) flags.push('<span class="result-chip primary">Primary Pick</span>');
+      if (cluster?.title || v?.cluster_hit) flags.push('<span class="result-chip">Story!</span>');
+
+      div.innerHTML = `<div class="result-head">
+        <h4>${escapeHtml(v.ref || 'Result')}</h4>
+        ${flags.length ? `<div class="result-flags">${flags.join('')}</div>` : ''}
+      </div><p>${escapeHtml((v.text || '').trim())}</p>${signalMarkup}${
+        clusterBits.length ? `<div class="hint" style="margin-top:8px">${clusterBits.join('<br>')}</div>` : ''
+      }`;
       div.onclick = async () => {
         const parts = extractReferenceParts(v.ref || '');
         pendingFocusVerse = Number.isFinite(Number(parts?.verse)) && Number(parts.verse) > 0 ? Number(parts.verse) : null;

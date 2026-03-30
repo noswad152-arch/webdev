@@ -100,6 +100,11 @@
   color: var(--text-subtle, #b8aa94);
 }
 
+#bible-search #searchQuery {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 </style>
 <div class="episode-page">
 
@@ -110,14 +115,7 @@
   <div class="hero-image-overlay"></div>
   
   <div class="hero-image-text">
-    <div class="scripture-card">
-    
-  <div class="scripture-inner " id="scripture-container">
-    <div id="scripture-label" class="scripture-label">Scripture</div>
-    <div id="scripture-ref" class="scripture-ref">Romans 12:5</div>
-    <div id="scripture-text" class="scripture-text">In Christ we, though many, form one body</div>
-  </div>
-</div>
+
     <div class="series-label">
       <span class="series-dot"></span>
       <span id="today-date"></span>
@@ -129,7 +127,14 @@
     </div>
     </div>
   </header>
-
+    <div class="scripture-card">
+    
+  <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    <div id="scripture-ref" class="scripture-ref">Romans 12:5</div>
+    <div id="scripture-text" class="scripture-text">In Christ we, though many, form one body</div>
+  </div>
+</div>
 
 
   <!-- Main content -->
@@ -198,8 +203,23 @@ Watch:
       </video>     
     </div>
         </aside>
+
+    </article>
+
 <aside class="content-card">
+<div class="content-heading">New Covenant Writings
+  <p style="font-size: 15px;color: var(--accent)">Featured Picks!</p>
+</div>
+
+  <div id="custom-summary-output" class="content-body"> </div>
+  <!--<p style="font-size: 15px;color: var(--accent)">Your Top Pick!</p>-->
+    </aside>
+
+  </section>
+
   
+  <!-- Reflection -->
+  <section class="reflection-card">
 <div id="bible-search" class="bible-search">
 
   <div class="bs-hero">
@@ -237,21 +257,9 @@ Watch:
   </div>
   <div class="bs-divider"></div> 
 </div>
-</aside>
 
-
-
-    </article>
-
-<aside class="content-card">
-<div class="content-heading">New Covenant Writings</div>
-
-  <div id="custom-summary-output" class="content-body"> </div>
-  <p style="font-size: 15px;color: var(--accent)">Your Top Pick!</p>
-    </aside>
 
   </section>
-
   <!-- Reflection -->
   <section class="reflection-card">
     <div class="reflection-label">A quiet question to carry</div>
@@ -364,7 +372,8 @@ const finalSelection = [
     const latestFromUrl2 = data2.items || [];;
 
     // Combine: 3 from first + 1 from second at bottom
-    const allResults = [...finalSelection,...latestFromUrl2];
+    //const allResults = [...finalSelection,...latestFromUrl2];
+    const allResults = [...finalSelection];
     /*if (latestFromUrl2) {
       allResults.push(latestFromUrl2);      
     }*/
@@ -497,10 +506,11 @@ document.getElementById("daily-question").textContent = `${todayTheme.question}`
            
 }
   async function loadScripture() {
-    const res = await fetch("https://bible-api.com/John%2016:23");
+    const res = await fetch("https://www.witnessv2.net/api/bible/open");
     const data = await res.json();
+    
 
-    document.getElementById("scripture-label").textContent = data.reference;
+    //document.getElementById("scripture-label").textContent = data.reference;
     document.getElementById("scripture-ref").textContent = data.reference;
     document.getElementById("scripture-text").textContent = data.text;
 
@@ -787,22 +797,10 @@ async function fetchJson(url) {
   if (!res.ok) throw new Error("Request failed");
   return res.json();
 }
-  //loadScripture();
+  
+  loadScripture();
 //loadSidebarVideo();
 updateHeroImage();
 updateHeroSideBar();
 loadPageData();
 </script>
-  
-</div>
-</div></div></div></div></div>
-    </div>
-  
-  </div>
-  
-</section>
-
-  
-</article>
-
-          
