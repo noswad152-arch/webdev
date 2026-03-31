@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Daily Witness Reflection</title>
+    <link>https://yourdomain.com</link>
+    <description>Daily Scripture, reflection, carry-this-with-you, and prayer.</description>
+    <language>en-us</language>
+
+    <item>
+      <title>Carry This With You — March 30</title>
+      <link>https://yourdomain.com/reflections/2026-03-30</link>
+      <guid>2026-03-30</guid>
+      <pubDate>Mon, 30 Mar 2026 08:00:00 -0800</pubDate>
+      <description><![CDATA[
+        <p><strong>Scripture:</strong> John 15:9</p>
+        <p><strong>Carry this with you:</strong> You are held in a love that does not waver.</p>
+        <p><strong>Prayer:</strong> Lord, steady my heart in Your abiding presence.</p>
+        <p><a href="https://yourdomain.com/reflections/2026-03-30">Read the full reflection</a></p>
+      ]]></description>
+    </item>
+
+  </channel>
+</rss>
