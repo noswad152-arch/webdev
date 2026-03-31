@@ -8,98 +8,17 @@
     <link rel="stylesheet" href="styles/cpPrimary.css">
 </head>
 <body>
-     <style>
-
-.bible-search .bs-verse-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+ 
+<style>
+#bible-search .bs-field {
+  min-width: 0;
 }
 
-.bible-search .bs-verse-flags {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+#bible-search #searchQuery {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
-
-.bible-search .bs-chip {
-  font-size: 11px;
-  line-height: 1;
-  padding: 5px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #efe6d7;
-  background: rgba(15, 18, 33, 0.6);
-}
-
-.bible-search .bs-chip.primary {
-  border-color: rgba(251, 174, 1, 0.7);
-  color: #ffe8b2;
-  background: rgba(251, 174, 1, 0.16);
-  font-weight: 700;
-}
-
-.bible-search .bs-cluster-signal {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
-    radial-gradient(circle at 0% 50%, rgba(122,167,255,0.12), transparent 40%);
-}
-
-.bible-search .bs-cluster-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.bible-search .bs-cluster-title {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-subtle, #b8aa94);
-}
-
-.bible-search .bs-cluster-score {
-  font-size: 12px;
-  font-weight: 700;
-  color: #dce8ff;
-}
-
-.bible-search .bs-cluster-bar {
-  height: 10px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-}
-
-.bible-search .bs-cluster-fill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #5eead4 0%, #7aa7ff 45%, #f6bf57 100%);
-  box-shadow: 0 0 18px rgba(122,167,255,0.28);
-}
-
-.bible-search .bs-cluster-meta {
-  margin-top: 7px;
-  font-size: 11px;
-  color: var(--text-subtle, #b8aa94);
-}
-
-.bible-search .bs-cluster-lines {
-  margin-top: 8px;
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--text-subtle, #b8aa94);
-}
-
 </style>
 <div class="episode-page">
 
@@ -110,14 +29,7 @@
   <div class="hero-image-overlay"></div>
   
   <div class="hero-image-text">
-    <div class="scripture-card">
-    
-  <div class="scripture-inner " id="scripture-container">
-    <div id="scripture-label" class="scripture-label">Scripture</div>
-    <div id="scripture-ref" class="scripture-ref">Romans 12:5</div>
-    <div id="scripture-text" class="scripture-text">In Christ we, though many, form one body</div>
-  </div>
-</div>
+
     <div class="series-label">
       <span class="series-dot"></span>
       <span id="today-date"></span>
@@ -129,7 +41,14 @@
     </div>
     </div>
   </header>
-
+    <div class="scripture-card">
+    
+  <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    <div id="scripture-ref" class="scripture-ref">Romans 12:5</div>
+    <div id="scripture-text" class="scripture-text">In Christ we, though many, form one body</div>
+  </div>
+</div>
 
 
   <!-- Main content -->
@@ -198,8 +117,21 @@ Watch:
       </video>     
     </div>
         </aside>
+
+    </article>
+
 <aside class="content-card">
+<div class="content-heading">New Covenant Writings</div>
+
+  <div id="custom-summary-output" class="content-body"> </div>
+  <p style="font-size: 15px;color: var(--accent)">Your Top Pick!</p>
+    </aside>
+
+  </section>
+
   
+  <!-- Reflection -->
+  <section class="reflection-card">
 <div id="bible-search" class="bible-search">
 
   <div class="bs-hero">
@@ -237,21 +169,9 @@ Watch:
   </div>
   <div class="bs-divider"></div> 
 </div>
-</aside>
 
-
-
-    </article>
-
-<aside class="content-card">
-<div class="content-heading">New Covenant Writings</div>
-
-  <div id="custom-summary-output" class="content-body"> </div>
-  <p style="font-size: 15px;color: var(--accent)">Your Top Pick!</p>
-    </aside>
 
   </section>
-
   <!-- Reflection -->
   <section class="reflection-card">
     <div class="reflection-label">A quiet question to carry</div>
@@ -364,7 +284,8 @@ const finalSelection = [
     const latestFromUrl2 = data2.items || [];;
 
     // Combine: 3 from first + 1 from second at bottom
-    const allResults = [...finalSelection,...latestFromUrl2];
+    //const allResults = [...finalSelection,...latestFromUrl2];
+    const allResults = [...finalSelection];
     /*if (latestFromUrl2) {
       allResults.push(latestFromUrl2);      
     }*/
@@ -497,10 +418,11 @@ document.getElementById("daily-question").textContent = `${todayTheme.question}`
            
 }
   async function loadScripture() {
-    const res = await fetch("https://bible-api.com/John%2016:23");
+    const res = await fetch("https://www.witnessv2.net/api/bible/open");
     const data = await res.json();
+    
 
-    document.getElementById("scripture-label").textContent = data.reference;
+    //document.getElementById("scripture-label").textContent = data.reference;
     document.getElementById("scripture-ref").textContent = data.reference;
     document.getElementById("scripture-text").textContent = data.text;
 
@@ -579,56 +501,6 @@ function renderResults(mount, data) {
   else container.appendChild(card);
 }
 
-function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>"']/g, ch => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  }[ch]));
-}
-
-function escapeAttr(value) {
-  return escapeHtml(value).replace(/`/g, '&#96;');
-}
-
-function asFiniteNumber(v) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-}
-
-function clamp01(v) {
-  const n = asFiniteNumber(v);
-  if (n == null) return null;
-  if (n <= 0) return 0;
-  if (n >= 1) return 1;
-  return n;
-}
-
-function toPct(v) {
-  const n = clamp01(v);
-  return `${Math.round((n == null ? 0 : n) * 100)}%`;
-}
-
-function compositeSignal(v) {
-  const cluster = (v && typeof v.cluster === 'object' && v.cluster) ? v.cluster : null;
-  const importance = clamp01(v?.cluster_importance ?? cluster?.importance);
-  const context = clamp01(v?.cluster_context_gain ?? cluster?.context_gain);
-  const pull = clamp01(v?.cluster_pull_strength);
-
-  const weighted = [
-    { value: importance, weight: 0.45 },
-    { value: context, weight: 0.35 },
-    { value: pull, weight: 0.2 }
-  ].filter(x => x.value != null);
-
-  if (!weighted.length) return null;
-  const sum = weighted.reduce((acc, x) => acc + x.value * x.weight, 0);
-  const totalWeight = weighted.reduce((acc, x) => acc + x.weight, 0);
-  return clamp01(sum / totalWeight);
-}
-
 
 
 function buildResultCard(data) {
@@ -650,8 +522,6 @@ const toneHTML = data.daily_tone
   ? `<div class="bs-tone">Tone: <span>${data.daily_tone}</span></div>`
   : "";
 
-const primaryRef = String(data?.primary_result?.ref || data?.primary_verse || "").trim();
-
 card.innerHTML = `
   <div class="bs-meta">
     ${topPickHTML}
@@ -669,7 +539,7 @@ card.innerHTML = `
   <div class="bs-divider"></div>
 
   <div class="bs-verses">
-    ${(data.results || []).map(v => verseBlock(v, primaryRef)).join("")}
+    ${(data.results || []).map(v => verseBlock(v)).join("")}
   </div>
 `;
 
@@ -711,55 +581,14 @@ card.innerHTML = `
   return card;
 }
 
-function verseBlock(v, primaryRef) {
-  const ref = String(v?.ref || "");
-  const text = String(v?.text || "");
-  const safeText = escapeAttr(text);
-  const safeRef = escapeAttr(ref);
-  const isPrimary = !!(primaryRef && ref.trim() === String(primaryRef).trim());
-  const cluster = (v && typeof v.cluster === 'object' && v.cluster) ? v.cluster : null;
-  const hasClusterData = !!(cluster || v?.cluster_id || v?.cluster_hit);
-
-  const clusterBits = [];
-  if (cluster?.title) clusterBits.push(`Title: ${escapeHtml(cluster.title)}`);
-  if (v?.cluster_role) clusterBits.push(`Role: ${escapeHtml(v.cluster_role)}`);
-  if (v?.cluster_range) clusterBits.push(`Range: ${escapeHtml(v.cluster_range)}`);
-  if (cluster?.pivot) clusterBits.push(`Pivot: ${escapeHtml(cluster.pivot)}`);
-  if (v?.cluster_nudge_reason) clusterBits.push(escapeHtml(v.cluster_nudge_reason));
-  if (cluster?.cta_text) clusterBits.push(escapeHtml(cluster.cta_text));
-
-  const signal = compositeSignal(v);
-  const fallbackSignal = clamp01(signal != null ? signal : (cluster?.importance ?? v?.cluster_pull_strength ?? 0.5));
-  const signalWidth = Math.round((fallbackSignal == null ? 0.5 : fallbackSignal) * 100);
-
-  const flags = [];
-  if (isPrimary) flags.push('<span class="bs-chip primary">Primary Pick</span>');
-  if (cluster?.title || v?.cluster_hit) flags.push('<span class="bs-chip">Story!</span>');
-
-  const signalMarkup = hasClusterData ? `
-    <div class="bs-cluster-signal">
-      <div class="bs-cluster-head">
-        <div class="bs-cluster-title">Cluster Signal</div>
-        <div class="bs-cluster-score">${escapeHtml(toPct(fallbackSignal))}</div>
-      </div>
-      <div class="bs-cluster-bar"><div class="bs-cluster-fill" style="width:${signalWidth}%"></div></div>
-      <div class="bs-cluster-meta">Weighted from importance, context strength, and pull relevance.</div>
-    </div>
-  ` : "";
-
-  const clusterDetails = clusterBits.length
-    ? `<div class="bs-cluster-lines">${clusterBits.join("<br>")}</div>`
-    : "";
+function verseBlock(v) {
+  const safeText = (v.text || "").replace(/`/g, "\\`").replace(/\\/g, "\\\\");
+  const safeRef = (v.ref || "").replace(/"/g, "&quot;");
 
   return `
     <div class="bs-verse" data-ref="${safeRef}" data-text="${safeText}">
-      <div class="bs-verse-head">
-        <div class="bs-ref">${escapeHtml(ref)}</div>
-        ${flags.length ? `<div class="bs-verse-flags">${flags.join("")}</div>` : ""}
-      </div>
-      <div class="bs-text">${escapeHtml(text)}</div>
-      ${signalMarkup}
-      ${clusterDetails}
+      <div class="bs-ref">${v.ref}</div>
+      <div class="bs-text">${v.text}</div>
       <div class="bs-verse-actions">
         <button type="button" class="bs-copy-btn">copy</button>
         
@@ -787,22 +616,10 @@ async function fetchJson(url) {
   if (!res.ok) throw new Error("Request failed");
   return res.json();
 }
-  //loadScripture();
+  
+  loadScripture();
 //loadSidebarVideo();
 updateHeroImage();
 updateHeroSideBar();
 loadPageData();
 </script>
-  
-</div>
-</div></div></div></div></div>
-    </div>
-  
-  </div>
-  
-</section>
-
-  
-</article>
-
-          
