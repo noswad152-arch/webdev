@@ -1,0 +1,56 @@
+<h2>Create Daily Reflection JSON</h2>
+
+<form id="dw-form">
+  <label>Date (YYYY-MM-DD)</label><br>
+  <input id="dw-date" type="text" placeholder="2026-04-01" required><br><br>
+
+  <label>Mantra</label><br>
+  <textarea id="dw-mantra" rows="2" required></textarea><br><br>
+
+  <label>Prayer</label><br>
+  <textarea id="dw-prayer" rows="8" required></textarea><br><br>
+
+  <label>Scripture Reference</label><br>
+  <input id="dw-ref" type="text" required><br><br>
+
+  <label>Verse</label><br>
+  <textarea id="dw-verse" rows="3" required></textarea><br><br>
+
+  <label>Optional Link</label><br>
+  <input id="dw-link" type="text" value="https://www.christpath.net" ><br><br>
+
+  <button type="button" onclick="generateJSON()">Generate JSON</button>
+</form>
+
+<h3>Output</h3>
+<textarea id="dw-output" rows="12" style="width:100%;"></textarea>
+
+<script>
+function generateJSON() {
+  const date = document.getElementById("dw-date").value.trim();
+  const mantra = document.getElementById("dw-mantra").value.trim();
+  const prayer = document.getElementById("dw-prayer").value.trim();
+  const ref = document.getElementById("dw-ref").value.trim();
+  const verse = document.getElementById("dw-verse").value.trim();
+  const link = document.getElementById("dw-link").value.trim();
+
+  // Build the object
+  const item = {
+    date: date,
+    mantra: mantra,
+    prayer: prayer,
+    ref: ref,
+    verse: verse
+  };
+
+  // Only include link if provided
+  if (link.length > 0) {
+    item.link = link;
+  }
+
+  // Pretty-print JSON with escaped newlines
+  const jsonString = JSON.stringify(item, null, 2);
+
+  document.getElementById("dw-output").value = jsonString;
+}
+</script>
