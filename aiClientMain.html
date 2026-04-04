@@ -1,0 +1,3705 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Witness V2</title>
+
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#0b0f14">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+
+
+    <style>
+
+        :root {
+            --header-h: 86px;
+            --gap: 12px;
+            --side-pad: 8px;
+            /* ONE knob: stage vs chat */
+            --stage-share: 0.55; /* 0..1 */
+            /* optional tokens */
+            --stroke: rgba(255,255,255,0.10);
+            --panel: rgba(255,255,255,0.06);
+            --vvh: 100dvh; /* visual viewport height */
+            --kbd: 0px; /* keyboard offset (optional) */
+            height: 100%;
+            overflow: hidden; /* app owns the scroll */
+            --bg-dark: #000000;/* 0b0f14 */
+            --panel-bg: #1a1a1a;
+            --accent: #090e21; /* --accent: #667eea; */
+            --user-accent: #0CE8D6;
+              --tap: 44px;
+
+            --sp-6: 6px; --sp-8: 8px; --sp-12: 12px; --sp-16: 16px; --sp-20: 20px;
+            --r-12: 12px; --r-16: 16px; --r-999: 999px;
+
+            --fs-12: 0.75rem; --fs-14: 0.875rem; --fs-16: 1rem; --fs-20: 1.25rem;
+            --lh-tight: 1.25; --lh-normal: 1.5; --lh-loose: 1.65;
+
+            --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600;
+
+            --stroke: rgba(255,255,255,0.10);
+            --stroke-strong: rgba(255,255,255,0.16);
+
+            --bg-0: #070A10;
+            --bg-1: rgba(255,255,255,0.04);
+
+            --ink-0: rgba(255,255,255,0.92);
+            --ink-1: rgba(255,255,255,0.72);
+            --ink-2: rgba(255,255,255,0.56);
+
+            --blur-weak: 8px;
+            --blur-med: 14px;
+
+            --sh-1: 0 6px 18px rgba(0,0,0,0.28);
+            --sh-2: 0 12px 32px rgba(0,0,0,0.40);
+
+            --ease-out: cubic-bezier(.16, 1, .3, 1);
+            --ease-inout: cubic-bezier(.4, 0, .2, 1);
+
+            --dur-180: 180ms;
+            --dur-240: 240ms;
+            --dur-900: 900ms;
+
+            /* Telemetry-driven (you already set these on the orb) */
+            --hue: 210;
+            --sat: 90%;
+            --lit: 58%;
+            --glow: 0.45;
+            --blur: 6;
+            --panel: rgba(255,255,255,0.00); /* more transparent 07*/
+        }
+
+        html, body {
+            margin: 0;
+
+            padding: 0;
+            background: var(--bg-dark);
+            color: var(--ink-0);
+        }
+        body {
+            min-height: 100dvh;               /* Dynamic viewport height for all devices */
+            padding-top: env(safe-area-inset-top, 0);      /* iOS top notch only, 0 fallback */
+            padding-bottom: env(safe-area-inset-bottom, 0); /* iOS bottom home indicator, 0 fallback */
+            padding-left: env(safe-area-inset-left, 0);
+            padding-right: env(safe-area-inset-right, 0);
+        }
+        .header-actions {
+            display: inline-flex;
+            gap: 8px;
+            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .app-title {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 78px;
+        }
+
+        .app-logo {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            min-width: 120px;
+            min-height: 120px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
+            vertical-align: middle;
+        }
+
+
+@media (min-width: 900px){
+  .main-container.app{
+    max-width: none;   /* let it stretch */
+    padding: 0 24px;   /* nicer gutters on big screens */
+  }
+}
+
+        .main-container.app {
+            height: 100svh;
+            /* max-width: 800px; */
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;  /* or just 0? */
+            padding: 0 calc(var(--side-pad) + env(safe-area-inset-right)) 0 calc(var(--side-pad) + env(safe-area-inset-left));
+            box-sizing: border-box;
+            position: relative;
+            display: grid;
+            grid-template-rows: var(--header-h) 1fr auto;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+        .main-container.app::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border-radius: 16px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 5;
+            transition: opacity 180ms ease;
+            background:
+                radial-gradient(circle at 0% 0%,
+                    rgba(255,255,255,0.56) 0%,
+                    rgba(255,255,255,0.20) 16%,
+                    rgba(255,255,255,0.00) 34%),
+                radial-gradient(circle at 100% 0%,
+                    rgba(255,255,255,0.56) 0%,
+                    rgba(255,255,255,0.20) 16%,
+                    rgba(255,255,255,0.00) 34%),
+                radial-gradient(circle at 100% 100%,
+                    rgba(255,255,255,0.56) 0%,
+                    rgba(255,255,255,0.20) 16%,
+                    rgba(255,255,255,0.00) 34%),
+                radial-gradient(circle at 0% 100%,
+                    rgba(255,255,255,0.56) 0%,
+                    rgba(255,255,255,0.20) 16%,
+                    rgba(255,255,255,0.00) 34%);
+            border: 1px solid rgba(255,255,255,0.16);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.06),
+                0 0 14px rgba(255,255,255,0.12);
+        }
+        .main-container.app.mic-armed-frame::after {
+            opacity: 0;
+            animation: none;
+        }
+        @keyframes micCornerBreathe {
+            0%, 100% {
+                opacity: 0.52;
+                filter: saturate(100%) brightness(96%);
+                box-shadow:
+                    inset 0 0 0 1px rgba(255,255,255,0.06),
+                    0 0 10px rgba(255,255,255,0.08);
+            }
+            50% {
+                opacity: 0.86;
+                filter: saturate(108%) brightness(106%);
+                box-shadow:
+                    inset 0 0 0 1px rgba(255,255,255,0.12),
+                    0 0 16px rgba(255,255,255,0.16);
+            }
+        }
+        .mode-badge {
+            padding: 4px 12px;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            border-radius: 999px;
+            font-size: 18px;
+            color: #8aa7ff;
+            font-weight: 500;
+        }
+        /* Header rail: stable */
+        .app-header {
+            height: var(--header-h);
+            padding: 0 calc(var(--side-pad) + 12px);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1105;
+            gap: 10px;
+        }
+
+        /* Middle rail controls vertical split */
+        .middle {
+            min-height: 0; /* CRITICAL */
+            display: grid;
+            grid-template-rows: calc(var(--stage-share) * 100%) auto 1fr;
+            gap: var(--gap);
+            padding: var(--gap) 0;
+            overflow: hidden;
+            transition: grid-template-rows 280ms ease;
+        }
+
+        /* Regions must be shrinkable */
+        .stageRegion,
+        .chatRegion {
+            min-height: 0; /* CRITICAL */
+            overflow: hidden;
+            border-radius: 24px;
+            border: 1px solid var(--stroke);
+            background: var(--panel);
+            transition: opacity 220ms ease, transform 220ms ease, filter 220ms ease;
+            will-change: opacity, transform, filter;
+        }
+
+        /* Stage region: stage + dots */
+        .stageRegion {
+            display: grid;
+            grid-template-rows: 1fr;
+            min-height: 0;
+        }
+
+        .stage-wrapper{
+        position: relative;
+        min-height: 0;
+        width: 100%;
+        overflow: visible; /* allow expand toggle to render outside scroll clip */
+        display: flex;
+        flex-direction: column;
+        }
+
+        /* Seatbelts for grid/flex overflow */
+        .stageRegion, .chatRegion { min-width: 0; }
+        .stage-wrapper, #stage { min-width: 0; }
+        .stageRegion { overflow: visible; position: relative; z-index: 2; }
+        .chatRegion { position: relative; z-index: 1; }
+
+        /* Stage fills its region */
+        #stage {
+           height: auto; 
+           flex: 1;
+           min-height: 0;
+           display: flex;
+           flex-direction: row;
+           flex-wrap: nowrap;
+              align-items: flex-start;
+           overflow-x: auto;
+                  overflow-y: hidden;
+           scroll-snap-type: x mandatory;
+           scroll-padding: 18px;
+           gap: 16px;
+           padding: 12px calc(var(--side-pad) + 10px);
+           align-items: stretch;
+              /* IOS-SWIPE-PATCH START: temporary horizontal swipe tuning */
+              -webkit-overflow-scrolling: touch;
+              touch-action: pan-x pinch-zoom;
+              /* IOS-SWIPE-PATCH END */
+        } 
+
+
+        #stage::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Stage cards fill viewport */
+        #stage > .stage-card{
+        flex: 0 0 clamp(280px, 92vw, 720px);
+        width: clamp(280px, 92vw, 720px);
+        height: 100%;
+        max-height: 100%;
+        scroll-snap-align: center;
+        min-height: 0;
+        background-color: #0a0f1a;
+        border-radius: 18px;
+        overflow: hidden;
+        
+
+        }
+
+        #stage > .stage-card .message-card{
+        height: 100%;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        }
+
+        #stage > .stage-card .message-header{
+        flex: 0 0 auto;
+        }
+
+        #stage > .stage-card .message-body{
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        /* IOS-SWIPE-PATCH: keep vertical scrolling inside card body */
+        touch-action: pan-y;
+        }
+       
+        /* Make the welcome card stack nicely on narrow widths */
+        #stage .stage-card > div{
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        @media (max-width: 520px){
+            #stage .stage-card > div{
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            #stage .stage-card img{
+                width: 100% !important;
+                height: auto !important;
+                max-height: 220px;
+            }
+        }
+
+        @media (max-width: 640px){
+            :root{
+                --header-h: 64px;
+                --stage-share: 0.48;
+                --side-pad: 6px;
+            }
+            .app-title{ font-size: 24px; }
+            .app-logo{
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                min-height: 48px;
+                margin-right: 6px;
+                background-size: cover;
+            }
+            .mode-badge{ font-size: 12px; }
+            .app-header{ padding: 0 calc(var(--side-pad) + 8px); }
+            .header-actions{ gap: 6px; }
+            .header-btn{ padding: 6px 10px; min-height: 32px; }
+            .middle{ gap: 10px; padding: 10px 0; }
+            #stage{ scroll-padding: 12px; gap: 12px; padding: 10px calc(var(--side-pad) + 8px); }
+            .main-container.app{ padding: 0 4px; }
+        }
+
+        @media (max-width: 430px){
+            :root{
+                --side-pad: 14px;
+            }
+            .app-title{ max-width: 46vw; }
+            .app-logo{
+                display: inline-block;
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                min-height: 44px;
+                margin-right: 6px;
+                background-size: cover;
+            }
+            .mode-badge{ display: none; }
+            .header-actions{ gap: 4px; }
+            .header-btn{
+                width: 34px;
+                height: 34px;
+                padding: 0;
+                font-size: 16px;
+                min-height: 34px;
+                justify-content: center;
+            }
+            .expand-toggle.in-header{
+                width: 30px;
+                height: 30px;
+                margin-left: 4px;
+            }
+            #presenceBar{
+                gap: 8px;
+                padding-left: var(--side-pad);
+                padding-right: var(--side-pad);
+                flex-wrap: nowrap;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #presenceBar{
+                padding-top: 6px;
+                padding-bottom: max(6px, env(safe-area-inset-bottom));
+                transform: translateY(calc(-1 * var(--kbd)));
+                transition: transform 140ms ease;
+            }
+            #presenceBar.hide-input{
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+            }
+            .presence-pill{
+                min-width: 0;
+                max-width: 100%;
+                width: 100%;
+                order: 2;
+                padding: 6px 10px;
+                height: 36px;
+            }
+            #chatInput.composer-input{
+                min-width: 0;
+                font-size: 14px;
+                width: 100%;
+                order: 1;
+                padding: 6px 10px;
+                max-height: 72px;
+            }
+            
+            
+            #presenceBar.hide-input #chatInput.composer-input{
+                display: none;
+            }
+            #presenceBar.hide-input .presence-pill{
+                width: 100%;
+            }
+            #presenceBar:not(.hide-input) .presence-pill{
+                height: 30px;
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+        }
+
+        /* Keep just one dots rule */
+        .stage-dots{
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 6px 0 10px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .stage-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.65);
+            opacity: 0.35;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+            transition: opacity 160ms ease, transform 160ms ease;
+        }
+
+       .stage-dot.active {
+                opacity: 0.9;
+                transform: scale(1.2);
+       }
+        #mainPane {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+        /* Chat region */
+        .mainpane-wrapper {
+            position: relative;
+            height: 100%;
+            min-height: 0;
+            overflow: hidden;
+            border-radius: 24px;
+            background: #0b0f14;
+            --mainpane-bg: none;
+            --mainpane-bg-filter: brightness(0.75) saturate(0.95);
+        }
+        .mainpane-bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            filter: var(--mainpane-bg-filter);
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 220ms ease;
+        }
+        .mainpane-wrapper.video-bg-active .mainpane-bg-video {
+            opacity: 1;
+        }
+        .mainpane-wrapper.video-bg-active::before {
+            background-image: none;
+        }
+
+            .mainpane-wrapper::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: var(--mainpane-bg);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                filter: var(--mainpane-bg-filter);
+                z-index: 0;
+            }
+
+            /* Starfall is pure background */
+            .mainpane-wrapper .starfall {
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                pointer-events: none;
+            }
+
+        /* Main chat scroll surface */
+        #mainPane.conversation-pane {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Footer rail */
+        #presenceBar.presence-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            margin: 0;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+        }
+
+
+        .presence-pill:hover:not(.disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            border-color: #667eea;
+        }
+
+        .presence-pill.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* ===== DOTS & MODES ===== */
+        .presence-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #666;
+            flex-shrink: 0; /* Keeps dot circular */
+            /* merged from earlier duplicate */
+            box-shadow: 0 0 10px hsl(var(--current-hue), 80%, 60%);
+            transition: background 0.5s ease;
+        }
+
+        .presence-pill.mode-aware .presence-dot {
+            background: #f4b400;
+            animation: pulse 1.5s infinite;
+            /* merged from earlier duplicate */
+            box-shadow: 0 0 8px #f4b400;
+        }
+
+        .presence-pill.mode-present .presence-dot {
+            background: #28a745;
+            animation: pulse 1.5s infinite;
+        }
+
+        .presence-pill.mode-text .presence-dot {
+            background: #667eea;
+        }
+
+        .presence-pill.mode-offline .presence-dot {
+            background: #ED1107;
+            animation: offlineDotBlink 1s steps(2, end) infinite;
+            box-shadow: 0 0 12px rgba(237, 17, 7, 0.8);
+        }
+        @keyframes offlineDotBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.25; }
+        }
+
+        /* AI Thinking State for Presence Dot */
+        .presence-pill.mode-thinking .presence-dot {
+            background: #667eea; /* Matches your status-indicator blue */
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+            animation: pulse 1.5s infinite;
+        }
+        .presence-pill.mic-arm-needed {
+            animation: micArmFlash 1s ease-in-out infinite;
+            border-color: rgba(244, 180, 0, 0.9);
+            box-shadow: 0 0 0 1px rgba(244, 180, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.32);
+        }
+        .presence-pill.mic-arm-needed .presence-dot {
+            background: #f4b400;
+            box-shadow: 0 0 12px rgba(244, 180, 0, 0.85);
+            animation: pulse 0.9s ease-in-out infinite;
+        }
+        #presenceOrb.mic-arm-needed {
+            animation: orbBreathe 1.2s ease-in-out infinite, micArmFlash 1s ease-in-out infinite;
+            filter: blur(calc(var(--blur) * 1px)) saturate(135%) brightness(125%);
+        }
+        @keyframes micArmFlash {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.75; transform: scale(1.03); }
+        }
+
+        .presence-hint {
+            font-size: 12px;
+            color: #9a9a9a;
+            margin-left: 4px; /* Small gap from label */
+            /* merged from earlier duplicate */
+            white-space: nowrap;
+        }
+
+        .posture-popover {
+            position: fixed;
+            min-width: 260px;
+            max-width: min(320px, calc(100vw - 24px));
+            max-height: calc(100dvh - 24px);
+            padding: 14px 16px 44px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(12,16,24,0.95);
+            box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            color: #e0e0e0;
+            opacity: 0;
+            transform: translateY(6px);
+            pointer-events: none;
+            transition: opacity 160ms ease, transform 160ms ease;
+            z-index: 1200;
+            overflow: auto;
+            --bar-dim: hsla(var(--hue), var(--sat), calc(var(--lit) - 10%), 0.35);
+            --bar-bright: hsla(var(--hue), var(--sat), calc(var(--lit) + 6%), 0.85);
+        }
+
+        .posture-logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 106px;
+            height: 106px;
+            border-radius: 6px;
+            background: url("/static/images/witness.png") center/contain no-repeat;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+            pointer-events: none;
+        }
+
+        .posture-share {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.08);
+            color: #e6ecf5;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .posture-share:hover {
+            transform: translateY(-1px);
+            background: rgba(255,255,255,0.14);
+        }
+
+        .posture-share:focus {
+            outline: none;
+        }
+
+        .posture-share:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(124,232,255,0.42);
+        }
+
+        .posture-popover.is-open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .posture-title {
+            font-size: 12px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            color: #9aa5b1;
+            margin-bottom: 6px;
+        }
+
+        .posture-index {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #f2f5ff;
+        }
+
+        .posture-label {
+            font-size: 12px;
+            color: #9aa5b1;
+            margin-bottom: 10px;
+        }
+
+        .posture-bar-row {
+            margin-top: 8px;
+        }
+
+        .posture-bar-label {
+            font-size: 11px;
+            color: #9aa5b1;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .posture-bar-track {
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+            overflow: hidden;
+        }
+
+/*         .posture-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(124,232,255,0.8), rgba(102,126,234,0.95));
+            width: 50%;
+            transition: width 200ms ease;
+        } */
+.posture-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+        var(--bar-dim),
+        var(--bar-bright)
+    );
+    box-shadow:
+        0 0 12px hsla(var(--hue), var(--sat), var(--lit), 0.18);
+    width: 50%;
+    transition: width 200ms ease;
+}
+
+        .posture-trend {
+            width: 100%;
+            height: 32px;
+            margin-top: 10px;
+        }
+
+        .posture-trend polyline {
+            fill: none;
+            stroke: rgba(124,232,255,0.9);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .posture-translation {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #c8d2df;
+        }
+
+        .posture-insight {
+            margin-top: 10px;
+            display: grid;
+            gap: 6px;
+        }
+
+        .posture-insight-headline {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f2f5ff;
+        }
+
+        .posture-insight-reflection,
+        .posture-insight-next,
+        .posture-insight-prayer,
+        .posture-insight-note {
+            font-size: 12px;
+            color: #c8d2df;
+        }
+
+        .posture-insight-note {
+            color: #9aa5b1;
+            font-style: italic;
+        }
+
+
+        #chatInput.composer-input {
+            flex: 1;
+            min-width: 0;
+            resize: none;
+            max-height: 120px;
+            overflow-y: auto;
+            color: white;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+        }
+        @media (min-width: 640px){
+                #chatInput.composer-input  {
+                    padding: 1.5rem; 
+                    font-size: 1.25rem;
+                }
+            }
+
+        /* Expand button anchor */
+        .expand-toggle {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            z-index: 200;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: rgba(18, 28, 48, 0.58);
+            border: 2px solid rgba(196, 220, 255, 0.72);
+            color: rgba(245, 252, 255, 0.98);
+            backdrop-filter: blur(6px);
+            box-shadow:
+    0 8px 20px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(120,160,220,0.28) inset,
+    0 0 8px rgba(255,255,255,0.18) inset; /* soft inner lift */
+            pointer-events: auto;
+        }
+        .expand-toggle svg {
+            stroke: currentColor;
+            transition: transform 0.25s ease;
+        }
+        @keyframes breathePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(140, 170, 255, 0.0); }
+            50% { transform: scale(1.06); box-shadow: 0 0 12px rgba(140, 170, 255, 0.35); }
+        }
+@keyframes shimmer {
+  0%   { background: rgba(255,255,255,0.12); }
+  50%  { background: rgba(255,255,255,0.22); }
+  100% { background: rgba(255,255,255,0.12); }
+        }
+
+        .main-container:not(.stage-expanded) .expand-toggle,
+        .expand-toggle.stage-hint {
+            animation: breathePulse 2.6s ease-in-out infinite, shimmer 2.6s ease-in-out infinite;
+        }
+        .main-container.stage-expanded .expand-toggle {
+            animation: none;
+        }
+        .expand-toggle.is-fixed {
+            position: fixed !important;
+            top: calc(var(--header-h) + 8px);
+            right: auto;
+            left: max(12px, env(safe-area-inset-left));
+            z-index: 9999;
+            display: inline-flex;
+            visibility: visible;
+            opacity: 1;
+            background: rgba(255,255,255,0.9);
+            color: #111;
+            border: 2px solid rgba(0,0,0,0.4);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+            transform: translateZ(0);
+        }
+        .stage-share-toggle {
+            position: fixed !important;
+            top: calc(var(--header-h) + 64px);
+            right: max(12px, env(safe-area-inset-right));
+            left: auto;
+            z-index: 9999;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.9);
+            color: #111;
+            border: 2px solid rgba(0,0,0,0.4);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+            transform: translateZ(0);
+            cursor: pointer;
+        }
+        .stage-share-toggle svg {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+        .expand-toggle.in-header {
+            position: static !important;
+            width: 34px;
+            height: 34px;
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,255,255,0.22);
+            box-shadow: none;
+        }
+        .header-actions.compact .header-btn{
+            width: 28px;
+            height: 28px;
+            min-height: 28px;
+            font-size: 13px;
+            padding: 0;
+        }
+
+        /* Rotate icon when stage is expanded */
+        .expand-toggle.is-active svg {
+            transform: rotate(180deg);
+        }
+
+        .main-container.stage-expanded .chatRegion {
+            opacity: 0.25;
+            filter: blur(1px) saturate(0.9);
+            transform: translateY(6px);
+        }
+
+        .main-container.stage-expanded .stageRegion {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-container.chat-expanded .app-header{
+            display: flex;
+        }
+        body.has-posture-popover #stageExpandBtn {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        body.has-posture-popover #stageShareBtn,
+        body.overlay-page-open #stageShareBtn,
+        body.bd-reader-open #stageShareBtn {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        body.overlay-page-open .app-title {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+        }
+        body.overlay-page-open .app-header {
+            pointer-events: none;
+            z-index: 900;
+        }
+        body.overlay-page-open .orbShell,
+        body.overlay-page-open .header-actions {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+        }
+        body.overlay-page-open #stageExpandBtn {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+            transform: translateY(-6px);
+            transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+        }
+        body.bd-reader-open .app-title,
+        body.bd-reader-open .orbShell,
+        body.bd-reader-open .header-actions,
+        body.bd-reader-open #stageExpandBtn {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        body.bd-reader-open .app-header {
+            pointer-events: none !important;
+            z-index: 900 !important;
+        }
+
+        .main-container.chat-expanded .stageRegion {
+            min-height: 56px;
+            max-height: 72px;
+            height: auto;
+            opacity: 0.58;
+            filter: saturate(0.9);
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .chatRegion::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.12);
+            opacity: 0;
+            transition: opacity 220ms ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .main-container.stage-expanded .chatRegion::before {
+            opacity: 1;
+        }
+
+        .main-container.chat-expanded .chatRegion {
+            opacity: 1;
+            transform: translateY(0);
+            padding-top: 0;
+        }
+
+        .main-container.chat-expanded .middle{
+            grid-template-rows: clamp(56px, 10svh, 72px) auto 1fr;
+            gap: var(--gap);
+        }
+
+        /* Phone landscape: stage-only mode (9:16 sideways usability) */
+        .main-container.landscape-stage-lock {
+            grid-template-rows: 1fr !important;
+            padding: 0 !important;
+        }
+        .main-container.landscape-stage-lock .app-header,
+        .main-container.landscape-stage-lock #presenceBar,
+        .main-container.landscape-stage-lock #stageDots,
+        .main-container.landscape-stage-lock .chatRegion,
+        .main-container.landscape-stage-lock #stageExpandBtn {
+            display: none !important;
+        }
+        .main-container.landscape-stage-lock .middle {
+            grid-template-rows: 1fr !important;
+            gap: 0 !important;
+            padding: 0 !important;
+        }
+        .main-container.landscape-stage-lock .stageRegion {
+            border: 0 !important;
+            border-radius: 0 !important;
+        }
+        .main-container.landscape-stage-lock .stage-wrapper {
+            height: 100%;
+        }
+        .main-container.landscape-stage-lock #stage {
+            height: 100%;
+            padding: 0 !important;
+            gap: 0 !important;
+            scroll-padding: 0 !important;
+        }
+        .main-container.landscape-stage-lock #stage > .stage-card {
+            flex: 0 0 100vw;
+            width: 100vw;
+            border-radius: 0 !important;
+        }
+
+        /* Overlay host for floating panels */
+        .overlayHost {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+            .overlayHost > * {
+                pointer-events: auto;
+            }
+
+        .overlayHost .posture-popover {
+            pointer-events: none;
+        }
+
+        .overlayHost .posture-popover.is-open {
+            pointer-events: auto;
+        }
+        .overlayScrim {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            opacity: 0;
+            transition: opacity 180ms ease;
+            pointer-events: none;
+        z-index: 0; /* ensure scrim sits behind overlay panels */
+        }
+        /* when any overlay is open */
+        .overlayHost.has-open .overlayScrim {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Full-screen page overlays (translucent) */
+        .page-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            background: rgba(8, 10, 16, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(12px);
+            transition: opacity 220ms ease, transform 220ms ease;
+            z-index: 1003;
+        }
+        .page-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+        .page-overlay .page-inner {
+            margin: 0;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(10, 12, 18, 0.72);
+            box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+            padding: 16px;
+            min-height: calc(100dvh - var(--header-h) - 20px);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .page-overlay.overlay-under-header .page-inner {
+            margin: calc(var(--header-h) + 8px) 12px 12px 12px;
+            min-height: calc(100dvh - var(--header-h) - 20px);
+        }
+        .page-overlay.overlay-library .page-inner {
+            width: min(860px, calc(100% - 24px));
+            margin: 12px auto;
+            min-height: calc(100dvh - 24px);
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(10, 12, 18, 0.84);
+            box-shadow: 0 22px 64px rgba(0,0,0,0.48);
+        }
+        .overlay-frame-shell {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+        .overlay-frame-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .page-overlay.overlay-headless .overlay-frame-head {
+            display: none;
+        }
+        .page-overlay.overlay-headless .page-inner {
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            background: linear-gradient(180deg, rgba(18,24,36,0.42) 0%, rgba(18,24,36,0.12) 18%, rgba(18,24,36,0.0) 34%);
+            box-shadow: none;
+            min-height: 100dvh;
+        }
+        .page-overlay.overlay-headless .overlay-frame-shell {
+            border: none;
+            border-radius: 0;
+            background: transparent;
+        }
+        .overlay-frame-title {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        .overlay-frame-close {
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border-radius: 10px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+        .overlay-frame {
+            width: 100%;
+            min-height: 0;
+            flex: 1 1 auto;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+        }
+        .overlay-floating-close {
+            position: absolute;
+            top: calc(env(safe-area-inset-top) + 8px);
+            right: 14px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(10,12,18,0.72);
+            color: #fff;
+            border-radius: 10px;
+            padding: 6px 10px;
+            cursor: pointer;
+            z-index: 1200;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+            display: none;
+        }
+        .page-overlay.overlay-headless .overlay-floating-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-overlay.overlay-no-floating-close .overlay-floating-close {
+            display: none !important;
+        }
+        .page-overlay.overlay-headless .overlay-frame {
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            height: 100dvh;
+        }
+        .courses-shell {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .courses-list {
+            display: grid;
+            gap: 10px;
+            overflow: auto;
+            max-height: min(calc(100dvh - 140px), 860px);
+            padding-right: 2px;
+        }
+        .course-card {
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            display: grid;
+            gap: 8px;
+        }
+        .course-card.is-in-progress {
+            border-color: rgba(56,189,248,0.65);
+            background: rgba(2,132,199,0.14);
+        }
+        .course-card.is-completed {
+            border-color: rgba(52,211,153,0.55);
+            background: rgba(6,95,70,0.16);
+        }
+        .course-card.is-taken {
+            border-color: rgba(251,191,36,0.45);
+            background: rgba(120,53,15,0.16);
+        }
+        .course-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .course-name {
+            margin: 0;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: #f2f5ff;
+        }
+        .course-badge {
+            font-size: 0.74rem;
+            border-radius: 999px;
+            padding: 3px 8px;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: rgba(255,255,255,0.86);
+            white-space: nowrap;
+        }
+        .course-meta {
+            font-size: 0.84rem;
+            color: rgba(255,255,255,0.74);
+            line-height: 1.35;
+        }
+        .course-action {
+            justify-self: start;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 7px 11px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .course-action:hover {
+            background: rgba(255,255,255,0.16);
+        }
+        .course-action[disabled] {
+            opacity: 0.6;
+            cursor: progress;
+        }
+        .courses-empty {
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 14px;
+            color: rgba(255,255,255,0.72);
+        }
+    /* Remove generic child z-index override; give panels explicit stacking */
+        .music-player {
+            position: absolute;
+            right: 16px;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            width: min(420px, calc(100vw - 32px));
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(12,16,24,0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 18px 60px rgba(0,0,0,0.5);
+            transform: translateY(16px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+            overflow: hidden;
+            z-index: 1001; /* ensure music panel sits above scrim */
+        }
+
+            .music-player.is-open {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+        .music-player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .music-player-title {
+            font-weight: 700;
+        }
+
+        .music-player-toggle {
+            transition: transform 180ms ease;
+        }
+
+        /* Collapsed state: hide content, rotate chevron */
+        .music-player.is-collapsed .music-player-content {
+            display: none;
+        }
+
+        .music-player.is-collapsed .music-player-toggle {
+            transform: rotate(180deg);
+        }
+
+        .music-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px 6px;
+        }
+
+        .music-control-btn {
+            min-width: 34px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            cursor: pointer;
+            padding: 0 8px;
+            line-height: 1;
+            font-size: 14px;
+        }
+
+        .now-playing {
+            flex: 1 1 100%;
+            min-width: 0;
+            margin-top: 4px;
+            color: #9fb0cd;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* song list styling (replaces inline style) */
+        .musicSongList {
+            margin-top: 12px;
+            max-height: 30vh;
+            overflow-y: auto;
+        }
+        .music-restore-btn {
+            position: absolute;
+            right: 16px;
+            bottom: calc(100px + env(safe-area-inset-bottom));
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            display: none; /* shown when player closed */
+            align-items: center;
+            justify-content: center;
+            background: var(--accent, #667eea);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            pointer-events: auto;
+        }
+
+            .music-restore-btn.is-visible {
+                display: flex;
+            }
+        @media (max-width: 640px) {
+            .music-player { width: calc(100vw - 16px); right: 8px; }
+            .music-controls { gap: 4px; padding: 8px 8px 6px; }
+            .music-control-btn { min-width: 30px; height: 30px; font-size: 13px; padding: 0 6px; }
+        }
+        @media (min-width: 640px) {
+    .music-restore-btn {
+        height: 4.5rem;
+        width: 4.5rem;
+        font-size: 1.5rem;
+    }
+}
+.floating-panel.profile-panel{
+    position: absolute;
+    right: 16px;
+    /* place panel below the header bar (header height + small gap + safe-area inset) */
+    top: calc(var(--header-h) + 8px + env(safe-area-inset-top));
+  width: min(360px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+
+  box-sizing: border-box;
+  min-width: 0;
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(12,16,24,0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.5);
+
+  transform: translateX(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+
+  z-index: 5;
+  padding: 12px;
+}
+
+/* Force profile panel above scrim and other overlays */
+.floating-panel.profile-panel{ z-index: 1002 !important; }
+
+.floating-panel.profile-panel.is-open{
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* profile panel helper classes (move inline styles into CSS) */
+.profile-select {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(180deg, rgba(9, 18, 32, 0.96), rgba(15, 31, 52, 0.94));
+    border: 1px solid rgba(126,165,221,.38);
+    border-radius: 8px;
+    color: #f2f7ff;
+    -webkit-text-fill-color: #f2f7ff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    margin-bottom: 12px;
+}
+.profile-select option {
+    background: #13233a;
+    color: #f2f7ff;
+}
+.profile-select:focus {
+    outline: none;
+    border-color: rgba(166,198,255,.72);
+    box-shadow: 0 0 0 2px rgba(122,167,255,.18);
+}
+.profile-select:disabled {
+    color: #d9e7ff;
+    -webkit-text-fill-color: #d9e7ff;
+    opacity: 1;
+}
+.panel-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .02em;
+    color: #d9e7ff;
+    margin: 0 0 10px 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(126,165,221,.28);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(20,38,62,.62), rgba(10,20,34,.52));
+}
+.profile-desc {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #666;
+}
+.panel-hr {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 15px 0;
+}
+.btn-fullwidth {
+    width: 100%;
+    margin-bottom: 8px;
+}
+.btn-setprofile {
+    width: 100%;
+    justify-content: center;
+}
+.logout-btn {
+    width: 100%;
+    margin-top: 18px;
+    background: #222;
+    color: #ED1107;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+        .presence-pill {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+            min-width: 200px; /* ↓ from 240, more mobile-safe */
+            max-width: 60vw; /* prevents footer overflow on small screens */
+            white-space: nowrap;
+        }
+
+        @media (min-width: 640px) {
+            .presence-pill, .presence-hint {
+                font-size: 1.25rem;
+            }
+            .presence-pill {
+                padding: 1.5rem;
+            }
+        }
+
+
+        #presenceBar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            margin: 0;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding-bottom: env(safe-area-inset-bottom);
+            /* If you ever need it to float above keyboard, uncomment:
+            transform: translateY(calc(-1 * var(--kbd)));
+            */
+        }
+
+        #chatInput {
+            flex: 1;
+            min-width: 0; /* CRITICAL so textarea can shrink next to pill */
+        }
+
+        .header-btn {
+            padding: 1.5rem; /* slightly taller, better tap target */
+            background: rgba(0,0,0,0.10);/* srgba(255,255,255,0.10)t */
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1; /* prevents line-height inflation */
+            min-height: 36px; /* 44 is ideal; 36 often OK if spacing is generous */
+
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        }
+        @media (min-width: 640px) {
+    .header-btn {
+        padding: 1.5rem;
+        font-size: 1.25rem;
+    }
+}
+
+            .header-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            }
+
+        @media (pointer: coarse) {
+            .header-btn {
+                padding: 8px 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+        /* === Orb === */
+        .orbShell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* padding: 16px 8px; */
+            padding: var(--sp-8) var(--sp-8);
+            min-width: calc(var(--tap) + var(--sp-16)); /* prevents header jitter */
+              outline: none;
+
+        }
+
+        .orb {
+            --hue: 210;
+            --sat: 90%;
+            --lit: 58%;
+            --glow: 0.45;
+            --glowAlpha: 0.08;
+            --coreHue: 210;
+            --coreSat: 92%;
+            --coreLit: 64%;
+            --blur: 6;
+            --bpm: 0.85;
+            --phaseSlip: 0.12;
+            --breathAmp: 1.0;
+            --reach: 0.0;
+            --t: 0;
+            width: 26px;
+            aspect-ratio: 1/1;
+            border-radius: 999px;
+            position: relative;
+            /*  overflow:hidden; */
+            will-change: transform, filter;
+            filter: blur(calc(var(--blur) * 1px));
+            transform: translate3d(0,0,0);
+            box-shadow: 0 18px 60px rgba(0,0,0,0.40), 0 0 calc(28px + 58px * var(--glow)) hsla(var(--hue), var(--sat), calc(var(--lit) + 14%), calc(0.10 + 0.72 * var(--glowAlpha)));
+            position: relative;
+
+            /* ✅ Add this background stack */
+            background:
+                /* bright center core (kills “pupil”) */
+                radial-gradient(circle at 70% 80%,
+                rgba(255,255,255,0.14) 0%,
+                rgba(255,255,255,0.06) 62%,
+                rgba(255,255,255,0.00) 48%
+                ),
+
+                /* soft top-left highlight */
+                radial-gradient(circle at 25% 30%,
+                rgba(255,255,255,0.18),
+                rgba(255,255,255,0.00) 44%
+                ),
+
+                /* telemetry glow (slightly off-center helps too) */
+                radial-gradient(circle at 50% 70%,
+                hsla(var(--hue), var(--sat), var(--lit), 0.24),
+                rgba(0,0,0,0) 62%
+                ),
+
+                /* base glass */
+                rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.10);
+           /* overflow: hidden;  👈 turn this back on; it helps a lot with blur edges */
+
+            will-change: transform, filter;
+            filter: blur(calc(var(--blur) * 1px));
+            transform: translate3d(0,0,0);
+
+            box-shadow:
+                0 18px 60px rgba(0,0,0,0.40),
+                0 0 calc(28px + 58px * var(--glow))
+                hsla(var(--hue), var(--sat), calc(var(--lit) + 14%), calc(0.10 + 0.72 * var(--glowAlpha)));
+}
+
+        /* Ring inside the orb */
+.orb-ring{
+  position:absolute;
+  inset: calc(-3px - 4px * var(--reach));
+  border-radius: inherit;
+  border: 1.6px solid hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 4%), calc(0.28 + 0.52 * var(--glowAlpha)));
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.20) inset,
+    0 0 calc(10px + 30px * var(--glowAlpha) + 24px * var(--reach))
+    hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 10%), calc(0.35 + 0.45 * var(--glowAlpha)));
+  opacity: calc(0.62 + 0.28 * var(--glowAlpha));
+  pointer-events:none;
+}
+/* Breathing (toggle .isBreathing from JS) */
+.orb.isBreathing{
+  animation: orbBreathe var(--dur-900) var(--ease-inout) infinite;
+}
+
+@keyframes orbBreathe{
+  0%, 100% { transform: scale(1); filter: blur(calc(var(--blur) * 1px)); }
+  50% { transform: scale(1.03); filter: blur(calc((var(--blur) - 1) * 1px)); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .orb.isBreathing{ animation: none; }
+}
+/*         .orb-ring {
+            position: absolute;
+            inset: -18px; 
+          border-radius: 50%;
+/*            border: 2px solid rgba(255,255,255,0.0);
+            opacity: 0;
+            transform: scale(0.92);
+            pointer-events: none;
+        } */
+
+        /* fires once when class added */
+        .orb.bloom .orb-ring {
+            animation: orbBloom 1.0s ease-out forwards;
+        }
+
+        @keyframes orbBloom {
+            0% {
+                opacity: 0.0;
+                transform: scale(0.92);
+                border-color: rgba(255,255,255,0.0);
+            }
+
+            20% {
+                opacity: 0.55;
+                transform: scale(1.02);
+                border-color: rgba(255,255,255,0.35);
+            }
+
+            100% {
+                opacity: 0.0;
+                transform: scale(1.20);
+                border-color: rgba(255,255,255,0.0);
+            }
+        }
+        @media (min-width: 900px){
+        .orb{ width: 44px; height: 44px; }
+        }
+        /* Field / Aura */
+        .orb::before {
+            content: "";
+            position: absolute;
+            inset: -28%;
+            border-radius: 999px;
+            background: radial-gradient(circle at 38% 34%, hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 4%), 0.66) 0%, hsla(var(--hue), var(--sat), calc(var(--lit) + 4%), 0.34) 42%, hsla(calc(var(--hue) + 24), var(--sat), calc(var(--lit) - 14%), 0.06) 76% );
+            box-shadow:
+                0 0 calc(48px + 66px * var(--glow) + 170px * var(--reach)) hsla(var(--hue), var(--sat), calc(var(--lit) + 14%), calc(0.30 + 0.46 * var(--glowAlpha) + 0.20 * var(--reach))),
+                0 0 calc(18px + 56px * var(--glowAlpha) + 120px * var(--reach)) hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 8%), calc(0.20 + 0.40 * var(--reach))),
+                inset 0 0 80px rgba(255,255,255,0.08);
+            animation: auraBreath calc((60 / (60 * var(--bpm))) * 6s) ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        /* If you used the button wrapper */
+        .orbButton{
+        width: var(--tap);
+        height: var(--tap);
+        border: 0;
+        padding: 0;
+        border-radius: var(--r-999);
+        background: transparent;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        }
+        .orbButton:focus-visible{
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255,255,255,0.14);
+        }
+
+        /* Core */
+        .orb::after {
+            content: "";
+            position: absolute;
+            inset: 7%;
+            border-radius: 999px;
+            background:
+                radial-gradient(
+                    circle at calc(48% + sin(var(--t)) * 7% * var(--phaseSlip)),
+                    calc(58% + cos(var(--t)) * 6% * var(--phaseSlip)),
+                    rgba(255,255,255, calc(0.18 + var(--glowAlpha) * 0.72)) 0%,
+                    rgba(255,255,255, calc(0.06 + var(--glowAlpha) * 0.48)) 26%,
+                    transparent 58%
+                ),
+                radial-gradient(
+                    circle at calc(48% + sin(var(--t)) * 8% * var(--phaseSlip)),
+                    calc(57% + cos(var(--t)) * 8% * var(--phaseSlip)),
+                    hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 6%), 0.36) 0%,
+                    hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) - 8%), 0.26) 64%,
+                    transparent 92%
+                );
+            box-shadow:
+                0 0 calc(20px + 26px * var(--glow) + 28px * var(--reach)) hsla(var(--coreHue), var(--coreSat), calc(var(--coreLit) + 14%), calc(0.32 + 0.40 * var(--glowAlpha))),
+                inset 0 -8px 22px rgba(255,255,255, calc(0.03 + var(--glowAlpha) * 0.20));
+            animation: corePulse calc((60 / (60 * var(--bpm))) * 2.2s) ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+
+        .orb.popover-open::after {
+            animation: none;
+            opacity: 0.95;
+        }
+
+        .orb.popover-open.bloom .orb-ring {
+            animation: none !important;
+        }
+
+        /* EXTREME breath (uses --breathAmp) */
+        @keyframes auraBreath {
+            0% {
+                transform: scale(calc(0.84 * var(--breathAmp)));
+                opacity: calc(0.70 + 0.10 * var(--reach));
+            }
+
+            50% {
+                transform: scale(calc((1.22 + 0.22 * var(--reach)) * var(--breathAmp)));
+                opacity: calc(0.98 + 0.20 * var(--reach));
+            }
+
+            100% {
+                transform: scale(calc(0.84 * var(--breathAmp)));
+                opacity: calc(0.70 + 0.10 * var(--reach));
+            }
+        }
+
+        @keyframes corePulse {
+            0% {
+                transform: scale(calc(0.88 * var(--breathAmp)));
+            }
+
+            50% {
+                transform: scale(calc(1.28 * var(--breathAmp)));
+            }
+
+            100% {
+                transform: scale(calc(0.88 * var(--breathAmp)));
+            }
+        }
+
+        /* 7. THE ORB (Fixed CSS) */
+        .orb-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            flex-direction: column; /**/
+            align-items: center;
+            justify-content: center;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            --current-hue: 200;
+            --orb-size: 40px;
+        }
+
+        .presence-orb {
+            width: var(--orb-size);
+            height: var(--orb-size);
+            border-radius: 50%;
+            /* Use the HSL color space so we can shift the hue easily */
+            background: radial-gradient(circle at 30% 30%, hsl(var(--current-hue), 80%, 70%), hsl(var(--current-hue), 90%, 40%));
+            box-shadow: 0 0 20px hsla(var(--current-hue), 80%, 50%, 0.4);
+            /* Apply the SVG filter you have in the HTML */
+            filter: url(#somatic-engine);
+            /* Apply the dynamic pulse speed */
+            animation: orb-breathing var(--pulse-speed) ease-in-out infinite;
+            transition: width 0.5s ease, height 0.5s ease, background 1s ease;
+        }
+
+        @keyframes orb-breathing {
+            0%, 100% {
+                transform: scale(1);
+                filter: url(#somatic-engine) blur(0px);
+            }
+
+            50% {
+                transform: scale(1.15);
+                filter: url(#somatic-engine) blur(1px);
+                box-shadow: 0 0 35px hsla(var(--current-hue), 80%, 50%, 0.7);
+            }
+        }
+        /* 1. The High-Energy Jitter */
+        @keyframes orb-jitter {
+            0% {
+                transform: translate(0, 0) scale(1.1);
+            }
+
+            20% {
+                transform: translate(-3px, 2px) scale(1.15);
+            }
+
+            40% {
+                transform: translate(3px, -1px) scale(1.05);
+            }
+
+            60% {
+                transform: translate(-2px, -3px) scale(1.2);
+            }
+
+            80% {
+                transform: translate(2px, 2px) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1.1);
+            }
+        }
+
+        /* 2. The Agitated State */
+        #presenceOrb.orb.orb-agitated {
+            animation: orb-jitter 0.08s infinite linear !important;
+            filter: blur(calc(var(--blur) * 1px)) contrast(200%) brightness(150%) saturate(200%) !important;
+        }
+        #presenceOrb.orb.orb-offline {
+            --hue: 2;
+            --sat: 92%;
+            --lit: 46%;
+            --glow: 0.9;
+            --glowAlpha: 0.08;
+            --coreHue: 12;
+            --coreSat: 96%;
+            --coreLit: 62%;
+            animation: orbOfflineBlink 1s steps(2, end) infinite !important;
+        }
+        @keyframes orbOfflineBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.2; }
+        }
+        /* === Messages === */
+        /* === Witness === */
+        .witness-card h2 {
+            margin: 0 0 8px 0;
+        }
+
+        /*.witness-card:hover {
+              animation: rhythmic-breath 6.5s ease-in-out infinite;
+        }*/
+
+/* Choice button row */
+.witness-choices {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+        .witness-choice {
+            padding: 10px 12px;
+            border-radius: 12px;
+        }
+
+        .witness-img {
+            display: flex;
+            justify-content: center;
+        }
+
+        .witness-img img {
+            width: auto;
+            height: auto;
+            max-width: 70%;
+            max-height: min(56vh, 520px);
+            border-radius: 16px;
+            margin: 10px 0;
+            object-fit: contain;
+            filter: contrast(1.05) saturate(1.05);
+            /* animation: rhythmic-breath 6.5s ease-in-out infinite; */
+        }
+
+        /* 8. MESSAGE CARDS */
+        .message-card {
+            padding: 16px;            
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin-bottom: 16px;
+            max-width: 65%;
+            z-index: 15;
+            background: rgba(10, 21, 35, 0.55);
+            backdrop-filter: blur(10px) saturate(115%);
+            -webkit-backdrop-filter: blur(10px) saturate(115%);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--ink-1);
+        }
+
+        .message-sender {
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        .message-sender.user {
+            color: var(--user-accent);
+        }
+
+        .message-sender.ai {
+            color: #8aa7ff;
+        }
+
+        .message-time {
+            color: var(--ink-2);
+            font-size: 11px;
+        }
+
+        .message-body {
+            word-break: break-word;
+        }
+
+        .message-body .message-text-plain {
+            white-space: pre-wrap;
+            word-break: break-word;
+            display: block;
+        }
+
+        .main-container.chat-expanded .conversation-pane .message-card {
+            background: rgba(10, 21, 35, 0.98) !important;
+        }
+
+        .main-container.stage-expanded .conversation-pane .message-card.user,
+        .main-container.stage-expanded .conversation-pane .message-card.ai {
+            background: rgba(10, 21, 35, 0.86);
+        }
+
+  .message-card.user {
+            margin-left: auto;
+            margin-right: 6px;
+            border-left: 3px solid var(--user-accent);
+        }
+
+        .message-card.ai {
+            margin-right: auto;
+            margin-left: 6px;
+            border-left: 3px solid var(--accent);
+        }
+        @media (max-width: 640px) {
+            .message-card {
+                max-width: 92%;
+                padding: 14px;
+            }
+            .message-card.user {
+                margin-right: 2px;
+            }
+            .message-card.ai {
+                margin-left: 2px;
+            }
+        }
+
+        @keyframes rhythmic-breath {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+        /* === Video Overlay === */
+        .video-overlay{
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+
+        z-index: 6; /* above scrim (scrim should be lower) */
+        }
+
+        .video-overlay.is-open{
+        opacity: 1;
+        pointer-events: auto;
+        }
+
+        .video-shell{
+        width: min(920px, calc(100vw - 32px));
+        max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(12,16,24,0.92);
+        box-shadow: 0 24px 90px rgba(0,0,0,0.6);
+        padding: 12px;
+        box-sizing: border-box;
+        position: relative;
+        }
+
+        #witnessVideo{
+        width: 100%;
+        height: auto;
+        max-height: calc(100dvh - 120px);
+        border-radius: 12px;
+        background: #000;
+        display: block;
+        position: relative;
+        z-index: 1;
+        }
+
+        .video-close{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+
+        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.10);
+        color: rgba(255,255,255,0.92);
+        cursor: pointer;
+        z-index: 2;
+        }
+        .video-close:hover{
+        background: rgba(255,255,255,0.18);
+        }
+
+/* Card container */
+#stage > .stage-card {
+  background: linear-gradient(145deg, #0c1324, #0a0f1a);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 210, 120, 0.12);
+  box-shadow:
+    0 0 18px rgba(255, 200, 120, 0.08),
+    inset 0 0 12px rgba(255, 200, 120, 0.05);
+  padding: 0;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+/* Header */
+#stage .stage-card .message-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 210, 120, 0.08);
+  background: rgba(255, 220, 150, 0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#stage .stage-card .message-sender {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  color: #ffd27a;
+  letter-spacing: 0.5px;
+  border-radius: 15px;
+}
+
+#stage .stage-card .message-time {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  color: #cfcfcf;
+}
+
+/* Body */
+#stage .stage-card .message-body {
+  padding: 20px;
+  color: #e8ecf7;
+  font-family: "Georgia", serif;
+  line-height: 1.55;
+}
+
+/* Headings inside card */
+#stage .stage-card h2 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 1.6rem;
+  color: #ffd27a;
+  text-shadow: 0 0 6px rgba(255, 200, 120, 0.35);
+}
+
+/* Paragraphs */
+#stage .stage-card p {
+  opacity: 0.88;
+  margin: 10px 0;
+}
+
+/* Image wrapper */
+#stage .stage-card .witness-img img {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 0 14px rgba(255, 200, 120, 0.15);
+}
+
+/* -----------------------------------------
+   BUTTONS — glowing, rounded, ritual-like
+------------------------------------------*/
+
+.witness-choice,
+.formation-share-btn {
+  font-family: "Cinzel", serif;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 210, 120, 0.35);
+  background: rgba(255, 210, 120, 0.08);
+  color: #ffdca8;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(3px);
+}
+
+.witness-choice:hover,
+.formation-share-btn:hover {
+  background: rgba(255, 210, 120, 0.18);
+  box-shadow: 0 0 12px rgba(255, 210, 120, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Share button (icon-only) */
+.formation-share-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Choice button row */
+.witness-choices {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+
+
+
+
+
+/* Base Witness Card */
+.w-card {
+  padding: 20px 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 210, 120, 0.12);
+  background: linear-gradient(145deg, #0c1324, #0a0f1a);
+  box-shadow:
+    0 0 18px rgba(255, 200, 120, 0.08),
+    inset 0 0 12px rgba(255, 200, 120, 0.05);
+  color: #e9f1ff;
+  font-family: Georgia, serif;
+  line-height: 1.55;
+  max-width: 760px;
+}
+.w-card--formation {
+  background: linear-gradient(160deg, #0f1524, #0a0f1a);
+  border-color: rgba(255, 210, 120, 0.18);
+  box-shadow:
+    0 0 22px rgba(255, 200, 120, 0.12),
+    inset 0 0 14px rgba(255, 200, 120, 0.08);
+}
+
+.w-card--formation .w-label {
+  background: rgba(255, 210, 120, 0.08);
+  border: 1px solid rgba(255, 210, 120, 0.25);
+  color: #ffe7b8;
+}
+.w-card--firstlight {
+  background: linear-gradient(160deg, #1a1f2c, #0f141f);
+  border-color: rgba(255, 180, 90, 0.22);
+  box-shadow:
+    0 0 26px rgba(255, 180, 90, 0.18),
+    inset 0 0 16px rgba(255, 180, 90, 0.10);
+}
+
+.w-card--firstlight .w-primary {
+  background: linear-gradient(135deg, #b57a2a, #f1c87a);
+  color: #fff7e8;
+}
+.w-card--mystery {
+  background: linear-gradient(160deg, #0a0d18, #05070d);
+  border-color: rgba(255, 230, 150, 0.14);
+  box-shadow:
+    0 0 30px rgba(255, 230, 150, 0.10),
+    inset 0 0 18px rgba(255, 230, 150, 0.06);
+}
+
+.w-card--mystery h2 {
+  color: #ffe9a6;
+  text-shadow: 0 0 8px rgba(255, 230, 150, 0.35);
+}
+.w-card--reading {
+  background: linear-gradient(160deg, #11161f, #0c1018);
+  border-color: rgba(180, 200, 255, 0.18);
+  box-shadow:
+    0 0 18px rgba(180, 200, 255, 0.10),
+    inset 0 0 12px rgba(180, 200, 255, 0.06);
+}
+
+.w-card--reading .w-label {
+  background: rgba(180, 200, 255, 0.10);
+  border: 1px solid rgba(180, 200, 255, 0.25);
+  color: #dbe7ff;
+}
+.w-btn {
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: Cinzel, serif;
+  backdrop-filter: blur(3px);
+}
+
+.w-btn--gold {
+  border: 1px solid rgba(232,198,117,.68);
+  background: linear-gradient(135deg, rgba(117,83,27,.98), rgba(220,185,101,.94));
+  color: #fff5df;
+}
+
+.w-btn--blue {
+  border: 1px solid rgba(127,162,214,.52);
+  background: rgba(10,22,42,.84);
+  color: #cde2ff;
+}
+
+.w-btn--danger {
+  border: 1px solid rgba(255,134,134,.62);
+  background: rgba(54,12,12,.86);
+  color: #ffd9d9;
+}
+
+.w-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(255, 210, 120, 0.45);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="app main-container" id="appRoot" data-layout="normal">
+
+        <!-- HEADER RAIL -->
+        <header class="app-header">
+            <div class="app-title">
+                <span class="app-logo" aria-hidden="true"></span>
+                <span class="mode-badge" id="modeBadge">Witness</span>
+            </div>
+
+            <div class="orbShell"> 
+                <div id="presenceOrb" class="orb" aria-label="Presence orb"> 
+                    <div class="orb-ring"></div> 
+                </div> 
+            </div>
+
+            <div class="header-actions">
+                <button class="header-btn" id="reflectionsBtn" title="Reflections">📖</button>
+                <button class="header-btn" id="prayerBtn" title="Prayer Sanctuary">🙏</button>
+                <button class="header-btn" id="coursesBtn" title="Witness Courses">🧭</button>
+                <button class="header-btn" id="settingsBtn" title="Possibles">💼</button>
+            </div>
+        </header>
+
+        <!-- MIDDLE RAIL (ONLY resizable region) -->
+        <main class="middle" id="middleRail">
+
+            <!-- STAGE REGION -->
+            <section class="stageRegion" id="stageRegion">
+                <div class="stage-wrapper">
+                    <button class="expand-toggle" id="stageExpandBtn" aria-label="Toggle Stage Size">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 9 12 14 17 9"></polyline>
+                        </svg>
+                    </button>
+                    <div id="stage" class="stage"></div>
+                </div>
+                
+            </section>
+            <div id="stageDots" class="stage-dots"></div>
+                 
+
+            <!-- CHAT REGION -->
+            <section class="chatRegion" id="chatRegion">
+                <div class="mainpane-wrapper">
+                    <div class="starfall" aria-hidden="true">
+                        <span class="falling-star"></span>
+                        <span></span><span></span>
+                        <span class="falling-star"></span>
+                        <span></span><span></span><span></span>
+                        <span class="falling-star"></span>
+                        <span></span><span></span>
+                        <span class="falling-star"></span>
+                        <span></span>
+                    </div>
+                    <video id="mainpaneBgVideo" class="mainpane-bg-video" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+
+                    <div id="mainPane" class="conversation-pane"></div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER RAIL -->
+        <footer class="presence-bar" id="presenceBar">
+            <input id="imageInput" type="file" accept="image" hidden />
+
+            <button class="presence-pill mode-aware" id="presenceBtn" type="button">
+                <span class="presence-dot" aria-hidden="true"></span>
+                <span class="presence-label" id="presenceLabel">Aware</span>
+                <span class="presence-hint" id="presenceHint">Listening Quietly</span>
+            </button>
+
+            <textarea class="composer-input" id="chatInput" placeholder="Type here…" rows="1"></textarea>
+            <button class="composer-btn" id="sendBtn" disabled hidden>&#10148;</button>
+        </footer>
+
+    </div>
+    <div class="overlayHost" id="overlayHost" aria-hidden="true">
+
+        <!-- Scrim/backdrop -->
+        <div class="overlayScrim" id="overlayScrim" aria-hidden="true"></div>
+
+        <!-- PAGE OVERLAYS -->
+        <section class="page-overlay" id="prayerOverlay" aria-hidden="true">
+            <div class="page-inner overlay-frame-shell">
+                <button class="overlay-floating-close" id="overlayFloatingClose" type="button">Close</button>
+                <div class="overlay-frame-head">
+                    <h2 class="overlay-frame-title" id="overlayFrameTitle">Prayer Sanctuary</h2>
+                    <button class="overlay-frame-close" id="overlayFrameClose" type="button">Close</button>
+                </div>
+                <iframe class="overlay-frame" id="overlayFrame" title="Overlay Content" allow="microphone; camera; autoplay"></iframe>
+            </div>
+        </section>
+        <section class="page-overlay overlay-library" id="coursesOverlay" aria-hidden="true">
+            <div class="page-inner overlay-frame-shell courses-shell">
+                <div class="overlay-frame-head">
+                    <h2 class="overlay-frame-title">Witness Courses</h2>
+                    <button class="overlay-frame-close" id="coursesOverlayClose" type="button">Close</button>
+                </div>
+                <div class="courses-list" id="coursesList"></div>
+            </div>
+        </section>
+
+        <div class="posture-popover" id="posturePopover" aria-hidden="true">
+            <div class="posture-logo" aria-hidden="true"></div>
+            <button class="posture-share" id="postureShareBtn" type="button" aria-label="Share posture">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line>
+                    <line x1="15.4" y1="6.5" x2="8.6" y2="10.5"></line>
+                </svg>
+            </button>
+            <div class="posture-title">Posture Index</div>            
+            <div class="posture-index" id="postureIndexValue">--</div>
+            <div class="posture-label" id="postureIndexLabel">--</div>
+
+            <div class="posture-bar-row">
+                <div class="posture-bar-label">
+                    <span>Stress</span>
+                    <span>Peace</span>
+                </div>
+                <div class="posture-bar-track">
+                    <div class="posture-bar-fill" id="posturePeaceFill"></div>
+                </div>
+            </div>
+
+            <div class="posture-bar-row">
+                <div class="posture-bar-label">
+                    <span>Despair</span>
+                    <span>Hope</span>
+                </div>
+                <div class="posture-bar-track">
+                    <div class="posture-bar-fill" id="postureHopeFill"></div>
+                </div>
+            </div>
+
+            <svg class="posture-trend" viewBox="0 0 120 32" aria-hidden="true">
+                <polyline id="postureTrendLine" points=""></polyline>
+            </svg>
+
+            <div class="posture-insight">
+                <div class="posture-insight-headline" id="postureInsightHeadline">--</div>
+                <div class="posture-insight-reflection" id="postureInsightReflection">--</div>
+                <div class="posture-insight-next" id="postureInsightNext"></div>
+                <div class="posture-insight-prayer" id="postureInsightPrayer"></div>
+                <div class="posture-insight-note" id="postureInsightNote"></div>
+            </div>
+        </div>
+
+        <!-- MUSIC PLAYER (floating overlay) -->
+        <div class="music-player" id="musicPlayer" aria-hidden="true">
+            <div class="music-player-header" id="musicHeader">
+                <span class="music-player-title">🎵  Media Player  🎬</span>
+                <span class="music-player-toggle" id="musicChevron">▲</span>
+            </div>
+            <div class="music-player-content" id="musicContent">
+                <div class="music-controls">
+                    <button class="music-control-btn" id="musicPrevBtn">⏮</button>
+                    <button class="music-control-btn" id="musicPlayBtn">▶</button>
+                    <button class="music-control-btn" id="musicNextBtn">⏭</button>
+                    <button class="music-control-btn" id="musicShuffleBtn" title="Shuffle">🔀</button>
+                    <button class="music-control-btn" id="musicPlayAllBtn" title="Play all">ALL</button>
+                    <button class="music-control-btn" id="musicStopBtn">⏹</button>
+                    <div class="now-playing" id="nowPlaying">No song playing</div>
+                </div>
+
+                <div id="musicSongList" class="musicSongList"></div>
+                <audio id="audioPlayer" preload="metadata"></audio>
+            </div>
+        </div>
+        <!-- MUSIC RESTORE BUTTON -->
+        <button id="musicRestoreBtn" class="music-restore-btn" title="Restore Music Player" aria-label="Open Media Player">
+            🎵
+        </button>
+        <!-- PROFILE PANEL -->
+        <div class="floating-panel profile-panel" id="profilePanel" aria-hidden="true">
+            <div class="panel-header">Shepherd's Bag</div>            
+            <button class="header-btn btn-fullwidth" data-action="mybible">My Bible</button>
+            <button class="header-btn btn-fullwidth" data-action="posture-info">Posture Info</button>
+            <button class="header-btn btn-fullwidth" data-action="witness-history">Witness History</button>
+            <button class="header-btn btn-fullwidth" data-action="formation-history">Formation History</button>
+            <button class="header-btn btn-fullwidth" data-action="bd-history">Content History</button>
+            <button class="header-btn btn-fullwidth" data-action="profile-settings">Profile & Billing</button>
+            <div id="adminForceSection" style="display:none; margin-top:10px; padding-top:10px; border-top:1px solid rgba(140,175,255,.25);">
+                <div style="font-size:12px; color:#9eb7da; margin-bottom:8px;">Admin Content Test</div>
+                <select id="adminWitnessStorySelect" class="profile-select" style="margin-bottom:8px;">
+                    <option value="">Select witness story...</option>
+                </select>
+                <button id="adminForceWitnessBtn" class="header-btn btn-fullwidth">Force Start Witness Story</button>
+                <div id="adminForceStatus" style="margin-top:6px; font-size:12px; color:#9eb7da;"></div>
+            </div>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+        <!-- Hidden legacy controls kept for JS compatibility -->
+        <div style="display:none !important;" aria-hidden="true">
+            <select id="profileSelect" disabled class="profile-select">
+                <option value="">Loading profiles...</option>
+            </select>
+            <button id="setProfileBtn" disabled class="header-btn primary btn-setprofile">Set Profile</button>
+            <div id="profileDesc" class="profile-desc">Connect to load profiles.</div>
+            <input type="checkbox" id="vadToggle" checked />
+        </div>
+        <!-- ===== VIDEO OVERLAY ===== -->
+        <div id="videoOverlay" class="video-overlay hidden" aria-hidden="true">
+            <div class="video-shell">
+                <button id="videoCloseBtn" class="video-close" aria-label="Close video">⏹</button>
+                <video id="witnessVideo" controls playsinline></video>
+            </div>
+        </div>
+        <div id="js-errors"
+             style="position:fixed;bottom:8px;left:8px;right:8px;z-index:999999;
+            background:rgba(180,40,40,0.85);color:#fff;padding:8px 10px;
+            border-radius:12px;font:12px -apple-system,system-ui,sans-serif;
+            display:none; white-space:pre-wrap;">
+        </div>
+    </div>
+
+
+
+    <script>window.SUPPRESS_JS_ERRORS = true;</script>
+    <script src="js/debug.js"></script>
+    <script src="js/userprofiles.js?v=2026-02-16a"></script>
+    <script src="js/authcheck.js"></script>
+    <script src="js/pOrb.js?v=2026-02-20d"></script>
+    <script src="js/updatepwa.js"></script>
+    <script src="js/wintess.js?v=2026-03-18b"></script>
+    <script src="js/mainuihandlers.js"></script>
+    <script src="js/messageCards.js?v=2026-03-18c"></script>
+    <script src="js/mainAudio.js?v=2026-03-05c"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" crossorigin="anonymous"></script>
+    <script src="js/aiClientMain.js?v=2026-03-18e"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.main-container');
+            const stage = document.getElementById('stage');
+            const mainPane = document.getElementById('mainPane');
+            let expandBtn = document.getElementById('stageExpandBtn');
+            const stageShareBtn = document.getElementById('stageShareBtn');
+            if (!expandBtn) {
+                const stageWrap = document.querySelector('.stage-wrapper');
+                if (stageWrap) {
+                    const btn = document.createElement('button');
+                    btn.className = 'expand-toggle';
+                    btn.id = 'stageExpandBtn';
+                    btn.setAttribute('aria-label', 'Toggle Stage Size');
+                    btn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 13 12 18 17 13"></polyline>
+                            <polyline points="7 6 12 11 17 6"></polyline>
+                        </svg>
+                    `;
+                    stageWrap.insertBefore(btn, stageWrap.firstChild);
+                    expandBtn = btn;
+                }
+            }
+            if (expandBtn) {
+                // Keep the header icons clean; pin expander to the left below header
+                expandBtn.classList.remove('in-header');
+                expandBtn.classList.add('is-fixed');
+                if (expandBtn.parentElement !== document.body) {
+                    document.body.appendChild(expandBtn);
+                }
+            }
+            const chatRegion = document.getElementById('chatRegion');
+            const chatInput = document.getElementById('chatInput');
+
+            function setStageBackground(url) {
+                if (!stage) return;
+                if (!url) {
+                    stage.style.backgroundImage = '';
+                    stage.style.backgroundSize = '';
+                    stage.style.backgroundPosition = '';
+                    stage.style.backgroundRepeat = '';
+                    stage.style.backgroundColor = '';
+                    return;
+                }
+                stage.style.backgroundImage = `url("${url}")`;
+                stage.style.backgroundSize = 'cover';
+                stage.style.backgroundPosition = 'center';
+                stage.style.backgroundRepeat = 'no-repeat';
+                stage.style.backgroundColor = 'transparent';
+            }
+
+            window.setStageBackground = setStageBackground;
+
+            function collectChatShareText() {
+                if (!mainPane) return "";
+                const cards = Array.from(mainPane.querySelectorAll(".message-card"));
+                const lines = [];
+                for (const card of cards) {
+                    const title = String(card.querySelector(".message-header")?.textContent || "").trim();
+                    const body = String(card.querySelector(".message-body")?.textContent || "").replace(/\s+/g, " ").trim();
+                    if (title && body) lines.push(`${title}\n${body}`);
+                    else if (body) lines.push(body);
+                    else if (title) lines.push(title);
+                }
+                return lines.filter(Boolean).join("\n\n");
+            }
+
+            async function shareStageContent() {
+                const text = collectChatShareText();
+                if (!text) {
+                    try { setStatus("Nothing in chat to share."); } catch (_) {}
+                    return;
+                }
+                const title = "Witness Chat";
+                if (navigator.share) {
+                    try {
+                        await navigator.share({ title, text });
+                        try { setStatus("Shared."); } catch (_) {}
+                        return;
+                    } catch (_) { }
+                }
+                try {
+                    await navigator.clipboard.writeText(text);
+                    try { setStatus("Chat text copied."); } catch (_) {}
+                } catch {
+                    try { setStatus("Share not available."); } catch (_) {}
+                }
+            }
+            window.shareWitnessStageText = shareStageContent;
+
+            chatInput?.addEventListener('focus', () => {
+                // wait for keyboard animation
+                setTimeout(() => {
+                    mainPane?.scrollTo({ top: mainPane.scrollHeight, behavior: "smooth" });
+                }, 250);
+            });
+
+            if (!container) return;
+
+            const SHARE = { normal: 0.55, stage: 0.85, chat: 0.14 };
+            let landscapeLocked = false;
+            let layoutBeforeLandscape = null;
+
+            function setStageShare(v) {
+                document.documentElement.style.setProperty('--stage-share', String(v));
+            }
+
+            function isLandscapePhone() {
+                const w = window.innerWidth || document.documentElement.clientWidth || 0;
+                const h = window.innerHeight || document.documentElement.clientHeight || 0;
+                const coarse = !!window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+                return coarse && w > h && h <= 560;
+            }
+
+            function setLayout(mode) {
+                if (landscapeLocked) mode = 'stage';
+                else if (window.forceChatLayout) mode = 'chat';
+                container.classList.toggle('stage-expanded', mode === 'stage');
+                container.classList.toggle('chat-expanded', mode === 'chat');
+
+                if (mode === 'stage') setStageShare(SHARE.stage);
+                else if (mode === 'chat') setStageShare(SHARE.chat);
+                else setStageShare(SHARE.normal);
+
+                expandBtn?.classList.toggle('is-active', mode === 'stage');
+                expandBtn?.classList.toggle('stage-hint', mode !== 'stage');
+                container.dataset.layout = mode;
+            }
+
+            function applyLandscapeStageLock() {
+                const shouldLock = isLandscapePhone();
+                if (shouldLock === landscapeLocked) return;
+                landscapeLocked = shouldLock;
+                if (shouldLock) {
+                    layoutBeforeLandscape = container.dataset.layout || 'normal';
+                    container.classList.add('landscape-stage-lock');
+                    setLayout('stage');
+                    return;
+                }
+                container.classList.remove('landscape-stage-lock');
+                setLayout(layoutBeforeLandscape || 'normal');
+                layoutBeforeLandscape = null;
+            }
+
+            function toggleStage() {
+                if (landscapeLocked) return setLayout('stage');
+                if (window.forceChatLayout) return setLayout('chat');
+                if (container.classList.contains('chat-expanded')) return setLayout('stage');
+                return setLayout(container.classList.contains('stage-expanded') ? 'normal' : 'stage');
+            }
+
+            function toggleChat() {
+                if (landscapeLocked) return setLayout('stage');
+                if (container.classList.contains('stage-expanded')) return setLayout('chat');
+                return setLayout(container.classList.contains('chat-expanded') ? 'normal' : 'chat');
+            }
+
+            // initialize
+            const preset = container.dataset.layout;
+            if (preset === 'stage' || preset === 'chat' || preset === 'normal') {
+                setLayout(preset);
+            } else if (container.classList.contains('stage-expanded')) setLayout('stage');
+            else if (container.classList.contains('chat-expanded')) setLayout('chat');
+            else setLayout('normal');
+            applyLandscapeStageLock();
+
+            // expose for presence mode overrides
+            window.setLayout = setLayout;
+
+            // stage background click (ignore cards)
+            stage?.addEventListener('click', (e) => {
+                if (e.target.closest('.stage-card')) return;
+                if (e.target === stage) toggleStage();
+            });
+
+            // expand button
+            expandBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleStage();
+            });
+
+            stageShareBtn?.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                await shareStageContent();
+            });
+
+            function isChatBackgroundToggleClick(e) {
+                const target = e.target;
+                if (!(target instanceof Element)) return false;
+                if (window.getSelection && window.getSelection()?.toString().trim()) return false;
+                if (target.closest('.message-card, .stage-card')) return false;
+                if (target.closest('a, button, input, textarea, select, label, [role="button"], [contenteditable="true"]')) return false;
+                return true;
+            }
+            
+            chatRegion?.addEventListener('click', (e) => {
+                const target = e.target;
+                if (!(target instanceof Element)) return;
+                if (!chatRegion.contains(target)) return;
+                if (isChatBackgroundToggleClick(e)) toggleChat();
+            });
+
+            window.addEventListener('resize', applyLandscapeStageLock, { passive: true });
+            window.addEventListener('orientationchange', () => setTimeout(applyLandscapeStageLock, 50));
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', applyLandscapeStageLock, { passive: true });
+            }
+        });
+
+        (function setupIOSViewportFix() {
+            const vv = window.visualViewport;
+            if (!vv) return;
+
+            function update() {
+                // visual viewport height in px
+                const vvh = Math.round(vv.height) + "px";
+                document.documentElement.style.setProperty("--vvh", vvh);
+
+                // optional: keyboard offset = layoutViewport - visualViewport - offsetTop
+                const kbd = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) + "px";
+                document.documentElement.style.setProperty("--kbd", kbd);
+            }
+
+            vv.addEventListener("resize", update);
+            vv.addEventListener("scroll", update); // iOS changes offsetTop when keyboard animates
+            window.addEventListener("orientationchange", () => setTimeout(update, 50));
+            update();
+        })();
+        (function setupOverlays() {
+            const overlayHost = document.getElementById('overlayHost');
+            const scrim = document.getElementById('overlayScrim');
+
+            const musicPlayer = document.getElementById('musicPlayer');
+            const musicHeader = document.getElementById('musicHeader'); // header click target
+            const musicRestoreBtn = document.getElementById('musicRestoreBtn');
+            //const videoOverlay = document.getElementById('videoOverlay');
+            const closeBtn = document.getElementById('videoCloseBtn');
+            const vid = document.getElementById('witnessVideo');
+            const profilePanel = document.getElementById('profilePanel');
+            const adminForceSection = document.getElementById('adminForceSection');
+            const adminWitnessStorySelect = document.getElementById('adminWitnessStorySelect');
+            const adminForceWitnessBtn = document.getElementById('adminForceWitnessBtn');
+            const adminForceStatus = document.getElementById('adminForceStatus');
+            const prayerOverlay = document.getElementById('prayerOverlay');
+            const coursesOverlay = document.getElementById('coursesOverlay');
+            const coursesOverlayClose = document.getElementById('coursesOverlayClose');
+            const coursesList = document.getElementById('coursesList');
+            const overlayFrame = document.getElementById('overlayFrame');
+            const overlayFrameTitle = document.getElementById('overlayFrameTitle');
+            const overlayFrameClose = document.getElementById('overlayFrameClose');
+            const overlayFloatingClose = document.getElementById('overlayFloatingClose');
+            let reflectionRec = null;
+            let reflectionRecActive = false;
+            let reflectionTranscriptFinal = "";
+            let reflectionTranscriptInterim = "";
+            let reflectionNetRetryCount = 0;
+            let reflectionNetRetryTimer = null;
+            let reflectionNetRecovering = false;
+
+            // Helper: repair host state. Never aria-hide the host; only show scrim
+            // when a true modal (profile, video) is open. Music is non-modal so it
+            // should not enable the scrim.
+            function syncHostOpenState() {
+                const music = document.getElementById('musicPlayer');
+                const profile = document.getElementById('profilePanel');
+                const video = document.getElementById('videoOverlay') || document.querySelector('.video-overlay');
+
+                // Music is NOT modal — no scrim needed. Modal open if profile or video
+                const modalOpen =
+                    (profile && profile.classList.contains('is-open')) ||
+                    (video && video.classList.contains('is-open')) ||
+                    (prayerOverlay && prayerOverlay.classList.contains('is-open')) ||
+                    (coursesOverlay && coursesOverlay.classList.contains('is-open'));
+                const pageOverlayOpen = !!(
+                    (prayerOverlay && prayerOverlay.classList.contains('is-open')) ||
+                    (coursesOverlay && coursesOverlay.classList.contains('is-open'))
+                );
+
+                overlayHost?.classList.toggle('has-open', !!modalOpen);
+                document.body.classList.toggle('overlay-page-open', pageOverlayOpen);
+
+                // host should not be aria-hidden if it contains focusables (restore btn)
+                overlayHost?.removeAttribute('aria-hidden');
+
+                if (typeof console !== 'undefined' && console.debug) {
+                    console.debug('[ui] syncHostOpenState: modalOpen=', modalOpen, { profile: profile ? profile.className : null, video: video ? video.className : null, music: music ? music.className : null });
+                }
+            }
+
+            // ----- MUSIC -----
+            function openMusic() {
+                if (!musicPlayer) return;
+                // State A — Music open (panel visible)
+                musicPlayer.classList.add('is-open');
+                musicPlayer.classList.add('show');
+                musicPlayer.classList.remove('is-collapsed');
+                musicPlayer.setAttribute('aria-hidden', 'false');
+
+                musicRestoreBtn?.classList.remove('is-visible');
+                if (musicRestoreBtn) musicRestoreBtn.style.display = 'none';
+                syncHostOpenState();
+            }
+
+            function closeMusic() {
+                if (!musicPlayer) return;
+                // State C — Music closed (panel hidden, restore visible)
+                musicPlayer.classList.remove('is-open');
+                musicPlayer.classList.remove('show');
+                musicPlayer.classList.remove('is-collapsed');
+                musicPlayer.setAttribute('aria-hidden', 'true');
+
+                musicRestoreBtn?.classList.add('is-visible');
+                if (musicRestoreBtn) musicRestoreBtn.style.display = 'flex';
+
+                // Move focus out of any element we're hiding to avoid aria-hidden
+                try {
+                    if (document.activeElement && musicPlayer.contains(document.activeElement)) {
+                        document.activeElement.blur();
+                        musicRestoreBtn?.focus();
+                    }
+                } catch (e) {}
+
+                syncHostOpenState();
+            }
+
+            function toggleMusicCollapse() {
+                if (!musicPlayer) return;
+                // State B — Music collapsed (panel visible but content hidden)
+                const willClose = musicPlayer.classList.contains('is-open');
+                if (willClose) {
+                    closeMusic();
+                } else {
+                    openMusic();
+                }
+            }
+
+            // Replace inline onclick="toggleMusicPlayer()"
+            musicHeader?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Collapse/expand content; keep overlay open
+                toggleMusicCollapse();
+                
+            });
+
+            musicRestoreBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openMusic();
+            });
+
+            // If you want a way to "fully hide" the player:
+            // e.g. long-press header or a close button (recommended)
+            // For now: double click header to hide
+            musicHeader?.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                closeMusic();
+            });
+
+            // Start state: player open or closed (choose one)
+            // openMusic();  // uncomment if you want it open by default
+            closeMusic();    // default hidden, restore button visible
+
+            // ----- PROFILE PANEL -----
+            let adminChecked = false;
+            let adminEnabled = false;
+
+            function setAdminForceStatus(msg, isErr = false) {
+                if (!adminForceStatus) return;
+                adminForceStatus.textContent = msg || '';
+                adminForceStatus.style.color = isErr ? '#ffb0b0' : '#9eb7da';
+            }
+
+            async function loadAdminWitnessStoryOptions() {
+                if (!adminWitnessStorySelect) return;
+                const token = localStorage.getItem('auth_token');
+                if (!token) return;
+                const res = await fetch('/api/witness/stories', {
+                    headers: { Authorization: 'Bearer ' + token }
+                });
+                const data = await res.json().catch(() => ({}));
+                const stories = Array.isArray(data?.stories) ? data.stories : [];
+                adminWitnessStorySelect.innerHTML = '<option value="">Select witness story...</option>';
+                for (const name of stories) {
+                    const opt = document.createElement('option');
+                    opt.value = String(name);
+                    opt.textContent = String(name);
+                    adminWitnessStorySelect.appendChild(opt);
+                }
+                setAdminForceStatus(stories.length ? `Loaded ${stories.length} stories.` : 'No witness stories found.', !stories.length);
+            }
+
+            async function ensureAdminForceControls() {
+                if (adminChecked) return;
+                adminChecked = true;
+                const token = localStorage.getItem('auth_token');
+                if (!token) return;
+                try {
+                    const res = await fetch('/api/admin/check', {
+                        headers: { Authorization: 'Bearer ' + token }
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    adminEnabled = !!data?.is_admin;
+                } catch (_) {
+                    adminEnabled = false;
+                }
+                if (!adminEnabled) return;
+                if (adminForceSection) adminForceSection.style.display = 'block';
+                try { await loadAdminWitnessStoryOptions(); } catch (_) { setAdminForceStatus('Could not load stories.', true); }
+            }
+
+            async function forceStartSelectedWitness() {
+                if (!adminEnabled) return;
+                const token = localStorage.getItem('auth_token');
+                if (!token) {
+                    setAdminForceStatus('Missing auth token.', true);
+                    return;
+                }
+                const filename = adminWitnessStorySelect?.value || '';
+                if (!filename) {
+                    setAdminForceStatus('Select a story first.', true);
+                    return;
+                }
+                setAdminForceStatus('Starting witness story...');
+                if (adminForceWitnessBtn) adminForceWitnessBtn.disabled = true;
+                try {
+                    const res = await fetch('/api/admin/witness/force-start', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ filename, clear_active: true })
+                    });
+                    const out = await res.json().catch(() => ({}));
+                    if (!res.ok || !out?.story) {
+                        throw new Error(out?.error || `HTTP ${res.status}`);
+                    }
+                    if (window.Witness && typeof window.Witness.start === 'function') {
+                        await window.Witness.start(out.story, out.meta || {});
+                        setAdminForceStatus(`Started: ${filename}`);
+                        closeProfile();
+                        setTimeout(() => {
+                            try { if (typeof window.stageGo === 'function') window.stageGo(0, false); } catch (_) {}
+                        }, 120);
+                    } else {
+                        throw new Error('Witness runtime not available');
+                    }
+                } catch (err) {
+                    setAdminForceStatus(`Failed: ${err?.message || err}`, true);
+                } finally {
+                    if (adminForceWitnessBtn) adminForceWitnessBtn.disabled = false;
+                }
+            }
+
+            function openProfile() {
+                profilePanel?.classList.add('is-open');
+                if (profilePanel) profilePanel.setAttribute('aria-hidden', 'false');
+                syncHostOpenState();
+                void ensureAdminForceControls();
+            }
+            function closeProfile() {
+                profilePanel?.classList.remove('is-open');
+                if (profilePanel) profilePanel.setAttribute('aria-hidden', 'true');
+                syncHostOpenState();
+            }
+            function toggleProfile() {
+                if (!profilePanel) return;
+                if (profilePanel.classList.contains('is-open')) {
+                    closeProfile();
+                } else {
+                    openProfile();
+                    // focus first focusable inside the panel for accessibility
+                    setTimeout(() => {
+                        try {
+                            const first = profilePanel.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                            if (first && typeof first.focus === 'function') first.focus();
+                        } catch (e) {}
+                    }, 50);
+                }
+            }
+
+            // Hook settings button to profile panel. Use delegated click handler so
+            // it still works if the element is replaced or added later.
+            document.addEventListener('click', (e) => {
+                const btn = e.target && e.target.closest && e.target.closest('#settingsBtn');
+                if (!btn) return;
+                console.debug('[ui] settingsBtn clicked, toggling profile');
+                e.stopPropagation();
+                toggleProfile();
+            });
+
+            // ----- SCRIM CLICK closes panels (optional behavior) -----
+            scrim?.addEventListener('click', () => {
+                // decide what should close on outside click:
+                closeProfile();
+                closeCourses();
+                // closeMusic(); // optional; many apps leave music persistent
+            });
+
+            // ----- PAGE OVERLAYS (Prayer) -----
+            function openPageOverlay(url, title, opts = {}) {
+                if (!prayerOverlay) return;
+                // Prevent profile panel from remaining visible behind overlays.
+                closeProfile();
+                const headless = !!opts.headless;
+                const hideFloatingClose = !!opts.hideFloatingClose;
+                const underHeader = !!opts.underHeader;
+                const library = !!opts.library;
+                prayerOverlay.classList.toggle('overlay-headless', headless);
+                prayerOverlay.classList.toggle('overlay-no-floating-close', hideFloatingClose);
+                prayerOverlay.classList.toggle('overlay-under-header', underHeader);
+                prayerOverlay.classList.toggle('overlay-library', library);
+                if (overlayFrameTitle) overlayFrameTitle.textContent = title || "Overlay";
+                if (overlayFrame) overlayFrame.src = url;
+                prayerOverlay.classList.add('is-open');
+                prayerOverlay.setAttribute('aria-hidden', 'false');
+                syncHostOpenState();
+            }
+            function postReflectionFrameMessage(payload) {
+                try {
+                    overlayFrame?.contentWindow?.postMessage(payload, '*');
+                } catch (_) {}
+            }
+            function resetReflectionRecognitionState() {
+                reflectionTranscriptFinal = "";
+                reflectionTranscriptInterim = "";
+                reflectionNetRetryCount = 0;
+                reflectionNetRecovering = false;
+                if (reflectionNetRetryTimer) {
+                    clearTimeout(reflectionNetRetryTimer);
+                    reflectionNetRetryTimer = null;
+                }
+            }
+            function stopDelegatedReflectionRecognition(notifyFrame = true) {
+                reflectionRecActive = false;
+                if (reflectionRec) {
+                    try { reflectionRec.onend = null; } catch (_) {}
+                    try { reflectionRec.stop(); } catch (_) {}
+                }
+                reflectionRec = null;
+                if (reflectionNetRetryTimer) {
+                    clearTimeout(reflectionNetRetryTimer);
+                    reflectionNetRetryTimer = null;
+                }
+                if (notifyFrame) {
+                    postReflectionFrameMessage({ type: 'witness-reflection-voice-state', state: 'stopped' });
+                }
+            }
+            function startDelegatedReflectionRecognition() {
+                const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SR) {
+                    postReflectionFrameMessage({
+                        type: 'witness-reflection-voice-error',
+                        message: 'Speech recognition not supported in this browser.'
+                    });
+                    return;
+                }
+                // Silent internal stop before a new delegated start.
+                // Do not unlatch the iframe record button during handoff.
+                stopDelegatedReflectionRecognition(false);
+                resetReflectionRecognitionState();
+                reflectionRecActive = true;
+                const rec = new SR();
+                reflectionRec = rec;
+                rec.lang = 'en-US';
+                rec.continuous = true;
+                rec.interimResults = true;
+                rec.onstart = () => {
+                    postReflectionFrameMessage({ type: 'witness-reflection-voice-state', state: 'started' });
+                };
+                rec.onerror = (e) => {
+                    const err = String(e?.error || 'unknown');
+                    if (!reflectionRecActive && err === 'aborted') return;
+                    if (err === 'network') {
+                        reflectionNetRecovering = true;
+                        reflectionNetRetryCount += 1;
+                        if (reflectionNetRetryCount <= 8) {
+                            const waitMs = Math.min(2500, 300 + (reflectionNetRetryCount * 250));
+                            postReflectionFrameMessage({
+                                type: 'witness-reflection-voice-state',
+                                state: 'started',
+                                note: `Reconnecting speech service (${reflectionNetRetryCount})...`
+                            });
+                            if (reflectionNetRetryTimer) clearTimeout(reflectionNetRetryTimer);
+                            reflectionNetRetryTimer = setTimeout(() => {
+                                reflectionNetRetryTimer = null;
+                                if (!reflectionRecActive || !reflectionRec) return;
+                                try { reflectionRec.start(); } catch (_) {}
+                            }, waitMs);
+                            return;
+                        }
+                        postReflectionFrameMessage({
+                            type: 'witness-reflection-voice-error',
+                            message: 'Speech service network unavailable. Check internet/VPN and try again.'
+                        });
+                        return;
+                    }
+                    const map = {
+                        "not-allowed": "Microphone permission is blocked for this page.",
+                        "service-not-allowed": "Microphone permission is blocked for this page.",
+                        "audio-capture": "No microphone detected. Check device/input."
+                    };
+                    postReflectionFrameMessage({
+                        type: 'witness-reflection-voice-error',
+                        message: map[err] || `Microphone error: ${err}`
+                    });
+                };
+                rec.onresult = (event) => {
+                    reflectionNetRecovering = false;
+                    reflectionNetRetryCount = 0;
+                    let finalNow = "";
+                    let interimNow = "";
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const tr = event.results[i]?.[0]?.transcript || "";
+                        if (event.results[i].isFinal) finalNow += tr + " ";
+                        else interimNow += tr + " ";
+                    }
+                    if (finalNow) reflectionTranscriptFinal += finalNow;
+                    reflectionTranscriptInterim = interimNow;
+                    const text = (reflectionTranscriptFinal + reflectionTranscriptInterim)
+                        .replace(/\u2019/g, "'")
+                        .replace(/\u2018/g, "'")
+                        .replace(/\u201C/g, '"')
+                        .replace(/\u201D/g, '"')
+                        .trim();
+                    postReflectionFrameMessage({ type: 'witness-reflection-transcript', text });
+                };
+                rec.onend = () => {
+                    if (!reflectionRecActive) {
+                        postReflectionFrameMessage({ type: 'witness-reflection-voice-state', state: 'stopped' });
+                        return;
+                    }
+                    setTimeout(() => {
+                        if (!reflectionRecActive || !reflectionRec) return;
+                        if (reflectionNetRecovering) return;
+                        try { reflectionRec.start(); } catch (_) {
+                            postReflectionFrameMessage({
+                                type: 'witness-reflection-voice-error',
+                                message: 'Microphone restart failed.'
+                            });
+                        }
+                    }, 250);
+                };
+                try {
+                    rec.start();
+                } catch (e) {
+                    postReflectionFrameMessage({
+                        type: 'witness-reflection-voice-error',
+                        message: `Microphone start blocked: ${e?.message || e}`
+                    });
+                }
+            }
+            // Expose direct same-origin hooks so iframe click can start/stop
+            // recognition in the top window user-gesture stack.
+            window.__witnessReflectionRecognitionStart = function () {
+                try {
+                    if (typeof window.stopMicrophone === 'function') {
+                        window.stopMicrophone('reflection_handoff');
+                    }
+                } catch (_) {}
+                startDelegatedReflectionRecognition();
+            };
+            window.__witnessReflectionRecognitionStop = function () {
+                stopDelegatedReflectionRecognition();
+            };
+            function closePrayer() {
+                if (!prayerOverlay) return;
+                stopDelegatedReflectionRecognition();
+                prayerOverlay.classList.remove('is-open');
+                prayerOverlay.classList.remove('overlay-headless');
+                prayerOverlay.classList.remove('overlay-no-floating-close');
+                prayerOverlay.classList.remove('overlay-under-header');
+                prayerOverlay.classList.remove('overlay-library');
+                prayerOverlay.setAttribute('aria-hidden', 'true');
+                if (overlayFrame) overlayFrame.removeAttribute('src');
+                syncHostOpenState();
+            }
+            function closeCourses() {
+                if (!coursesOverlay) return;
+                coursesOverlay.classList.remove('is-open');
+                coursesOverlay.setAttribute('aria-hidden', 'true');
+                syncHostOpenState();
+            }
+            function courseStatusLabel(status) {
+                if (status === "in_progress") return "In Progress";
+                if (status === "completed") return "Completed";
+                if (status === "taken") return "Taken";
+                return "New";
+            }
+            function courseActionLabel(status) {
+                if (status === "in_progress") return "Continue";
+                if (status === "completed") return "Review";
+                if (status === "taken") return "Resume";
+                return "Start";
+            }
+            function escapeCourseHtml(s) {
+                return String(s || "")
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#39;');
+            }
+            function renderCourses(courses) {
+                if (!coursesList) return;
+                if (!Array.isArray(courses) || !courses.length) {
+                    coursesList.innerHTML = '<div class="courses-empty">No courses available right now.</div>';
+                    return;
+                }
+                coursesList.innerHTML = courses.map((c) => {
+                    const status = String(c.status || "new");
+                    const count = Number(c.count || 0);
+                    const done = Number(c.completed_count || 0);
+                    const title = escapeCourseHtml(c.title || c.course_id || "Course");
+                    const detailBits = [];
+                    detailBits.push(`${done}/${count} complete`);
+                    if (c.current_story_title) detailBits.push(`Current: ${escapeCourseHtml(c.current_story_title)}`);
+                    const detail = detailBits.join(" · ");
+                    return (
+                        '<article class="course-card is-' + status.replaceAll("_", "-") + '">' +
+                            '<div class="course-row">' +
+                                '<h3 class="course-name">' + title + '</h3>' +
+                                '<span class="course-badge">' + courseStatusLabel(status) + '</span>' +
+                            '</div>' +
+                            '<div class="course-meta">' + escapeCourseHtml(detail) + '</div>' +
+                            '<button class="course-action" data-course-start="' + escapeCourseHtml(c.course_id || "") + '">' + courseActionLabel(status) + '</button>' +
+                        '</article>'
+                    );
+                }).join("");
+            }
+            async function loadCourses() {
+                if (!coursesList) return;
+                coursesList.innerHTML = '<div class="courses-empty">Loading courses...</div>';
+                const listRes = await topFetchJson('/api/witness/courses');
+                const statusRes = await topFetchJson('/api/witness/courses/status');
+                const rows = Array.isArray(listRes?.courses) ? listRes.courses : [];
+                const statusRows = Array.isArray(statusRes?.courses) ? statusRes.courses : [];
+                const statusById = {};
+                for (let i = 0; i < statusRows.length; i++) {
+                    const cid = String(statusRows[i]?.course_id || "");
+                    if (cid) statusById[cid] = statusRows[i];
+                }
+                const merged = rows.map((c) => {
+                    const cid = String(c?.course_id || "");
+                    const st = statusById[cid] || {};
+                    return Object.assign({}, c, st, { course_id: cid, title: c?.title || st?.title || cid });
+                });
+                const rank = { in_progress: 0, new: 1, taken: 2, completed: 3 };
+                merged.sort((a, b) => {
+                    const ra = rank[String(a.status || "new")] ?? 9;
+                    const rb = rank[String(b.status || "new")] ?? 9;
+                    if (ra !== rb) return ra - rb;
+                    return String(a.title || "").localeCompare(String(b.title || ""));
+                });
+                renderCourses(merged);
+            }
+            async function startCourse(courseId, btn) {
+                if (!courseId) return;
+                if (btn) btn.disabled = true;
+                try {
+                    const out = await topFetchJson('/api/witness/course/start', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ course_id: courseId, clear_active: true })
+                    });
+                    if (out?.course_complete) {
+                        await loadCourses();
+                        return;
+                    }
+                    if (window.Witness && typeof window.Witness.start === 'function' && out?.story) {
+                        await window.Witness.start(out.story, out.meta || {});
+                        closeCourses();
+                        setTimeout(() => {
+                            try { if (typeof window.stageGo === 'function') window.stageGo(0, false); } catch (_) {}
+                        }, 120);
+                        return;
+                    }
+                    await loadCourses();
+                } catch (err) {
+                    console.warn('[courses] start failed', err);
+                    if (coursesList) {
+                        coursesList.insertAdjacentHTML('afterbegin', '<div class="courses-empty">Could not open that course right now.</div>');
+                    }
+                } finally {
+                    if (btn) btn.disabled = false;
+                }
+            }
+            function openCourses() {
+                if (!coursesOverlay) return;
+                coursesOverlay.classList.add('is-open');
+                coursesOverlay.setAttribute('aria-hidden', 'false');
+                syncHostOpenState();
+                void loadCourses();
+            }
+            function toggleCourses() {
+                if (!coursesOverlay) return;
+                if (coursesOverlay.classList.contains('is-open')) closeCourses();
+                else openCourses();
+            }
+            coursesOverlayClose?.addEventListener('click', closeCourses);
+            coursesOverlay?.addEventListener('click', (e) => {
+                if (e.target === coursesOverlay) closeCourses();
+            });
+            coursesList?.addEventListener('click', (e) => {
+                const btn = e.target && e.target.closest ? e.target.closest('[data-course-start]') : null;
+                if (!btn) return;
+                const cid = String(btn.getAttribute('data-course-start') || '').trim();
+                if (!cid) return;
+                void startCourse(cid, btn);
+            });
+            function openPrayer() {
+                openPageOverlay(`/mysanctuary?overlay=1&v=${Date.now()}`, '', { headless: true });
+            }
+            function openReflection() {
+                openPageOverlay(`/reflection?v=${Date.now()}`, '', { headless: true });
+            }
+            function openMyBible() {
+                openPageOverlay(`/mybible?overlay=1&v=${Date.now()}`, '', { headless: true });
+            }
+            function openProfileSettings() {
+                openPageOverlay(`/profile-settings?overlay=1&v=${Date.now()}`, '', { headless: true });
+            }
+            function openPostureInfo() {
+                openPageOverlay(`/posture-info?overlay=1&v=${Date.now()}`, '', { headless: true });
+            }
+            function openReflectionHistory() {
+                openPageOverlay('/reflection_history.html', 'Reflection History', { library: true });
+            }
+            function openWitnessHistory() {
+                openPageOverlay('/witness_history.html', 'Witness History', { library: true });
+            }
+            function openFormationHistory() {
+                openPageOverlay('/formation_history.html', 'Formation History', { library: true });
+            }
+            function openBDHistory() {
+                openPageOverlay('/bd/history', 'Content History', { library: true });
+            }
+            function togglePrayer() {
+                if (!prayerOverlay) return;
+                if (prayerOverlay.classList.contains('is-open')) closePrayer();
+                else openPrayer();
+            }
+
+            function openFromDeepLink() {
+                let params;
+                try {
+                    params = new URLSearchParams(window.location.search || "");
+                } catch (_) {
+                    return;
+                }
+                const open = String(params.get("open") || "").trim().toLowerCase();
+                if (!open) return;
+                if (open === "prayer" || open === "sanctuary" || open === "mysanctuary") {
+                    openPrayer();
+                    return;
+                }
+                if (open === "reflection") {
+                    openReflection();
+                    return;
+                }
+                if (open === "bible" || open === "mybible") {
+                    openMyBible();
+                    return;
+                }
+                if (open === "profile" || open === "settings") {
+                    openProfileSettings();
+                    return;
+                }
+                if (open === "courses") {
+                    openCourses();
+                    return;
+                }
+            }
+            // Run after overlay wiring exists.
+            setTimeout(openFromDeepLink, 0);
+
+            function b64UrlToUint8Array(base64String) {
+                const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+                const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+                const rawData = atob(base64);
+                const outputArray = new Uint8Array(rawData.length);
+                for (let i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+                return outputArray;
+            }
+            async function topFetchJson(url, opts = {}) {
+                const token = String(localStorage.getItem("auth_token") || "").trim();
+                const headers = Object.assign({}, opts.headers || {});
+                if (token) headers.Authorization = "Bearer " + token;
+                const res = await fetch(url, Object.assign({}, opts, { headers }));
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(json.error || json.detail || ("HTTP " + res.status));
+                return json;
+            }
+            async function ensureTopServiceWorkerReady() {
+                if (!("serviceWorker" in navigator)) {
+                    throw new Error("Service worker is not supported in this browser.");
+                }
+                const regs = await navigator.serviceWorker.getRegistrations();
+                for (const r of (regs || [])) {
+                    const scriptUrl = String(r?.active?.scriptURL || r?.installing?.scriptURL || r?.waiting?.scriptURL || "");
+                    if (scriptUrl.includes("/static/sw.js")) {
+                        try { await r.unregister(); } catch (_) {}
+                    }
+                }
+                let reg = await navigator.serviceWorker.getRegistration("/");
+                if (!reg) reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+                return await navigator.serviceWorker.ready;
+            }
+            async function topSubscribePush() {
+                if (!("Notification" in window)) throw new Error("Notifications are not supported.");
+                if (Notification.permission !== "granted") throw new Error("Permission is not granted.");
+                const keyResp = await topFetchJson("/api/notifications/vapid-public-key");
+                const publicKey = String(keyResp.public_key || "").trim();
+                if (!publicKey) throw new Error("VAPID public key unavailable.");
+                const reg = await ensureTopServiceWorkerReady();
+                let sub = await reg.pushManager.getSubscription();
+                if (!sub) {
+                    sub = await reg.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: b64UrlToUint8Array(publicKey)
+                    });
+                }
+                const j = sub.toJSON();
+                await topFetchJson("/api/notifications/subscription", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        endpoint: j.endpoint,
+                        p256dh: j.keys?.p256dh || "",
+                        auth: j.keys?.auth || ""
+                    })
+                });
+                return { ok: true };
+            }
+            async function topUnsubscribePush() {
+                const reg = await ensureTopServiceWorkerReady();
+                const sub = await reg.pushManager.getSubscription();
+                if (!sub) return { ok: true };
+                const endpoint = encodeURIComponent(sub.endpoint);
+                await topFetchJson(`/api/notifications/subscription?endpoint=${endpoint}`, { method: "DELETE" });
+                await sub.unsubscribe().catch(() => {});
+                return { ok: true };
+            }
+            function postPushResult(ev, reqId, result) {
+                const msg = { type: "witness-push-result", reqId, result };
+                try { ev?.source?.postMessage(msg, "*"); } catch (_) {}
+                try { overlayFrame?.contentWindow?.postMessage(msg, "*"); } catch (_) {}
+                try { window.postMessage(msg, "*"); } catch (_) {}
+            }
+
+            prayerOverlay?.addEventListener('click', (e) => {
+                // click outside inner panel closes
+                if (e.target === prayerOverlay) closePrayer();
+            });
+            overlayFrameClose?.addEventListener('click', closePrayer);
+            overlayFloatingClose?.addEventListener('click', closePrayer);
+            window.addEventListener('message', (ev) => {
+                const t = ev?.data?.type;
+                if (t === 'witness-overlay-close') closePrayer();
+                if (t === 'witness-top-nav' && ev?.data?.url) {
+                    try {
+                        window.location.assign(String(ev.data.url));
+                    } catch (_) {}
+                }
+                if (t === 'witness-reflection-voice-start') {
+                    try {
+                        if (ev?.data?.recording === true) {
+                            startDelegatedReflectionRecognition();
+                        }
+                    } catch (_) {}
+                }
+                if (t === 'witness-reflection-voice-stop') {
+                    stopDelegatedReflectionRecognition();
+                }
+                if (t === 'witness-profile-updated' && ev?.data?.profile) {
+                    try {
+                        const p = String(ev.data.profile || "").trim();
+                        if (p) {
+                            window.userPreferredProfile = p;
+                            localStorage.setItem("preferred_profile", p);
+                            window.dispatchEvent(new CustomEvent("witness:preferred-profile-updated", {
+                                detail: { profile: p }
+                            }));
+                        }
+                    } catch (_) {}
+                }
+                if (t === 'witness-push-request-permission') {
+                    const reqId = ev?.data?.reqId;
+                    Promise.resolve()
+                        .then(async () => {
+                            if (!("Notification" in window)) throw new Error("Notifications are not supported.");
+                            const p = await Notification.requestPermission();
+                            return { ok: p === "granted", permission: p };
+                        })
+                        .catch((e) => ({ ok: false, error: String(e?.message || e) }))
+                        .then((result) => { postPushResult(ev, reqId, result); });
+                }
+                if (t === 'witness-push-subscribe') {
+                    const reqId = ev?.data?.reqId;
+                    Promise.resolve()
+                        .then(() => topSubscribePush())
+                        .catch((e) => ({ ok: false, error: String(e?.message || e) }))
+                        .then((result) => { postPushResult(ev, reqId, result); });
+                }
+                if (t === 'witness-push-unsubscribe') {
+                    const reqId = ev?.data?.reqId;
+                    Promise.resolve()
+                        .then(() => topUnsubscribePush())
+                        .catch((e) => ({ ok: false, error: String(e?.message || e) }))
+                        .then((result) => { postPushResult(ev, reqId, result); });
+                }
+            });
+            // Wire profile panel action buttons (no inline onclicks)
+            (function wireProfileActions(){
+                const host = document.getElementById('profilePanel');
+                if(!host) return;
+                host.addEventListener('click', (e) => {
+                    const a = e.target && e.target.closest && e.target.closest('[data-action]');
+                    if(!a) return;
+                    const act = a.getAttribute('data-action');
+                    if(act === 'profile-settings') openProfileSettings();
+                    else if(act === 'mybible') openMyBible();
+                    else if(act === 'posture-info') openPostureInfo();
+                    else if(act === 'witness-history') openWitnessHistory();
+                    else if(act === 'formation-history') openFormationHistory();
+                    else if(act === 'bd-history') openBDHistory();
+                });
+
+                const logout = document.getElementById('logoutBtn');
+                if(logout) logout.addEventListener('click', () => {
+                    // Fallback only; primary logout flow is in js/aiClientMain.js.
+                    try{ window.location.href = '/login'; }catch(e){ window.open('/login', '_blank'); }
+                });
+                if (adminForceWitnessBtn) {
+                    adminForceWitnessBtn.addEventListener('click', () => { void forceStartSelectedWitness(); });
+                }
+            })();
+            document.getElementById('reflectionsBtn').addEventListener('click', () => {
+                openReflection();
+            });
+            document.getElementById('prayerBtn').addEventListener('click', () => {
+                togglePrayer();
+            });
+            document.getElementById('coursesBtn')?.addEventListener('click', () => {
+                toggleCourses();
+            });
+            // ESC closes (desktop)
+            window.addEventListener('keydown', (e) => {
+                if (e.key !== 'Escape') return;
+                closeProfile();
+                closePrayer();
+                closeCourses();
+                // closeMusic(); // optional
+            });
+
+            // ----- EDGE SWIPE (right edge to open, swipe right to close) -----
+            (function setupEdgeSwipe(){
+                const EDGE = 24;        // px from edge to start
+                const TRIGGER = 60;     // px travel to trigger
+                const MAX_Y = 40;       // max vertical drift
+                let tracking = false;
+                let startX = 0;
+                let startY = 0;
+
+                function isFormTarget(t){
+                    return t && (t.closest('input, textarea, select, button') || t.isContentEditable);
+                }
+
+                document.addEventListener('pointerdown', (e) => {
+                    if (isFormTarget(e.target)) return;
+                    const w = window.innerWidth;
+                    const overlayOpen = prayerOverlay && prayerOverlay.classList.contains('is-open');
+                    const nearRight = e.clientX >= (w - EDGE);
+                    const nearLeft = e.clientX <= EDGE;
+
+                    if (!overlayOpen && !nearRight) return;
+                    if (overlayOpen && !nearLeft && !nearRight) return;
+
+                    tracking = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }, { passive: true });
+
+                document.addEventListener('pointermove', (e) => {
+                    if (!tracking) return;
+                    const dx = e.clientX - startX;
+                    const dy = Math.abs(e.clientY - startY);
+                    if (dy > MAX_Y) { tracking = false; return; }
+                    const overlayOpen = prayerOverlay && prayerOverlay.classList.contains('is-open');
+                    if (!overlayOpen && dx < -TRIGGER) { openPrayer(); tracking = false; }
+                    if (overlayOpen && dx > TRIGGER) { closePrayer(); tracking = false; }
+                }, { passive: true });
+
+                document.addEventListener('pointerup', () => { tracking = false; }, { passive: true });
+                document.addEventListener('pointercancel', () => { tracking = false; }, { passive: true });
+            })();
+        })();
+    </script>
+</body>
+</html>
