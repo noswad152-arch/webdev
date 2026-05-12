@@ -37,7 +37,7 @@
 
   .episode-page {
     font-family: var(--font-body);
-    background: radial-gradient(circle at top, #2b2230 0, #0b0b10 55%);
+
     color: var(--text-main);
     padding: 10px 16px 64px;
     max-width: 100%;
@@ -346,8 +346,8 @@
     margin-top: 22px;
     padding: 16px 18px;
     border-radius: var(--radius-lg);
-    border: 1px dashed rgba(246, 180, 91, 0.5);
-    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(246, 180, 91, 0.5);
+    background: rgba(176, 151, 151, 0.35);
     font-size: 16px;
     color: var(--text-soft);
   }
@@ -410,7 +410,71 @@
     transition: opacity 0.5s ease-in-out;
     opacity: 1;
   }
+/* The button itself */
+.episode-page .prayer-button {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  color: #ffffff;
+  background: linear-gradient(135deg, #b88ce9, #9f6edc);
+  border-radius: 999px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(150, 100, 200, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
+/* Soft lavender glow pulse */
+.episode-page .prayer-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%);
+  opacity: 0;
+  animation: prayerGlow 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Angelic white shimmer sweep */
+.episode-page .prayer-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.65) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Hover lift */
+.episode-page .prayer-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(150, 100, 200, 0.45);
+}
+
+/* Keyframes */
+@keyframes prayerGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes shimmer {
+  0% { left: -120%; }
+  60% { left: 140%; }
+  100% { left: 140%; }
+}
 /* A helper class to hide the image during the swap */
 .fade-out {
   opacity: 0;
@@ -1353,7 +1417,7 @@
 }
 
 .prayer-title {
-  font-size: 28px;
+  font-size: 14px;
   font-weight: 700;
   color: #5a3d8c;
   margin-bottom: 12px;

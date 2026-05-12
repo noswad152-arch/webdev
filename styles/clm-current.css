@@ -498,7 +498,7 @@ box-shadow: 0 12px 32px rgba(120, 80, 160, 0.12);
   font-size: 24px;
 }
 /* Wrapper centers the button */
-.episode-page .prayer-button-wrapper {
+.episode-page .-wrapper {
   text-align: center;
   margin: 2.5rem 0;
 }
