@@ -6,266 +6,615 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Witness V2?</title>
     <!-- Add your CSS link here -->
-    <link rel="stylesheet" href="styles/clm.css">
+    <link rel="stylesheet" href="css/target.css">
 </head>
 <body>
+    <style>
+  .dw-card {
+    background: var(--dw-panel);
+    border: 1px solid var(--dw-border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    max-width: 640px;
+    margin: 0 auto;
+    background-image: var(--dw-glow);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+  .dw-heading {
+    font-family: var(--dw-heading-font);
+    font-size: 1rem;
+    color: var(--dw-accent);
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+  }
+
+  .dw-scripture {
+    font-family: var(--dw-body-font);
+    font-size: 0.9rem;
+    color: var(--dw-ink);
+    margin-bottom: 12px;
+  }
+
+  .dw-label {
+    font-weight: bold;
+    color: var(--dw-accent);
+  }
+
+  .dw-carry {
+    border-left: 2px solid var(--dw-accent);
+    padding-left: 10px;
+    font-style: italic;
+    color: var(--dw-accent);
+    font-family: var(--dw-body-font);
+    margin-bottom: 14px;
+  }
+
+  .dw-prayer {
+    font-family: var(--dw-body-font);
+    font-size: 0.9rem;
+    color: var(--dw-ink);
+    opacity: 0.9;
+    margin-bottom: 14px;
+  }
+
+  .dw-link {
+    font-family: var(--dw-body-font);
+    font-size: 0.85rem;
+    color: var(--dw-accent);
+    text-decoration: none;
+  }
+
+  .dw-link:hover {
+    text-decoration: underline;
+  }
+
+  .dw-sigil {
+    text-align: center;
+    margin-top: 12px;
+    font-family: var(--dw-heading-font);
+    font-size: 0.75rem;
+    color: var(--dw-border);
+    opacity: 0.7;
+  }
+      .video-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.video-wrap video {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.video-title-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  padding: 6px 10px;
+  background: rgba(0,0,40,0.55);
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  pointer-events: none; /* important: does NOT block video controls */
+  backdrop-filter: blur(4px);
+}
+</style>
 <div class="episode-page">
   <header class="episode-header">
-    <div class="series-label date-reflection">
-      <span class="series-dot"></span>
-      <span class="today-date"></span>
-    </div>
 
 
-    <h1 class="episode-title">Your Prayer Ministry is Active and Listening</h1>
-    <p id="daily-question1" class="episode-subtitle">Insights on prayer from the Christ Love community</p>
-  </header>
 
-
- <div class="reflection-card ">
-    
-  <div class="scripture-inner " id="scripture-container">
+   
+<div class="reflection-card ">
+      <div class="scripture-inner " id="scripture-container">
     <div id="scripture-label" class="scripture-label">Scripture</div>
     
-    <div class="prayer-title">"Whatsoever ye shall ask the Father in my name, he will give it to you."</div>
-    <div id="scripture-ref" class="scripture-ref">John 16:23</div>
-  </div>
-
-</div>
-
-
+    <div class="prayer-title">"You shall act justly, love mercy, and walk humbly with your God."</div>
+    <div id="scripture-ref" class="scripture-ref">Micah 6:8</div>
+      </div>
+  </div>  
+    
+  </header>
   <!-- Main content -->
-  <section class="content-grid">
+  
 
     <!-- Left: Core narrative -->
     <article class="content-card">
-      
-<div class="content-heading"> The Message</div>
-
+       <p></p>
+<button id="random-play-all" class="random-play-btn">▶ Play all music in this article while you read</button>
      <div class="content-body">
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_398fb569cb0a7cc0.mp3">
 
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Not Louder than Love (Micah 6:8)</div>
+      <div class="card-player-subtitle">Formation Series · 3:57</div>
+    </div>
+  </div>
+
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
+
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+</div>
       <p>
-       We believe the heart of prayer is revealed with what Jesus says in John 16:23. 
-        
-          Prayer spoken this way is not wishful thinking—it is faith in motion. 
+       Science and nature can teach us the ways of the heart and that if we are to change the landscape of our nation, it starts within.
+For us to change our heart we must act justly, love mercy, and walk humbly with God (Micah 6:8).  This alone can change the family, the church, the community, the state, and the nation.
+
         </p>
         <p>
-        To pray in His name is to stand in partnership with the living God, trusting that no word shaped by Christ is ever wasted.
+        There is a small plant growing in the margins of nearly every meadow in the world. It doesn't look like much. Three leaves, a white bloom, close to the ground. But the clover is doing something that most of the natural world has never learned to do; it is taking what is abundant and invisible — nitrogen locked in the atmosphere above every living thing — and converting it into nourishment it then releases freely into the soil for every plant around it.
+        <br><br>It does not hoard. It does not negotiate. It does not require reciprocity.
+        It simply gives what it has, and in doing so, it creates a fertile environment for the flourishing of all the life around it.  It is tens of millions of years older than we are.
         </p>
+            <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_40c87b93b4130f8a.jpeg" alt="clover">
+    </div>
         <p>
 
-        To the degree that we know, love, and trust Jesus, our prayers are formed in Him. And when they are, not a single word returns empty.
+        I want to talk about what it would mean for us — for the Church, for this moment in America — to become the clover.
 </p>        
         <p>
-        Because we are divine beings having a human experience, there is always the temptation to pray in our own name—to ask God to bless what we have already decided. 
-        By praying in His name we reshape our will to match the Father’s, fulfilling the promise that <strong>“it is the Father’s good pleasure to give you the Kingdom” (Luke 12:32).</strong>
+        We are in a cycle of dysfunction bigger than anything most of us have seen in our lifetimes. There is no external place to go — and often no internal one either — without an emotional charge waiting there. No matter your politics, your culture, your personality, your faith tradition: the atmosphere is thick with it. With fear. With grievance. With the exhausting vigilance of people who believe, on some level, that they are under siege.
         </p>
         <p>
-        God hears the substance beneath our words, not the polish of the words themselves. Prayer does not require formality or performance—only honesty. It rises naturally from an authentic heart. True prayer flows from unity rather than division, from trust rather than control.
+        I want to give this phenomenon a name: the Emotional Chamber of Commerce.
+        <br>Let me define the terms, because the words matter.
         </p>
-        <p>
-
-        Prayer does not merely build faith. 
-        Prayer is faith. And when we live from that unitive awareness—the living presence of Christ within us—a quiet prayer of gratitude, or a simple “Thy will be done,” may be all the prayer we ever need. 
+              <p>
+        <strong>Emotional</strong> is the most important word of all. The Emotional Chamber of Commerce is not just a marketplace of ideas, but a marketplace of feelings. It is where we go to exchange our emotional experience with others. It is where we go to be seen, heard, and understood in our fear. It is where we go to find connection and community in the midst of our anxiety. It is where we go to feel less alone in our vulnerability.
       </p>
-          <div class="prayer-button-wrapper">
-  <a href="/prayer" class="prayer-button">
-    Submit a Prayer Request
-  </a>
+
+      <p>
+        <strong>Chamber</strong> evokes a room, a place of relative safety. We know it often as the echo chamber — the space we retreat to for validation. Fear, paradoxically, drives us toward the very things that amplifies it. We enter our chambers seeking shelter and find instead a marketplace that trades in the thing that drove us there.
+      </p>
+        <p>
+        <strong>Commerce</strong> finds its roots in the Latin commercium — a compound of com- (together) and merx (merchandise, what we seek). It has always meant more than the exchange of goods. In older usage, to have "commerce" with someone meant deep conversation, fellowship, the interchange of ideas. It meant being in genuine relationship. I am reclaiming that original meaning here. The Emotional Chamber of Commerce is the active, reciprocal exchange of human experience — and right now, in America, what we are primarily exchanging is fear.
+      </p>
+
+      <p>
+        And at the center of all of it within our brain — governing the gates — is a structure the size of an almond.
+</p>
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_edd5366338a21ad9.png" alt="amygdala">
+    </div>
+<p>
+The amygdala takes its name from the Greek amygdalē, meaning almond, named for its shape. It is ancient, small, and fast. It is the biological seat of our fight-or-flight response, and it is not interested in nuance. It asks only one question: Safe, or dangerous?  
+<br><br>The amygdala processes every bit of information you see, hear, smell.  It can take an intended happy event gone wrong and forever mark that event unsafe within your memory. It is also ancient—It knows that the snake bites, that the fire burns because it is encoded with your ancestry. 
+<br><br>The amygdala is not evil. It has kept our species alive. But it is biased — constitutionally, structurally biased — toward survival over connection. It labels the world in two categories: Self, which is safe, and Other, which is suspect. And when we allow it to govern our participation in the broader culture, we find ourselves living in a fortress of our own construction, peering out of windows we have chosen precisely because they confirm what we already fear.
+<br><br>We look for the signals. Are they with us, or against us? In ancient times we wore garments to show allegiance — tassels, shields, colors, flags. Now the signals are subtler, and the assumptions are faster, and the amygdala, poor ancient thing that it is, cannot tell the difference between a disagreement on social media and a lion on the savanna. It responds the same way to both.
+<br><br>You could consider the amygdala as a “relevance” meter to “self”.  It filters through information to determine if it is a threat (lion), an opportunity (food), or intense social meaning (friend, or partner).
+<br><br>This is the striking irony at the heart of our moment: we rely on the amygdala to keep us safe, but by letting it drive our commerce with one another, we trap ourselves in a fortress that cuts us off from the very fellowship — the original commercium — that might actually help us heal.
+      </p>
+      <p>
+        In a trust-based economy, safety is scarce. You must prove yourself before I receive you. Trust requires past performance. It is credit-based, transactional, and fragile. If the other person deviates from the expected script, the market crashes, the drawbridge rises, and the fortress goes into lockdown.
+<br><br>Let’s take a simple policy debate, to keep it light.  You can apply it later to bigger ideas or scandals later.  Tribe A says lower taxes on a group, Tribe B says to raise taxes on that group.  
+          <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_bc74c06a85585411.png" alt="tribal_trust">
+    </div>
+<br><br>The typical scenario is that you distrust the other political tribe, they are misguided.  Both tribes assume they are right.  We never consider both sides may well be considering what is good for the whole system.  We assume they are considering only what is good for their tribe.
+<br><br>We start with an emotional trigger—they are wrong, we are right.   Then we engage in justification—we post our rebuttal.  Someone responds.  Now we sort, we find the intention of our argument, and we internalize it biochemically and respond again.  The rest of our tribe is doing the same, so, we further align with our tribe and fail to see the other tribe—and worse, the other tribe is doing the exact same thing.  We’ve only offered and consumed the nitrogen of our own tribe, not accepted the nitrogen of the other.  It all cancels everything out.
+<br><br>We’re no longer doing it out of fear, now we are doing it out of social identity—because deviating from our tribe places an emotional burden upon us that we refuse to face.  The amygdala calls that death—summary removal from the tribe followed by starvation.
+<br><br>But then you add an ideology of the groups to the debate and each tribe will fight for that ideology using the same mechanisms presented in this discussion—even if it is completely fictional or based on lies presented within in our chamber.  A hat alone can do this—a hat that has no real relevance to the person wearing it, but we may see that hat as proof of someone completely out of alignment with ourselves.
+      </p>
+          <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_fc3c0dc123743765.png" alt="tribal_fear">
+    </div>
+<p>
+  In politics the same system governs our engagement.  It produces hardened tribes that are against one another.  Left or right, republican or democrat, gay or straight, Christian or Muslim, black or white, rich or poor, android or iPhone, us or them—the tribes are endless. 
+<br><br>This is how you get ideological entrenchment. This is how you get families that no longer speak. This is how you get nations locked behind walls of certainty, and eventually, it is how you get violence — because when perceived danger lives long enough in the chamber, and enough fear has been seeded and validated, the "fight" response finds a target. It always does. It happens in families, in congregations, in political movements, in nations. 
+<br><br>All governed by a structure the size of an almond.  The emotional seat of our life, and death.
+<br><br>The clover does not fight for nitrogen. It does not form coalitions against the grasses. It does not build walls around the good soil. It found a different source entirely — one that was always there, abundant and ignored — and it converted that source into something that feeds its neighbors whether they deserve it or not whether they are grateful or not, whether they even know the clover exists.  It has no emotional identity.  
+<br><br>The hummingbird, when it finds an empty flower, does not organize a protest. It finds another flower.  The hummingbird will return to the original flower, eventually, when it is ready to give.  That innate acceptance creates more flowers and produces more hummingbirds.
+          <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_37a0171e2c022fa6.png" alt="hummingbird_fear">
+    </div>
+<br><br>These are not merely charming illustrations from nature. They are images of a different operating system — one built not on scarcity and defense, but on abundance and offering.
+<br><br>We should recognize this. We were given this operating system two thousand years ago in words we can understand.  
+</p>
+<p>
+  But first, physics also offers us a framework for understanding why we are where we are, and where the way out might lie.
+<br><br>Systems tend toward entropy, or chaos — not because they prefer chaos, but because disorder is statistically more probable, and therefore feels attractive, because it is a threat. It is where the crowd gathers.  It is the reality of our everyday where tribes form.
+
+
+ <br><br>A car accident in the southbound lanes of a six-lane highway slows traffic on the northbound lanes, because we are attracted to the disruption going in another direction.  They call this, in physics, “cross-chamber entanglement.”  
+<br><br>Even though a physical barrier (the divider) and no actual debris in the northbound lanes is between us and the event, the "flow" is disrupted because the observer has shifted their focus from the path ahead to the chaos adjacent.  They call this “turbulent flow” in physics.  You excite enough molecules in motion in a particular direction, they become chaotic.  Direction is disrupted… for all.
+<br><br>Your amygdala, a mile behind, is programmed to prioritize this slowing as threat, even at a distance.  We further slow those behind us because of the “scandal” on the other side of the road far ahead.  Now everyone heading north is at heightened awareness of a threat that doesn’t exist in our relative environment. 
+<br><br>…and no doubt when you finally arrive at work it will be the first topic of discussion you offer.
+          <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_663b8ee1eba57070.png" alt="traffic_cross_chamber_entanglement">
+    </div>
+<br><br>This is natural law, and it is not evil. It is indifferent. A shattered glass and a peaceful sunset obey the same physics.  And so do we.
+<br><br>The human mind is not a neutral observer of entropy. It is a survival instrument. The amygdala is tuned not for truth, but for threat—more specifically, it is tuned for “relevance”. It notices disruption and harmony with fear and threat being the underlying concern.
+<br><br>And then — and this is the dangerous part — humans have built entire systems that monetize that attention for us to consume.  Some call it “the algorithm”.  
+<br><br>When I grew up, during my formative years, my first best friend was black.  In those days, racism wasn’t a daily topic of discussion.  Sure, I may have had a very basic understanding of slavery, but I was never told I was inherently racist as we are told now.  Derek and I didn’t have to reconcile these details that are now prevalent in culture, once again—why?  Because we weren’t being offered, every day, the syllabus of inherent racism. An offense that was false when I grew up, but I’m told I now I am guilty of.  And when the system tells me so, I form a fortress against the lie or choose to align with it.
+<br><br>Our Emotional Chambers of Commerce do not merely reflect fear. They manufacture it, package it, and sell it back to us as identity. Framing the “other” as immoral and dangerous.  
+<br><br>Marketing cracked the code, and we are victims of it.  When we click thumbs up or down on social media, we seek relevance within our tribe and are forever marked, by the system, as a member of that tribe.  Thus, you will get back what you paid for—more content that confirms the fallacy we already consumed. Eyes and ears that distract us from the truth of our being.
+<br><br>I searched recently for a fancy blender; I now see it everywhere when I turn on my phone.
+
+          <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_60f5a8f8f33fa060.jpg" alt="emotional_chamber_of_commerce">
+    </div>
+<br><br>We are all driving northbound, but we’ve spent the last many seasons with our heads turned left, staring at the wreck in the southbound lanes. There is no debris in our path, yet we are at a dead stop. We have allowed the chaos of an adjacent system to dictate the velocity of our own. 
+<br><br>I’m here to suggest we take our foot off the brakes and refocus on the road ahead. Bless the problems adjacent, and those that may be in front of us.  If we don’t, more violence, or disorder, will be in our future.
+<br><br>When you say a prayer for the ambulance heading southbound, are you saying it for the adjacent event, to maintain your security for your northbound direction, or for the whole system?  
+<br><br>That changes the prayer when you stop and consider that question before the prayer, doesn’t it?  I’m suggesting we reason and align with the entire system.  
+
+ 
+<br><br>In wave mechanics, when two signals are out of phase, they cancel one another. Noise increases. Energy is lost. Speech, what you hear, is wave mechanics in action.  This “phase shift” is the precise condition of our cultural discourse. We are not merely at odds — we are making it harder for anyone to hear anything at all. Because we are reflecting on the southbound lanes and not about our northbound destination or the system as a whole. 
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_a543559660ef68ec.jpg" alt="wave_mechanics">
+    </div>
+<br><br>But on a still lake at dawn, a lone loon calls, and its voice travels for miles.
+<br><br>Not because it is loud. Because nothing competes with it.
+<br><br>The water is calm. The air is clear. The signal is uninterrupted.
+<br><br>This is not metaphor. This is physics. And it is also, I would argue, theology.
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_85f5d14acafd97a2.png" alt="loon_wave">
+    </div>
+<br><br>Life does not violate entropy. It works within it. It gathers, organizes, creates coherence — drawing in energy and converting it, freely, into structure. The scientist Erwin Schrödinger called this negentropy: the movement toward order, observed gracefully, within a system that is otherwise chaotic. 
+<br><br>The clover is negentropy made botanical. It takes what is ambient, invisible, and unconverted, and it transforms it into life-giving nourishment for the whole system.  A system that might otherwise want to destroy the clover.
+<br><br>To be the loon on the calm lake, within a system of noise, you must align with only one thing:
+<br><br>Love.
+<br><br>Not love as sentiment. Not love as feeling. Love as a non-transactional offering. A gift introduced into a system without demand for return. If fear is the currency of entropy-driven systems, then love is the currency of order; the order that God offers us for a higher purpose. It does not judge difference — it holds difference in coherence. It does not eliminate tension — it transforms tension into structure.
+<br><br>When two signals start to align—when they are in phase—they amplify. Structure emerges. Strength increases. Reason is achievable and real.  This is not metaphor; it is the fundamental behavior of synchronized systems.  It is pure inescapable physics.
+<br><br>Jesus was not being poetic when He said it. He was being precise.
+<div class="reflection-card ">
+      <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    
+    <div class="prayer-title">"You have heard that it was said,
+      <br>'You shall love your neighbor and hate your enemy.' 
+      <br>But I tell you, love your enemies, bless those who curse you, do good to those who hate you, and pray for those who mistreat you and persecute you.
+      <br>That you may be children of your Father who is in heaven. 
+      <br>For He makes His sun to rise on the evil and the good, and sends rain on the just and the unjust.
+      <br>For if you love those who love you, what reward do you have?"</div>
+    <div id="scripture-ref" class="scripture-ref">Matthew 5:43–46</div>
+   
+  </div>  
+  </div>  
+
+
+
+<br><br>This is not a suggestion embedded in a longer list of spiritual recommendations. It is a binary. You are either fortifying the perimeter of your chamber, or you are lowering the drawbridge. There is no middle ground, no partial credit, no negotiated settlement.
+<br><br>Most of us, when we hear this, immediately think: But they won't.
+<br><br>And I want to say to you gently, as colleagues in this work: that response is fear wearing the clothing of reason because we know it will put us at odds with our social identity.  It is the amygdala speaking in complete sentences. "I don't trust them" and "this is naïve" are the same fear with different predicates. And as long as that is our answer, we — and everyone in our orbit — remain in the fortress.
+<br><br>The currency Jesus introduces is agape — not love as transaction, not love as reward, not love as the natural affection between those who agree. Agape is the Greek word the early Church chose precisely because it had no prior baggage. It means gift. Unconditional regard. Offering without expectation of return.  The early church called it “The Way”.
+<div class="reflection-card ">
+      <div class="scripture-inner " id="scripture-container">
+    <div id="scripture-label" class="scripture-label">Scripture</div>
+    
+    <div class="prayer-title">"I am the Way, the Truth, and the Life"</div>
+    <div id="scripture-ref" class="scripture-ref">John 14:6</div>
+  </div>  
+  </div>  
+
+<br><br>“The Way” eventually toppled empires—it led to global changes that are still in motion today.  At times in strife, for sure, but it will break chains eventually if we remember and embrace the path.   Maybe not for us today, in this moment, but for our children and our grandchildren in the future.
+<br><br>If the commerce in your chamber were redefined not by the exchange of approval — which is what we currently trade to feel safe — but by the offer of unconditional regard for the whole system, the entire marketplace changes. 
+<br><br>Safety is no longer scarce, because it is no longer dependent on the other person's (or tribe’s) behavior. It becomes an internal condition, not an external negotiation. Tribal signaling loses its value entirely, because the door is no longer locked. There is no key to earn, no language to perform, no apostle's creed of ideology to recite at the gate.
+<br><br>The door is simply open.
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_887f410b1fda68af.png" alt="love_calms">
+    </div>
+<br><br>That is where it gets hard. 
+<br><br>To love the enemy is to remove the armor in a war zone. It makes you vulnerable in a way that feels, to the amygdala, indistinguishable from suicide. And yet — and this is the paradox at the center of the Gospel — that vulnerability may be the only thing that actually disarms the other person's amygdala. You cannot out-fortress a fortress. You can only stop being a threat.
+<br><br>If you stop trying to prove trustworthiness — which is a calculation — and start embodying it — which is a state of being — you change the gravitational field of every interaction you enter. You stop being a target in a battle and become a center of gravity. You become the loon on the still lake, and your voice carries in ways that argument never could.
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_bba12df09379ba0e.png" alt="love_trusts">
+    </div>
+<br><br>This may require a sabbatical from your chamber. A deliberate step away from the noise. A conversation with a family member where you ask them, just for now, to set fear aside. An uncomfortable encounter that you enter not to win, but to offer. To disconnect from the tools we use to find our identity.   Social media, the news we consume, the things that drag us back into the chamber.
+
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_46866f818a9db19d.png" alt="love_allows_movement">
+    </div>
+
+<br><br>The person or group that challenges you do not need to be trusted. You only need to find one thing — however small — through which love can move.  To break you free from your chamber.
+<br><br>Pick one—who severely challenges you?  I say go big and offer one small thing you can choose to love about them.
+<br><br>Love your enemy.
+<br>Not because it is safe. But because it is the only act that quiets the system.
+
+<br><br>The clover does not wait for the grasses to be worthy before it enriches the soil. It simply does what it was made to do, and the meadow becomes what it was meant to be.
+<br><br>…and here is the thing—one more hard concept.  
+<br><br>The clover moves through a reality we often resist. The reality of death and decay.
+<br><br>The nitrogen it draws into the soil is not abstract, it is real. It is the long memory of the meadow, beyond our time — the residue of what has lived, and died, and returned. Predator and prey, decay and renewal, all held within it.  That is resurrection in nature.
+<br><br>The clover does not recoil from this. It does not attempt to separate life from death, or abundance from loss. It simply receives what is given and converts it into nourishment for the whole.  
+<br><br>…and here is the good news, something you hold within you is world changing.
+<br><br>The clover works without fear, but we have been given something more.
+<br><br>A definition of Love we were made for.  
+<br>Not as sentiment, but as offering —
+<br>expressed in a word, a gesture, a gift.
+<br>A commerce not of fear, but of understanding, thoughtfulness, and mercy.
+<br>We need not be the loudest voice in the storm.
+<br><br>We are called to be the still water
+<br>on which a true signal can finally travel.
+<br><br>The gift of love — offered without condition, without transaction, without requiring return 
+changes the field.
+<br><br>It renews; it resurrects.  And it always will.
+<br><br>“For if you only love those who love you, what reward do you have?”
+<br><br>Go lower the drawbridge.
+    <div class="hero-image-block">
+      <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_797ff957bda621ee.png" alt="emotional_chamber_of_commerce">
+    </div>
+</p>
+     </div>
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_398fb569cb0a7cc0.mp3">
+
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Not Louder than Love</div>
+      <div class="card-player-subtitle">Formation Series · 3:57</div>
+    </div>
+  </div>
+
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
+
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+
+
+
+</div>
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_30bb26ef42bfa3a6.mp3">
+
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Never Lost</div>
+      <div class="card-player-subtitle">Formation Series · 4:14</div>
+    </div>
+  </div>
+
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
+
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+
 </div>
 
-      <p class="emoji-divider">🙏✨</p>
- <p></p>
-      <aside class="content-card">
-      <div id="video-sidebar" class="content-body">  
-           <div class="custom-item">
-      <video id="sidebar-player" controls width="100%" playsinline>
-        <source src="https://duge79ki51wc4.cloudfront.net/video/asset_514073465ab590fb.mp4" type="video/mp4">
-        
-        Sorry, your browser does not support the video tag. You can always go direct:
-        <a href="https://duge79ki51wc4.cloudfront.net/video/asset_514073465ab590fb.mp4">Soothing, Healing</a>
-        
-      </video>     
-             <p><strong>10 Minutes of Quiet, Soft Melody</strong></p>
-    </div>
-    </div>
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_a2ba82ab096c38d3.mp3">
 
-      </aside>
-    <div class="meta-row">
-      <span class="meta-pill"><font size="5">Theme: A Church without Walls</font></span>
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Still With Me</div>
+      <div class="card-player-subtitle">Formation Series · 5:34</div>
     </div>
-       <p></p>
-          <div class="prayer-request-scripture">
-    <p class="label">The Word</p>
-    <p id="scrip-verse" class="verse">“Lord, help us to remember that the church has no roof but the sky and no walls but the reach of Your arms. Send us out to be Your hands and feet where people are hurting.”</p>
-    <p id="scrip-ref" class="reference">Christ Love Ministries</p>
   </div>
-     
-    </article>
 
-<aside class="content-card">
-<div class="content-heading">Prayer</div>
-    <p class="signature">Light · Love · Joy</p>
-  <div id="custom-summary-output" class="content-body"> </div>
-    </aside>
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
 
-  </section>
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+
+</div>
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_8a055cf0247d6416.mp3">
+
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Be Still and Know</div>
+      <div class="card-player-subtitle">Formation Series · 3:37</div>
+    </div>
+  </div>
+
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
+
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+
+</div>
+     <div class="card-player" id="player1" data-src="https://duge79ki51wc4.cloudfront.net/music/asset_a9ea998ef39b1435.mp3">
+
+  <div class="card-player-info">
+    <img class="card-player-art" src="https://duge79ki51wc4.cloudfront.net/images/asset_aedec274a4b880cc.jpeg" alt="Morning Reflection cover art">
+    <div class="card-player-meta">
+      <div class="card-player-title">Selah of the River</div>
+      <div class="card-player-subtitle">Formation Series · 3:13</div>
+    </div>
+  </div>
+
+  <div class="card-player-progress">
+    <div class="card-player-progress-fill"></div>
+  </div>
+
+  <div class="card-player-controls">
+    <button class="card-player-btn play" title="Play/Pause">▶</button>
+    <button class="card-player-btn stop" title="Stop">■</button>
+    <span class="card-player-time">0:00 / 4:32</span>
+  </div>
+
+</div>
+      </article>
+
 
   <!-- Reflection -->
   <section class="reflection-card">
     <div class="reflection-label">A quiet question to carry</div>
     <div id="daily-question" class="question-offer">
-      When you think of Mary Magdalene, which image rises first—and where did that image come from?></div>
+      What is one small thing you can find to love about someone who challenges you?
+    </div>      
   </section>
 
 </div>
+</body> 
 <script>
+  function fmt(seconds) {
+  return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+}
+function resetAllCards() {
+  document.querySelectorAll('.card-player').forEach(card => {
+    const btn = card.querySelector('.play');
+    const fill = card.querySelector('.card-player-progress-fill');
+    const time = card.querySelector('.card-player-time');
 
-// Put this at the bottom of <body> or in a <script> tag after the element
-  const formattedDate = new Date().toLocaleDateString("en-US", {
-    weekday: "long",    // optional: "Sunday"
-    month: "long",      // "March"
-    day: "numeric",     // "15"
-    year: "numeric"     // "2026"
+    btn.textContent = '▶';
+    fill.style.width = '0%';
+    time.textContent = '0:00 / 0:00';
   });
-  document.querySelectorAll(".today-date").forEach(node => {
-    node.textContent = formattedDate;
-  });
-const heroImg = document.querySelector('#dynamic-hero img');
-const hour = new Date().getHours();
-const collectionUrl = 'https://www.clmreno.org/prayers?format=json';
+}
 
+function initCardPlayers() {
+  document.querySelectorAll('.card-player').forEach(player => {
+    const source = (player.dataset.src || '').trim();
+    const playBtn = player.querySelector('.play');
+    const stopBtn = player.querySelector('.stop');
+    const fill = player.querySelector('.card-player-progress-fill');
+    const time = player.querySelector('.card-player-time');
 
-function updateHeroSideBar() {  
- fetch(collectionUrl)
-  .then(response => {
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.json();
-  })
-  .then(data => {
-    const allItems = data.items;
-    const container = document.getElementById('custom-summary-output');
-    
-    if (!container) return; // Safety check
+    if (!source || !playBtn || !stopBtn || !fill || !time) {
+      return;
+    }
 
-    // 1. Grab the absolute latest item (the first one)
-    const latestItem = allItems[0];
+    const audio = new Audio(source);
 
-    // 2. Take the rest of the items and shuffle them
-    const otherItems = allItems.slice(1); 
-    const shuffled = otherItems.sort(() => 0.5 - Math.random());
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+      fill.style.width = `${pct}%`;
+      time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration || 0)}`;
+    });
 
-    // 3. Combine the latest + the first 2 from the shuffled deck
-    const finalSelection = [latestItem, ...shuffled.slice(0, 2)];
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      fill.style.width = '0%';
+    });
 
-    let htmlContent = '';
-
-    finalSelection.forEach((item, index) => {
-      if (item) {
-      
-        htmlContent += `
-          <div class="custom-item" >
-            <img src="${item.assetUrl}?format=500w" alt="${item.title}">
-            <p><strong>${item.title}</strong></p>
-            <p>${item.excerpt || ''}</p>
-            <a href="${item.fullUrl}">Read More</a>
-          </div>
-        `;
+    playBtn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          playBtn.textContent = '⏸';
+        } catch (error) {
+          playBtn.textContent = '▶';
+        }
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶';
       }
     });
 
-    container.innerHTML = htmlContent;
-  }) // Removed the semicolon that was here!
-  .catch(err => {
-    console.error('Error fetching Squarespace data:', err);
-    const container = document.getElementById('custom-summary-output');
-    if (container) {
-      container.innerHTML = `
-        <div class="custom-item">
-          <p><strong>Latest writings are unavailable right now.</strong></p>
-          <p>This is often caused by browser CORS rules on cross-domain requests.</p>
-        </div>
-      `;
-    }
+    stopBtn.addEventListener('click', () => {
+      audio.pause();
+      audio.currentTime = 0;
+      playBtn.textContent = '▶';
+      fill.style.width = '0%';
+    });
   });
-  }
-
-
-function loadPageData() {
-let dayThemes = {
-  "Monday": {
-    "title": "The Intention",
-    "primary_metric": "stability",
-    "pastoral_mode": "orientation",
-    "verse": "Lord, help us to remember that the church has no roof but the sky and no walls but the reach of Your arms.  Send us out to be Your hands and feet where people are hurting.",
-    "ref": "Christ Love Ministries",
-    "question": "How well did I stay connected to my chosen intention today, and in what moments did I feel most grounded and stable?"
-  },
-  "Tuesday": {
-    "title": "The Practice",
-    "primary_metric": "clarity",
-    "pastoral_mode": "focus",
-    "verse": "The God who made the world and everything in it... does not live in temples built by human hands.",
-    "ref": "Acts 17:24",
-    "question": "What practice or disciplined action did I engage in today, and how clearly did it help me see what truly matters right now?"
-  },
-  "Wednesday": {
-    "title": "The Midpoint",
-    "primary_metric": "resilience",
-    "pastoral_mode": "renewal",
-    "verse": "Don’t you know that you yourselves are God’s temple and that God’s Spirit dwells in your midst?",
-    "ref": "1 Corinthians 3:16",
-    "question": "Where did I encounter resistance or fatigue this week so far, and how did I manage to renew my energy or bounce back in a resilient way?"
-  },
-  "Thursday": {
-    "title": "The Deepening",
-    "primary_metric": "presence",
-    "pastoral_mode": "attention",
-    "verse": "For where two or three gather in my name, there am I with them.",
-    "ref": "Matthew 18:20",
-    "question": "In what moments today was I most fully present, and what did I notice when I gave my undivided, gentle attention to my experience?"
-  },
-  "Friday": {
-    "title": "The Offering",
-    "primary_metric": "gratitude",
-    "pastoral_mode": "release",
-    "verse": "However, the Most High does not dwell in houses made by human hands...",
-    "ref": "Acts 7:48-49",
-    "question": "What did I give or offer today (of my time, care, work, or heart), and for what specific experiences or people am I feeling genuine gratitude as I release this week?"
-  },
-  "Saturday": {
-    "title": "The Rest",
-    "primary_metric": "restoration",
-    "pastoral_mode": "gentleness",
-    "verse": "God is our refuge and strength, a very present help in trouble.",
-    "ref": "Psalms 29:11",
-    "question": "How kindly did I treat myself in terms of rest and restoration today, and what felt most replenishing or soothing to my body and spirit?"
-  },
-  "Sunday": {
-    "title": "The Return",
-    "primary_metric": "alignment",
-    "pastoral_mode": "reorientation",
-    "verse": "He will cover you with his feathers. Under his wings you will take refuge.",
-    "ref": "Psalms 91:4",    
-    "question": "Looking back over the week, where do I feel most aligned with my deeper values or purpose, and what small reorientation might help me step into the coming week more centered?"
-  }
-}
-// Map numeric day → name
-const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const todayName = dayNames[new Date().getDay()];
-// Get today's theme object
-const todayTheme = dayThemes[todayName];
-
-// Inject into your meta pills
-document.getElementById("scrip-verse").textContent = `${todayTheme.verse}`;
- document.getElementById("scrip-ref").textContent = `${todayTheme.ref}`;
-//document.getElementById("movement-pill").textContent = `Movement: ${todayTheme.pastoral_mode}`;
-document.getElementById("daily-question").textContent = `${todayTheme.question}`;
-  document.getElementById("daily-question1").textContent = `${todayTheme.question}`;
-           
 }
 
-  
-updateHeroSideBar();
-loadPageData();
+(function () {
+  let globalPlaylist = [];
+  let currentIndex = 0;
+  let globalAudio = null;
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+function resetAllCards() {
+  document.querySelectorAll('.card-player').forEach(card => {
+    const btn = card.querySelector('.play');
+    const fill = card.querySelector('.card-player-progress-fill');
+    const time = card.querySelector('.card-player-time');
+
+    btn.textContent = '▶';
+    fill.style.width = '0%';
+    time.textContent = '0:00 / 0:00';
+  });
+}
+
+  function playNext() {
+    if (currentIndex >= globalPlaylist.length) return;
+
+    const entry = globalPlaylist[currentIndex];
+    const { src, card } = entry;
+
+    // Stop previous
+    if (globalAudio) {
+      globalAudio.pause();
+      globalAudio = null;
+    }
+
+    // Create new audio
+    globalAudio = new Audio(src);
+
+
+    // Update UI on the card
+    const playBtn = card.querySelector('.play');
+    const fill = card.querySelector('.card-player-progress-fill');
+    const time = card.querySelector('.card-player-time');
+resetAllCards();
+
+    playBtn.textContent = '⏸';
+
+    globalAudio.addEventListener('timeupdate', () => {
+      const pct = (globalAudio.currentTime / (globalAudio.duration || 1)) * 100;
+      fill.style.width = pct + '%';
+      time.textContent = `${fmt(globalAudio.currentTime)} / ${fmt(globalAudio.duration || 0)}`;
+    });
+
+    globalAudio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      fill.style.width = '0%';
+      currentIndex++;
+      playNext();
+    });
+
+    globalAudio.play();
+    window.WitnessSetNowPlaying(globalAudio, card);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('random-play-all');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const cards = Array.from(document.querySelectorAll('.card-player'))
+        .filter(c => c.dataset.src);
+
+      globalPlaylist = shuffle(
+        cards.map(card => ({
+          src: card.dataset.src,
+          card
+        }))
+      );
+
+      currentIndex = 0;
+      playNext();
+    });
+  });
+
+})();
 </script>

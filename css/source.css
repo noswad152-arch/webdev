@@ -399,11 +399,17 @@
     border: 1px solid rgba(255,255,255,0.06);
   }
 
+  .hero-image-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   .hero-image-block .hero-main-image {
     width: 100%;
     height: auto;
     display: block;
-    filter: brightness(0.75) contrast(1.1);
+    /*filter: brightness(0.75) contrast(1.1);*/
     transition: opacity 0.5s ease-in-out;
     opacity: 1;
   }
@@ -1751,4 +1757,9 @@
   color: #d2b47c;
   opacity: 0.9;
   font-style: italic;
+}
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px; /* or whatever you want */
 }

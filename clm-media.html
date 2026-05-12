@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLM Media Sanctuary</title>
+    <!-- Add your CSS link here -->
+    <link rel="stylesheet" href="styles/clm-media.css">
+</head>
+<body>
+<style>
+  
+.reflection-grid-card {
+    margin-top: 22px;
+    padding: 20px 22px;
+    border-radius: var(--radius-lg);
+    border: 1px dashed rgba(246,180,91,0.5);
+    background: rgba(0,0,60,0.5);
+    font-size: 14px;
+    
+    color: var(--text-soft);
+  }
+
+  .reflection-grid-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 16px;
+  }
+
+  .reflection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  .grid-header {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .grid-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 84px;
+    margin: 6px 0;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+ 
+/* Force images to a consistent height */
+.content-card img {
+  width: 100%;
+  height: 140px; /* adjust as needed */
+  object-fit: contain; /* keeps logos clean */
+  margin-bottom: 0px;
+}
+
+</style>
+<div class="episode-page">
+  <header class="episode-header">
+    <div class="series-label date-reflection">
+      <span class="series-dot"></span>
+      <span class="today-date"></span>
+    </div>
+  </header>
+
+
+<section class="reflection-grid-card">
+  
+  <div role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:22px auto;">
+  
+      <div style="
+        padding:10px 22px;
+        border-radius:999px;
+        background:#f6b45b;
+        color:#1f1f30;
+        font-size:13px;
+        font-weight:bold;
+        letter-spacing:0.18em;
+        text-transform:uppercase;
+        border:1px solid rgba(255,255,255,0.15);
+        box-shadow:0 4px 12px rgba(246,180,91,0.45);
+        display:inline-block;
+      ">
+        Sing to the glory of his name!  Offer glory and praise!<br><br>
+        Psalm 66:1-2
+      </div>
+  </div>
+<div class="reflection-grid-card">
+  <div class="grid-section" id="formation-section">
+    <div class="grid-header">Formation Series</div>
+    <div class="reflection-grid" id="formation-grid"></div>
+  </div>
+<p> <br></p>
+  <div class="grid-section" id="prayer-section">
+    <div class="grid-header">Prayer Series</div>
+    <div class="reflection-grid" id="prayer-grid"></div>
+  </div>
+<p> <br></p>
+  <div class="grid-section" id="inspire-section">
+    <div class="grid-header">Inspire Series</div>
+    <div class="reflection-grid" id="inspire-grid"></div>
+  </div>
+</div>
+
+  </div>
+
+  <div id="custom-summary-output" class="content-body"> </div>
+  </section>
+
+ 
+    
+</div>
+<script>
+
+// Put this at the bottom of <body> or in a <script> tag after the element
+  const formattedDate = new Date().toLocaleDateString("en-US", {
+    weekday: "long",    // optional: "Sunday"
+    month: "long",      // "March"
+    day: "numeric",     // "15"
+    year: "numeric"     // "2026"
+  });
+  document.querySelectorAll(".today-date").forEach(node => {
+    node.textContent = formattedDate;
+  });
+const heroImg = document.querySelector('#dynamic-hero img');
+const hour = new Date().getHours();
+const collectionUrl = 'https://www.clmreno.org/prayers?format=json';
+
+
+function updateHeroSideBar() {  
+ fetch(collectionUrl)
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
+  .then(data => {
+    const allItems = data.items;
+    const container = document.getElementById('custom-summary-output');
+    
+    if (!container) return; // Safety check
+
+    // 1. Grab the absolute latest item (the first one)
+    const latestItem = allItems[0];
+
+    // 2. Take the rest of the items and shuffle them
+    const otherItems = allItems.slice(1); 
+    const shuffled = otherItems.sort(() => 0.5 - Math.random());
+
+    // 3. Combine the latest + the first 2 from the shuffled deck
+    const finalSelection = [latestItem, ...shuffled.slice(0, 2)];
+
+    let htmlContent = '';
+
+    finalSelection.forEach((item, index) => {
+      if (item) {
+      
+        htmlContent += `
+          <div class="custom-item" >
+            <img src="${item.assetUrl}?format=500w" alt="${item.title}">
+            <p><strong>${item.title}</strong></p>
+            <p>${item.excerpt || ''}</p>
+            <a href="${item.fullUrl}">Read More</a>
+          </div>
+        `;
+      }
+    });
+
+    container.innerHTML = htmlContent;
+  }) // Removed the semicolon that was here!
+  .catch(err => {
+    console.error('Error fetching Squarespace data:', err);
+    const container = document.getElementById('custom-summary-output');
+    if (container) {
+      container.innerHTML = `
+        <div class="custom-item">
+          <p><strong>Latest writings are unavailable right now.</strong></p>
+          <p>This is often caused by browser CORS rules on cross-domain requests.</p>
+        </div>
+      `;
+    }
+  });
+  }
+
+
+function loadPageData() {
+let dayThemes = {
+  "Monday": {
+    "title": "The Intention",
+    "primary_metric": "stability",
+    "pastoral_mode": "orientation",
+    "question": "How well did I stay connected to my chosen intention today, and in what moments did I feel most grounded and stable?"
+  },
+  "Tuesday": {
+    "title": "The Practice",
+    "primary_metric": "clarity",
+    "pastoral_mode": "focus",
+    "question": "What practice or disciplined action did I engage in today, and how clearly did it help me see what truly matters right now?"
+  },
+  "Wednesday": {
+    "title": "The Midpoint",
+    "primary_metric": "resilience",
+    "pastoral_mode": "renewal",
+    "question": "Where did I encounter resistance or fatigue this week so far, and how did I manage to renew my energy or bounce back in a resilient way?"
+  },
+  "Thursday": {
+    "title": "The Deepening",
+    "primary_metric": "presence",
+    "pastoral_mode": "attention",
+    "question": "In what moments today was I most fully present, and what did I notice when I gave my undivided, gentle attention to my experience?"
+  },
+  "Friday": {
+    "title": "The Offering",
+    "primary_metric": "gratitude",
+    "pastoral_mode": "release",
+    "question": "What did I give or offer today (of my time, care, work, or heart), and for what specific experiences or people am I feeling genuine gratitude as I release this week?"
+  },
+  "Saturday": {
+    "title": "The Rest",
+    "primary_metric": "restoration",
+    "pastoral_mode": "gentleness",
+    "question": "How kindly did I treat myself in terms of rest and restoration today, and what felt most replenishing or soothing to my body and spirit?"
+  },
+  "Sunday": {
+    "title": "The Return",
+    "primary_metric": "alignment",
+    "pastoral_mode": "reorientation",
+    "question": "Looking back over the week, where do I feel most aligned with my deeper values or purpose, and what small reorientation might help me step into the coming week more centered?"
+  }
+}
+// Map numeric day → name
+const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const todayName = dayNames[new Date().getDay()];
+// Get today's theme object
+const todayTheme = dayThemes[todayName];
+
+// Inject into your meta pills
+//document.getElementById("theme-pill").textContent = `Theme: ${todayTheme.title}`;
+//document.getElementById("movement-pill").textContent = `Movement: ${todayTheme.pastoral_mode}`;
+//document.getElementById("daily-question").textContent = `${todayTheme.question}`;
+//  document.getElementById("daily-question1").textContent = `${todayTheme.question}`;
+           
+}
+
+async function loadAudioGrid() {
+  const response = await fetch("https://www.witnessv2.net/static/music-clm.json");
+  const items = await response.json();
+
+  const groups = {
+    "Formation Series": document.getElementById("formation-grid"),
+    "Prayer Series": document.getElementById("prayer-grid"),
+    "Inspire Series": document.getElementById("inspire-grid")
+  };
+
+  items.forEach((item, index) => {
+    const grid = groups[item.subtitle];
+    if (!grid) return; // ignore unknown series
+
+    const card = document.createElement("div");
+    card.className = "card-player";
+    card.dataset.src = item.src;
+    card.id = "player" + (index + 1);
+
+    card.innerHTML = `
+      <div class="card-player-info">
+        <img class="card-player-art" src="${item.image}">
+        <div class="card-player-meta">
+          <div class="card-player-title">${item.title}</div>
+          <div class="card-player-subtitle">${item.series}</div>
+        </div>
+      </div>
+
+      <div class="card-player-progress">
+        <div class="card-player-progress-fill"></div>
+      </div>
+
+      <div class="card-player-controls">
+        <button class="card-player-btn play">▶</button>
+        <button class="card-player-btn stop">■</button>
+        <span class="card-player-time">0:00</span>
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+    // Load duration
+    const audio = new Audio(item.src);
+    audio.addEventListener("loadedmetadata", () => {
+      const duration = fmt(audio.duration);
+      card.querySelector(".card-player-subtitle").textContent += ` · ${duration}`;
+      card.querySelector(".card-player-time").textContent = `0:00 / ${duration}`;
+    });
+  });
+
+  // Initialize your existing player logic
+  if (window.WitnessInitCardPlayers) {
+    window.WitnessInitCardPlayers();
+  }
+}
+
+function fmt(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+(function () {
+  function fmt(seconds) {
+    return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+  }
+
+  function initCardPlayers(root) {
+    const scope = root || document;
+    scope.querySelectorAll('.card-player').forEach(player => {
+      if (player.dataset.playerInit === '1') return;
+      player.dataset.playerInit = '1';
+
+      const source = (player.dataset.src || '').trim();
+      const playBtn = player.querySelector('.play');
+      const stopBtn = player.querySelector('.stop');
+      const fill = player.querySelector('.card-player-progress-fill');
+      const time = player.querySelector('.card-player-time');
+
+      if (!source || !playBtn || !stopBtn || !fill || !time) {
+        return;
+      }
+
+      const audio = new Audio(source);
+
+      audio.addEventListener('timeupdate', () => {
+        const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+        fill.style.width = `${pct}%`;
+        time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration || 0)}`;
+      });
+
+      audio.addEventListener('ended', () => {
+        playBtn.textContent = '▶';
+        fill.style.width = '0%';
+      });
+
+      playBtn.addEventListener('click', async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            playBtn.textContent = '⏸';
+          } catch (_) {
+            playBtn.textContent = '▶';
+          }
+        } else {
+          audio.pause();
+          playBtn.textContent = '▶';
+        }
+      });
+
+      stopBtn.addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        playBtn.textContent = '▶';
+        fill.style.width = '0%';
+      });
+    });
+  }
+
+  function runInit() {
+    initCardPlayers(document);
+  }
+
+  window.WitnessInitCardPlayers = runInit;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInit, { once: true });
+  } else {
+    runInit();
+  }
+
+  window.addEventListener('load', runInit);
+  window.addEventListener('pageshow', runInit);
+  window.addEventListener('popstate', runInit);
+
+  const observer = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (!(node instanceof Element)) continue;
+        if (node.matches?.('.card-player')) {
+          initCardPlayers(node.parentElement || document);
+          continue;
+        }
+        if (node.querySelector?.('.card-player')) {
+          initCardPlayers(node);
+        }
+      }
+    }
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+
+loadAudioGrid();
+//updateHeroSideBar();
+loadPageData();
+</script>

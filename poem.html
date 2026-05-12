@@ -1,0 +1,160 @@
+<div id="gospel-window">
+  <div class="gw-stars"></div>
+  <div class="gw-beam"></div>
+
+  <div class="gw-content">
+    <div class="gw-star-glyph">✦</div>
+    <h2 class="gw-title">A Light in the Night</h2>
+
+    <div class="gw-poem">
+      <!-- YOUR POEM GOES HERE -->
+      <p>No crowd, no crown, no borrowed room<br>
+      Just borrowed breath in borrowed gloom<br>
+      The night stayed still, the world stayed blind<br>
+      He came on time, but out of time</p>
+
+      <p>Joseph’s hands are shaking now<br>
+      Not from fear, but sacred how<br>
+      You hold the One who made your breath<br>
+      And teach Him life inside of death</p>
+
+      <p>No thunder spoke, no empire knew<br>
+      He came too small to conquer through</p>
+
+      <p>By themselves, beneath the hay<br>
+      Heaven leaned the other way<br>
+      No applause, no royal sound<br>
+      Just God laid helpless on the ground<br>
+      If this is how You choose to reign<br>
+      Then break my pride, and break my name</p>
+
+      <p>Mary counts each fragile cry<br>
+      The cost of “yes” still in her eyes<br>
+      She knows the blade, she knows the road<br>
+      She holds the weight she hasn’t told</p>
+
+      <p>The world outside keeps breathing fine<br>
+      While God arrives without a sign<br>
+      No one came to mark the hour<br>
+      But all of time just lost its power</p>
+
+      <p>By themselves, the door shut tight<br>
+      The Light arrived inside the night<br>
+      No army formed, no banner waved<br>
+      Just mercy wrapped in flesh and hay<br>
+      If this is love, then let it burn<br>
+      Take my strength—let weakness learn</p>
+    </div>
+
+    <div class="gw-footer-glyph">✦</div>
+  </div>
+</div>
+
+<style>
+/* --- Container --- */
+#gospel-window {
+  position: relative;
+  padding: 120px 20px;
+  background: #0b0f19;
+  color: #f4e9d7;
+  font-family: 'EB Garamond', serif;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* --- Star Field --- */
+.gw-stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 80%, rgba(255,255,255,0.3) 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 0 1px, transparent 2px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* --- Vertical Beam --- */
+.gw-beam {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 60%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(247,233,201,0.10),
+    rgba(247,233,201,0.18),
+    rgba(247,233,201,0.10)
+  );
+  filter: blur(40px);
+  animation: gwBreath 28s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gwBreath {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.75; }
+}
+
+/* --- Content --- */
+.gw-content {
+  position: relative;
+  max-width: 650px;
+  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+
+.gw-star-glyph {
+  font-size: 32px;
+  color: #d9c08c;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 1.5s ease;
+}
+
+.gw-title {
+  font-family: 'Spectral SC', serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #d9c08c;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 1.5s ease 0.4s;
+}
+
+.gw-poem p {
+  margin-bottom: 28px;
+  line-height: 1.65;
+  font-size: 20px;
+}
+
+.gw-footer-glyph {
+  font-size: 22px;
+  color: #d9c08c;
+  margin-top: 40px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 1.5s ease 1.2s;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const content = document.querySelector("#gospel-window .gw-content");
+  const star = document.querySelector("#gospel-window .gw-star-glyph");
+  const title = document.querySelector("#gospel-window .gw-title");
+  const footer = document.querySelector("#gospel-window .gw-footer-glyph");
+
+  setTimeout(() => { content.style.opacity = 1; }, 300);
+  setTimeout(() => { star.style.opacity = 1; star.style.transform = "translateY(0)"; }, 800);
+  setTimeout(() => { title.style.opacity = 1; title.style.transform = "translateY(0)"; }, 1200);
+  setTimeout(() => { footer.style.opacity = 1; footer.style.transform = "translateY(0)"; }, 2000);
+});
+</script>
