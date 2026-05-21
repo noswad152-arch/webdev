@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raven Electronics Corporation</title>
+    <link rel="stylesheet" href="styles/raven.css">
+</head>
+<body>
+<div class="episode-page">
+  <section class="content-grid">
+    <article class="content-card">
+        <div class="hero-image-block">
+            <img class="hero-main-image" src="https://duge79ki51wc4.cloudfront.net/images/asset_e02162087cc58aaa.jpg" alt="Raven logo">
+          </div>
+    </article>
+    <article class="content-card product-accordion" aria-label="Raven information sections">
+        <button class="btn btn-primary accordion-btn" type="button" aria-expanded="false" aria-controls="panel-products" id="toggle-products">Products</button>
+        <div class="panel" id="panel-products" role="region" aria-labelledby="toggle-products" hidden>
+          <h2 class="content-heading">FlexGate</h2>
+          <h2 class="content-heading">RoIP Solutions</h2>
+          <h2 class="content-heading">M4x Blade</h2>
+        </div>
+
+        <button class="btn btn-primary accordion-btn" type="button" aria-expanded="false" aria-controls="panel-support" id="toggle-support">Support</button>
+        <div class="panel" id="panel-support" role="region" aria-labelledby="toggle-support" hidden>
+          <p>Call 1-800-123-4567</p>
+        </div>
+    </article>
+  </section>
+
+  <section class="reflection-card">
+    <aside class="content-card">
+      <h2 class="content-heading">How much does it cost? </h2>
+    </aside>
+    <p></p>
+  </section>
+
+  <section class="reflection-card">
+    <div class="reflection-label">A quiet question to carry</div>
+    <div>
+      How do I make mac and cheese?
+    </div>
+  </section>
+</div>
+<script>
+  (function () {
+    var buttons = Array.from(document.querySelectorAll('.accordion-btn'));
+
+    function closePanel(button) {
+      var panelId = button.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (!panel) return;
+
+      button.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      requestAnimationFrame(function () {
+        panel.style.maxHeight = '0px';
+      });
+      panel.addEventListener('transitionend', function onEnd() {
+        if (button.getAttribute('aria-expanded') === 'false') {
+          panel.hidden = true;
+        }
+        panel.removeEventListener('transitionend', onEnd);
+      });
+    }
+
+    function openPanel(button) {
+      var panelId = button.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (!panel) return;
+
+      panel.hidden = false;
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+
+    function togglePanel(button) {
+      var isOpen = button.getAttribute('aria-expanded') === 'true';
+
+      buttons.forEach(function (btn) {
+        if (btn !== button) closePanel(btn);
+      });
+
+      if (isOpen) {
+        closePanel(button);
+      } else {
+        openPanel(button);
+      }
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        togglePanel(button);
+      });
+
+      button.addEventListener('keydown', function (event) {
+        var currentIndex = buttons.indexOf(button);
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          buttons[(currentIndex + 1) % buttons.length].focus();
+        }
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          buttons[(currentIndex - 1 + buttons.length) % buttons.length].focus();
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
