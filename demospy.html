@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InterestSpy • Social Media Tracker Demo</title>
+  <link rel="stylesheet" href="styles/spy.css">
+</head>
+<body>
+  <div class="header">
+    <h1>InterestSpy Demo</h1>
+    <button id="reset">Reset Profile</button>
+  </div>
+
+  <div id="feed" class="feed"></div>
+
+  <div id="profile" class="profile-panel">
+    <h2>Your Inferred Interests</h2>
+    <div id="interest-bars"></div>
+  </div>
+
+  </body>
+</html>
+<script>
+    const topics = ["cats", "cooking", "fitness", "tech", "travel", "memes", "finance"];
+
+const samplePosts = [
+  { id: 1, topic: "cats", type: "image", src: "Images/friends.png", caption: "This cat paused mid-jump..." },
+  { id: 2, topic: "cooking", type: "video", src: "Images/mary.mp4", caption: "Watch till the end" },
+  // Add 15–20 more with different topics...
+];
+
+let userProfile = {}; // topic → score
+
+const feed = document.getElementById('feed');
+const interestBars = document.getElementById('interest-bars');
+
+function createCard(post) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.topic = post.topic;
+  card.dataset.id = post.id;
+
+  let media = '';
+  if (post.type === "image") {
+    media = `<div class="card-media"><img src="${post.src}" alt="${post.caption}" loading="lazy"></div>`;
+  } else {
+    media = `<div class="card-media"><video src="${post.src}" muted loop autoplay playsinline preload="metadata"></video></div>`;
+  }
+
+  card.innerHTML = `
+    <div class="interest-score">0s</div>
+    ${media}
+    <div class="metadata">
+      <p>${post.caption}</p>
+    </div>
+  `;
+  const videoEl = card.querySelector('video');
+
+  // === Tracking Logic ===
+  let dwellTime = 0;
+  let timer;
+  let visibleStart = null;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        visibleStart = Date.now();
+        if (videoEl) {
+          videoEl.play().catch(() => {});
+        }
+        timer = setInterval(() => {
+          dwellTime = (Date.now() - visibleStart) / 1000;
+          card.querySelector('.interest-score').textContent = dwellTime.toFixed(1) + 's';
+        }, 100);
+      } else {
+        if (visibleStart) {
+          recordInterest(post.topic, dwellTime);
+          clearInterval(timer);
+          visibleStart = null;
+        }
+        if (videoEl) {
+          videoEl.pause();
+        }
+      }
+    });
+  }, { threshold: 0.6 }); // 60% visible = "paused" on it
+
+  observer.observe(card);
+
+  // Bonus: Mouse hover pause tracking
+  card.addEventListener('mouseenter', () => {
+    card.style.border = '3px solid #0a84ff';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.border = 'none';
+  });
+
+  feed.appendChild(card);
+}
+
+function recordInterest(topic, seconds) {
+  if (seconds < 1.5) return; // too fast = no interest
+
+  userProfile[topic] = (userProfile[topic] || 0) + Math.min(seconds, 12); // cap influence
+  renderProfile();
+  
+  // Dynamic feed adjustment
+  if (userProfile[topic] > 25) {
+    injectMoreOfTopic(topic);
+  }
+}
+
+function renderProfile() {
+  interestBars.innerHTML = '';
+  Object.entries(userProfile)
+    .sort((a,b) => b[1] - a[1])
+    .forEach(([topic, score]) => {
+      const percent = Math.min(100, score * 2);
+      interestBars.innerHTML += `
+        <div>${topic} <span style="float:right">${score.toFixed(1)}s</span></div>
+        <div class="bar" style="width: ${percent}%"></div>
+      `;
+    });
+}
+
+function injectMoreOfTopic(topic) {
+  // Add new cards of high-interest topic at the bottom
+  for (let i = 0; i < 2; i++) {
+    const newPost = samplePosts.find(p => p.topic === topic) || samplePosts[Math.floor(Math.random()*samplePosts.length)];
+    createCard({...newPost, id: Date.now()});
+  }
+}
+
+// Init
+samplePosts.forEach(createCard);
+document.getElementById('reset').addEventListener('click', () => {
+  userProfile = {};
+  renderProfile();
+  feed.innerHTML = '';
+  samplePosts.forEach(createCard);
+});
+</script>
+
