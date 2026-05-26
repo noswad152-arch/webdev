@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Emotional Chamber: Engagement Tracker</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; background: rgb(249, 249, 249); color: rgb(51, 51, 51); transition: background-color 1.2s linear, color 1.2s linear; }
+        .dashboard { background: #fff; border: 2px solid #007bff; border-radius: 8px; padding: 15px; position: fixed; top: 10px; right: 10px; width: 260px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 14px; z-index: 1000; }
+        .dashboard h3 { margin-top: 0; color: #007bff; }
+        .metric { margin-bottom: 8px; font-weight: bold; }
+        .value { color: #d9534f; font-family: monospace; }
+        .content-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 40px 0; transition: background 0.3s; }
+        .content-box:hover { border-color: #d9534f; }
+        .spacer { height: 80vh; background: linear-gradient(#eee, #fff); display: flex; align-items: center; justify-content: center; color: #999; font-style: italic; }
+        .injected-content { border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+
+    <!-- Real-Time Telemetry Dashboard -->
+    <div class="dashboard">
+        <h3>Telemetry Feed</h3>
+        <div class="metric">Target Element: <span id="status" class="value">Out of View</span></div>
+        <div class="metric">Total Dwell Time: <span id="dwell-time" class="value">0.00</span>s</div>
+        <div class="metric">Micro-Pauses (<1s): <span id="pauses" class="value">0</span></div>
+        <div class="metric">Total Interactions: <span id="clicks" class="value">0</span></div>
+    </div>
+
+    <h1>The Psychology of the Scroll</h1>
+    <p>Scroll down naturally to read the content. Watch how the dashboard captures your subconscious behavior.</p>
+    
+    <div class="spacer">⬇️ Scroll down to read the article snippet... ⬇️</div>
+
+    <!-- The Emotional Trigger Element -->
+    <div id="emotional-trigger" class="content-box">
+        <h2>⚠️ BREAKING: Shocking New Allegations Split Public Opinion</h2>
+          <img src="https://duge79ki51wc4.cloudfront.net/images/asset_6a9ad89365061b4c.jpeg" alt="rivalssee" width="100%" style="display:block; width:100%; border-radius:18px;">
+        <p><strong>"The Emotional Chamber of Commerce"</strong> thrives on your attention. Even if you do not click 'Like', your amygdala forces you to freeze, read, and assess the threat. The system marks this hesitation as a positive signal to feed you more outrage.</p>
+        <button id="action-btn">Click to Share / React</button>
+    </div>
+
+    <!--<div class="spacer">End of Page. Scroll back up to review your data.</div>-->
+    <div id="dynamic-content-root"></div>
+
+    <script>
+        let totalDwellTime = 0;
+        let microPauses = 0;
+        let clickCount = 0;
+        let trackingInterval = null;
+        let lastPauseCheck = 0;
+        const MAX_DWELL_FOR_DARK = 30; // seconds to reach darkest state
+        const CONTENT_BLOCK_INTERVAL = 10; // add one block every 10 seconds
+        let blocksAdded = 0;
+        const ROTATING_CONTENT = [
+            {
+                title: "Escalation Cue: Friction Increases Attention",
+                body: "When information feels tense or unresolved, people often linger longer to reduce uncertainty."
+            },
+            {
+                title: "Identity Hook: 'People Like Me' Signals",
+                body: "Subtle cues that mirror identity can increase trust and keep readers engaged beyond intent."
+            },
+            {
+                title: "Threat Frame: Scan Before You Scroll",
+                body: "Perceived risk prompts quick threat assessment, which boosts dwell even without interaction."
+            },
+            {
+                title: "Reward Tease: Just One More Detail",
+                body: "Partial reveals create a curiosity loop that nudges users to stay for the next payoff."
+            },
+            {
+                title: "Consensus Pressure: Everyone Is Reacting",
+                body: "Social proof can make content feel more important, raising both pauses and return glances."
+            }
+        ];
+
+        const triggerElement = document.getElementById('emotional-trigger');
+        const statusEl = document.getElementById('status');
+        const dwellEl = document.getElementById('dwell-time');
+        const pausesEl = document.getElementById('pauses');
+        const clicksEl = document.getElementById('clicks');
+        const actionBtn = document.getElementById('action-btn');
+        const dynamicRoot = document.getElementById('dynamic-content-root');
+
+        function mix(start, end, t) {
+            return Math.round(start + (end - start) * t);
+        }
+
+        function updatePageMood() {
+            return
+            const progress = Math.min(totalDwellTime / MAX_DWELL_FOR_DARK, 1);
+
+            const bg = mix(249, 24, progress);   // light gray -> near black
+            const text = mix(51, 238, progress); // dark text -> light text
+
+            document.body.style.backgroundColor = `rgb(${bg}, ${bg}, ${bg})`;
+            document.body.style.color = `rgb(${text}, ${text}, ${text})`;
+        }
+
+        function appendDwellContentBlock(index) {
+            const item = ROTATING_CONTENT[(index - 1) % ROTATING_CONTENT.length];
+            const block = document.createElement('div');
+            block.className = 'content-box injected-content';
+            block.innerHTML = `
+                <h2>${item.title}</h2>
+                <p>You reached <strong>${index * CONTENT_BLOCK_INTERVAL} seconds</strong> of dwell time.</p>
+                <p>${item.body}</p>
+            `;
+            dynamicRoot.appendChild(block);
+        }
+
+        function addScheduledContentIfNeeded() {
+            const targetBlocks = Math.floor(totalDwellTime / CONTENT_BLOCK_INTERVAL);
+            while (blocksAdded < targetBlocks) {
+                blocksAdded++;
+                appendDwellContentBlock(blocksAdded);
+            }
+        }
+
+        // 1. Dwell Time via Intersection Observer (Tracking when element is actually on screen)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    statusEl.innerText = "👀 ACTIVE VIEW";
+                    statusEl.style.color = "#d9534f";
+                    triggerElement.style.background = "#fff8f8";
+                    
+                    // Start counting milliseconds
+                    clearInterval(trackingInterval);
+                    trackingInterval = setInterval(() => {
+                        totalDwellTime += 0.01;
+                        dwellEl.innerText = totalDwellTime.toFixed(2);
+                        updatePageMood();
+                        addScheduledContentIfNeeded();
+                    }, 10);
+                } else {
+                    statusEl.innerText = "Out of View";
+                    statusEl.style.color = "#28a745";
+                    triggerElement.style.background = "#fff";
+                    clearInterval(trackingInterval);
+                }
+            });
+        }, { threshold: 0.5 }); // Triggers when 50% of the box is visible
+
+        observer.observe(triggerElement);
+
+        // 2. Micro-Pause Tracking via Scroll Events
+        window.addEventListener('scroll', () => {
+            const rect = triggerElement.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+            
+            if (isVisible) {
+                clearTimeout(lastPauseCheck);
+                lastPauseCheck = setTimeout(() => {
+                    microPauses++;
+                    pausesEl.innerText = microPauses;
+                }, 200); // Registers a micro-pause if scrolling stops for 200ms
+            }
+        });
+
+        // 3. Explicit Interaction Tracker
+        actionBtn.addEventListener('click', () => {
+            clickCount++;
+            clicksEl.innerText = clickCount;
+            alert("Captured! The algorithm now categorizes your political alignment based on this action.\n\n You are forever tagged as 'Engaged' in the system's eyes. Welcome to the club! 🎉");
+        });
+    </script>
+</body>
+</html>
