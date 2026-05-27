@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InterestSpy • Social Media Tracker Demo</title>
+  <title>Snapgram • Social Media Tracker Demo</title>
   <link rel="stylesheet" href="styles/spy.css">
 </head>
 <body>
   <div class="header">
-    <h1>InterestSpy Demo</h1>
+    <h1>Snapgram</h1>
     <button id="reset">Reset Profile</button>
   </div>
 
@@ -22,11 +22,19 @@
   </body>
 </html>
 <script>
-    const topics = ["cats", "cooking", "fitness", "tech", "travel", "memes", "finance"];
+    const topics = ["animals", "religion", "politics", "music", "travel", "tech", "sports", "nature", "food", "fashion"];
 
 const samplePosts = [
-  { id: 1, topic: "cats", type: "image", src: "Images/friends.png", caption: "This cat paused mid-jump..." },
-  { id: 2, topic: "cooking", type: "video", src: "Images/mary.mp4", caption: "Watch till the end" },
+  { id: 1, topic: "animals", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_2e596e56be2d4c80.png", caption: "Chickens are easy to raise..." },
+  { id: 2, topic: "religion", type: "video", src: "https://duge79ki51wc4.cloudfront.net/video/asset_aa220238571380c2.mp4", caption: "Watch till the end-- " },
+  { id: 3, topic: "politics", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_6a9ad89365061b4c.jpeg", caption: "⚠️ BREAKING: Shocking New Allegations Split Public Opinion" },
+    { id: 4, topic: "animals", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_5ed225a6b6ce0a28.jpg", caption: "Morning Dove.." },
+    { id: 5, topic: "music", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_377841d4580ab88e.jpeg", caption: "Waznod's new alblum released.." },
+    { id: 6, topic: "religion", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_7ccb3fbcccdbcb73.jpeg", caption: "Pastor Jamaal lights up the stage!" },
+    { id: 7, topic: "politics", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_c43aa8484970c0b4.png", caption: "Where is God in all this mess?" },
+    { id: 8, topic: "religion", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_9802179c23f0c7af.png", caption: "AI takes over the world.." },
+    { id: 9, topic: "nature", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_ae95a47e66bcb99b.png", caption: "Get out and take a breath!" },
+    { id: 10, topic: "sports", type: "image", src: "https://duge79ki51wc4.cloudfront.net/images/asset_b40a3af8f65c1a75.jpeg", caption: "Mustangs for the win!!" },
   // Add 15–20 more with different topics...
 ];
 
@@ -106,7 +114,7 @@ function recordInterest(topic, seconds) {
   renderProfile();
   
   // Dynamic feed adjustment
-  if (userProfile[topic] > 25) {
+  if (userProfile[topic] > 10) { // if user has spent more than 15s on this topic, inject more content
     injectMoreOfTopic(topic);
   }
 }

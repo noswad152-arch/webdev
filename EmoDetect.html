@@ -12,7 +12,7 @@
         .value { color: #d9534f; font-family: monospace; }
         .content-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 40px 0; transition: background 0.3s; }
         .content-box:hover { border-color: #d9534f; }
-        .spacer { height: 80vh; background: linear-gradient(#eee, #fff); display: flex; align-items: center; justify-content: center; color: #999; font-style: italic; }
+        .spacer { height: 60vh; background: linear-gradient(#eee, #fff); display: flex; align-items: center; justify-content: center; color: #999; font-style: italic; }
         .injected-content { border-left: 4px solid #007bff; }
     </style>
 </head>
@@ -40,7 +40,7 @@
         <button id="action-btn">Click to Share / React</button>
     </div>
 
-    <!--<div class="spacer">End of Page. Scroll back up to review your data.</div>-->
+    <div class="spacer">End of Page. Scroll back up to review your data.</div>
     <div id="dynamic-content-root"></div>
 
     <script>
@@ -50,7 +50,7 @@
         let trackingInterval = null;
         let lastPauseCheck = 0;
         const MAX_DWELL_FOR_DARK = 30; // seconds to reach darkest state
-        const CONTENT_BLOCK_INTERVAL = 10; // add one block every 10 seconds
+        const CONTENT_BLOCK_INTERVAL = 3; // add one block every 3 seconds
         let blocksAdded = 0;
         const ROTATING_CONTENT = [
             {
